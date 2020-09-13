@@ -5,21 +5,21 @@ import styled from 'styled-components';
 import colors from '../../assets/colors';
 import { breakpoints } from '../../common/constants';
 
-export type SidebarItemProps = {
+export type NavbarItemProps = {
   path: string;
   name: string;
   icon: any;
 };
-export default function SidebarItem({ path, name, icon }: SidebarItemProps) {
+export default function NavbarItem({ path, name, icon }: NavbarItemProps) {
   return (
-    <StyledSidebarItem exact activeClassName="active" to={path}>
+    <StyledNavbarItem exact activeClassName="active" to={path}>
       <FontAwesomeIcon icon={icon} />
       <span>{name}</span>
-    </StyledSidebarItem>
+    </StyledNavbarItem>
   );
 }
 
-const StyledSidebarItem = styled(NavLink)`
+const StyledNavbarItem = styled(NavLink)`
   text-decoration: none;
   color: ${colors.black};
   display: flex;

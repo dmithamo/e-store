@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import colors from '../../assets/colors';
 import { breakpoints } from '../../common/constants';
 import allTheRoutes from '../routes/allTheRoutes';
-import SidebarItem from './SidebarItem';
+import NavbarItem from './NavbarItem';
 
-export default function Sidebar() {
+export default function Navbar() {
   return (
-    <StyledSidebar>
+    <StyledNavbar>
       <div className="home">
-        <SidebarItem
+        <NavbarItem
           key={allTheRoutes[0].path}
           path={allTheRoutes[0].path}
           name={allTheRoutes[0].name}
@@ -18,14 +18,14 @@ export default function Sidebar() {
       </div>
       <div className="rest">
         {allTheRoutes.slice(1).map((r) => (
-          <SidebarItem key={r.path} path={r.path} name={r.name} icon={r.icon} />
+          <NavbarItem key={r.path} path={r.path} name={r.name} icon={r.icon} />
         ))}
       </div>
-    </StyledSidebar>
+    </StyledNavbar>
   );
 }
 
-const StyledSidebar = styled.nav`
+const StyledNavbar = styled.nav`
   padding: 0.5em 0;
   display: flex;
   justify-content: space-between;

@@ -1,24 +1,22 @@
 /* eslint-disable no-undef */
 import React from 'react';
 import styled from 'styled-components';
-import Sidebar from '../sidebar/Sidebar';
+import Navbar from '../navbar/Navbar';
 
-export type WithSidebarProps = {
+export type WithNavbarProps = {
   children: JSX.Element[] | JSX.Element;
 };
 
-export default function WithSidebar({
-  children,
-}: WithSidebarProps): JSX.Element {
+export default function WithNavbar({ children }: WithNavbarProps): JSX.Element {
   return (
-    <StyledWithSidebar>
-      <Sidebar />
+    <StyledWithNavbar>
+      <Navbar />
       <section>{children}</section>
-    </StyledWithSidebar>
+    </StyledWithNavbar>
   );
 }
 
-const StyledWithSidebar = styled.div`
+const StyledWithNavbar = styled.div`
   display: flex;
   flex-direction: column;
   section {

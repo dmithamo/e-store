@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import WithSidebar from '../layouts/WithSidebar';
+import WithNavbar from '../layouts/WithNavbar';
 
 /* eslint-disable no-undef */
 export type RouteItemProps = {
@@ -23,9 +23,9 @@ export default function RouteItem({
           <Component />
         </Layout>
       ) : (
-        <WithSidebar>
+        <WithNavbar>
           <Component />
-        </WithSidebar>
+        </WithNavbar>
       )}
     </Route>
   );
