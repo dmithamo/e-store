@@ -25,6 +25,7 @@
   "rules": {
     "react/jsx-filename-extension": [0],
     "no-use-before-define": "off",
+    "no-undef": "off",
     "import/extensions": [
       "error",
       "ignorePackages",

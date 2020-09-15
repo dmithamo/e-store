@@ -1,6 +1,192 @@
-import React from 'react';
-import WorkingOnIT from '../TempPage';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { FormEvent, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import colors from '../../assets/colors';
+import Button from '../../common/components/Button';
+import Input from '../../common/components/Input';
+import AuthFormWrapper from './AuthFormWrapper';
 
-export default function CreateAccountPage() {
-  return <WorkingOnIT />;
-}
+type CreateAccountFormProps = {};
+
+const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
+  const [pageNumber, setPageNumber] = useState(1);
+  const [credentials, setCredentials] = useState({
+    userType: '',
+    firstname: '',
+    lastname: '',
+    phoneNumber: '',
+    email: '',
+    password: '',
+    repeatPassword: '',
+  });
+
+  function handleInput(e: FormEvent) {
+    setCredentials({
+      ...credentials,
+      [(e.target as HTMLTextAreaElement)
+        .name]: (e.target as HTMLTextAreaElement).value,
+    });
+  }
+
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+  }
+
+  const history = useHistory();
+  return (
+    <AuthFormWrapper>
+      <StyledCreateAccountForm>
+        <form
+          autoComplete="off"
+          method=""
+          onSubmit={(e: FormEvent) => {
+            handleSubmit(e);
+          }}
+        >
+          <h2 style={{ marginBottom: '2em' }}>Sign up to get started</h2>
+
+          {pageNumber === 1 && (
+            <div className="page-two">
+              <Input
+                type="text"
+                name="firstname"
+                placeholder="Enter your first name"
+                label="First name"
+                value={credentials.firstname}
+                onChange={(e: FormEvent) => {
+                  handleInput(e);
+                }}
+              />
+              <Input
+                type="text"
+                name="lastname"
+                placeholder="Enter your last name"
+                label="Last name"
+                value={credentials.lastname}
+                onChange={(e: FormEvent) => {
+                  handleInput(e);
+                }}
+              />
+              <Input
+                type="text"
+                name="phoneNumber"
+                placeholder="Enter your mobile phone number"
+                label="Mobile number"
+                value={credentials.phoneNumber}
+                onChange={(e: FormEvent) => {
+                  handleInput(e);
+                }}
+              />
+
+              <div className="buttons">
+                <Button
+                  type="submit"
+                  onClick={() => {
+                    setPageNumber(2);
+                  }}
+                >
+                  <span>Next</span>
+                  <FontAwesomeIcon icon="arrow-right" />
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {pageNumber === 2 && (
+            <div className="page-three">
+              <Input
+                type="email"
+                name="email"
+                placeholder="Enter your email address"
+                label="Email address"
+                value={credentials.email}
+                onChange={(e: FormEvent) => {
+                  handleInput(e);
+                }}
+              />
+              <Input
+                type="password"
+                name="password"
+                placeholder="Create a strong password"
+                label="Password"
+                value={credentials.password}
+                onChange={(e: FormEvent) => {
+                  handleInput(e);
+                }}
+              />
+              <Input
+                type="password"
+                name="repeatPassword"
+                placeholder="Re-type your password"
+                label="Repeat Password"
+                value={credentials.repeatPassword}
+                onChange={(e: FormEvent) => {
+                  handleInput(e);
+                }}
+              />
+
+              <div className="buttons">
+                <Button
+                  type="submit"
+                  onClick={(e) => {
+                    handleSubmit(e);
+                  }}
+                >
+                  <span>Create your account</span>
+                  <FontAwesomeIcon icon="arrow-right" />
+                </Button>
+              </div>
+            </div>
+          )}
+        </form>
+        <div className="redirect">
+          <Button
+            onClick={() => history.push('/login')}
+            category="link"
+            value="Already have an account? Sign in instead"
+          />
+        </div>
+      </StyledCreateAccountForm>
+    </AuthFormWrapper>
+  );
+};
+
+const StyledCreateAccountForm = styled.div`
+  /* box-shadow: 0 0 2px 2px ${colors.veryLightBlack};   */
+  background-color: ${colors.white};
+  padding: 4em 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 15px 15px 0;
+
+  form {
+    padding: 0.1em;
+    width: 90%;
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-evenly;
+    }
+
+    label {
+      margin-bottom: 2em;
+    }
+
+    div.buttons {
+      width: 100%;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  div.redirect {
+    /* margin-top: 3em; */
+  }
+`;
+
+export default CreateAccountForm;

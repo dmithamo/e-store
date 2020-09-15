@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import React from 'react';
 import styled from 'styled-components';
 
@@ -13,7 +12,7 @@ export default function NoNavbar({ children }: NoNavbarProps): JSX.Element {
 const StyledNoNavbar = styled.section`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   height: 100vh;
   width: 100%;

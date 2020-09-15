@@ -2,7 +2,6 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import WithNavbar from '../layouts/WithNavbar';
 
-/* eslint-disable no-undef */
 export type RouteItemProps = {
   path: string;
   component: any;

@@ -16,4 +16,10 @@ export default [
     icon: 'home',
     component: WorkingOnIT,
   },
+  {
+    path: '/info',
+    name: 'info',
+    icon: 'info',
+    component: WorkingOnIT,
+  },
 ];
