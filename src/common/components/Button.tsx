@@ -10,6 +10,7 @@ type ButtonProps = {
   category?: string;
   value?: string;
   children?: JSX.Element | JSX.Element[];
+  title?: string;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -18,9 +19,16 @@ const Button: React.FC<ButtonProps> = ({
   category,
   value,
   onClick,
+  title,
 }: ButtonProps): JSX.Element => (
   <StyledButton>
-    <button className={category} onClick={onClick} type={type} value={value}>
+    <button
+      title={title}
+      className={category}
+      onClick={onClick}
+      type={type}
+      value={value}
+    >
       {value || children}
     </button>
   </StyledButton>
@@ -30,6 +38,7 @@ Button.defaultProps = {
   type: 'button',
   category: 'primary',
   value: '',
+  title: '',
   children: <></>,
 };
 
@@ -89,6 +98,7 @@ const StyledButton = styled.span`
   }
 
   button.link {
+    padding: 0;
     font-weight: 400;
     background: none;
     color: ${colors.lightBlack};

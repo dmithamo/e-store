@@ -44,11 +44,34 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
             handleSubmit(e);
           }}
         >
-          <h2 style={{ marginBottom: '2em' }}>Sign up to get started</h2>
+          <h2 className="form-header">Sign up to get started</h2>
+          <span className="form-pagination">
+            <Button
+              title="Step 1 of 2"
+              category="link"
+              type="button"
+              onClick={() => {
+                setPageNumber(1);
+              }}
+            >
+              <FontAwesomeIcon icon="arrow-alt-circle-left" />
+            </Button>
+            <Button
+              title="Step 2 of 2"
+              category="link"
+              type="button"
+              onClick={() => {
+                setPageNumber(2);
+              }}
+            >
+              <FontAwesomeIcon icon="arrow-alt-circle-right" />
+            </Button>
+          </span>
 
           {pageNumber === 1 && (
-            <div className="page-two">
+            <div className="page-one">
               <Input
+                required
                 type="text"
                 name="firstname"
                 placeholder="Enter your first name"
@@ -59,6 +82,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
                 }}
               />
               <Input
+                required
                 type="text"
                 name="lastname"
                 placeholder="Enter your last name"
@@ -69,6 +93,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
                 }}
               />
               <Input
+                required
                 type="text"
                 name="phoneNumber"
                 placeholder="Enter your mobile phone number"
@@ -94,8 +119,9 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
           )}
 
           {pageNumber === 2 && (
-            <div className="page-three">
+            <div className="page-two">
               <Input
+                required
                 type="email"
                 name="email"
                 placeholder="Enter your email address"
@@ -106,6 +132,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
                 }}
               />
               <Input
+                required
                 type="password"
                 name="password"
                 placeholder="Create a strong password"
@@ -116,6 +143,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
                 }}
               />
               <Input
+                required
                 type="password"
                 name="repeatPassword"
                 placeholder="Re-type your password"
@@ -142,7 +170,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
         </form>
         <div className="redirect">
           <Button
-            onClick={() => history.push('/login')}
+            onClick={() => history.push('/sign-in')}
             category="link"
             value="Already have an account? Sign in instead"
           />
@@ -161,6 +189,23 @@ const StyledCreateAccountForm = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 0 15px 15px 0;
+
+  h2.form-header {
+    margin-bottom: 0.2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  span.form-pagination {
+    padding: 0.5em 0;
+    font-size: 1.2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+  }
 
   form {
     padding: 0.1em;
@@ -185,7 +230,7 @@ const StyledCreateAccountForm = styled.div`
     }
   }
   div.redirect {
-    /* margin-top: 3em; */
+    margin-top: 3em;
   }
 `;
 

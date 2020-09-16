@@ -56,6 +56,9 @@ const StyledInfoBanner = styled.div`
 
   button {
     width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 

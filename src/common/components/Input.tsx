@@ -10,6 +10,7 @@ type InputProps = {
   onChange: any;
   placeholder?: string;
   id?: string;
+  required?: boolean;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -20,6 +21,7 @@ const Input: React.FC<InputProps> = ({
   name,
   placeholder,
   label,
+  required,
 }: InputProps): JSX.Element => (
   <StyledInputWithLabel htmlFor={name}>
     <input
@@ -29,6 +31,7 @@ const Input: React.FC<InputProps> = ({
       onChange={onChange}
       id={id}
       name={name}
+      required={required}
     />
 
     <span>{label}</span>
@@ -38,6 +41,7 @@ const Input: React.FC<InputProps> = ({
 Input.defaultProps = {
   placeholder: 'Enter something',
   id: '',
+  required: false,
 };
 
 const StyledInputWithLabel = styled.label`
