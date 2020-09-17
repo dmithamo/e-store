@@ -14,11 +14,18 @@ export default function Navbar() {
           path={allTheRoutes[0].path}
           name={allTheRoutes[0].name}
           icon={allTheRoutes[0].icon}
+          needsAuth={false}
         />
       </div>
       <div className="rest">
         {allTheRoutes.slice(1).map((r) => (
-          <NavbarItem key={r.path} path={r.path} name={r.name} icon={r.icon} />
+          <NavbarItem
+            key={r.path}
+            path={r.path}
+            name={r.name}
+            needsAuth={r.needsAuth}
+            icon={r.icon}
+          />
         ))}
       </div>
     </StyledNavbar>

@@ -1,10 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { FormEvent, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import colors from '../../assets/colors';
 import Button from '../../common/components/Button';
 import Input from '../../common/components/Input';
+import { RootState } from '../../common/store/rootReducer';
 import AuthFormWrapper from './AuthFormWrapper';
 
 type CreateAccountFormProps = {};
@@ -33,7 +35,12 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
     e.preventDefault();
   }
 
+  const { isLoading } = useSelector((state: RootState) => state.auth);
   const history = useHistory();
+
+  if (isLoading) {
+    return <p>Loading ...</p>;
+  }
   return (
     <AuthFormWrapper>
       <StyledCreateAccountForm>

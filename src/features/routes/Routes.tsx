@@ -14,12 +14,19 @@ export default function Routes() {
             path={r.path}
             exact
             component={r.component}
+            needsAuth={r.needsAuth}
             customLayout={r?.customLayout || null}
           />
         ))}
 
         {/* Catch-all for 404s */}
-        <RouteItem key="404" path="*" exact={false} component={NotFound} />
+        <RouteItem
+          needsAuth={false}
+          key="404"
+          path="*"
+          exact={false}
+          component={NotFound}
+        />
       </Switch>
     </BrowserRouter>
   );
