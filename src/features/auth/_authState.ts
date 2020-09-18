@@ -1,30 +1,52 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-type authStateStructure = {
-  username: string;
+type AuthState = {
+  email: string;
+  phoneNumber: string;
   avatar: string;
+  userID: string;
   isAuthenticated: boolean;
-  isLoading: boolean;
-  errors: any[];
 };
 
-export const initialState: authStateStructure = {
-  username: '',
+type AuthAction = {
+  type: string;
+  payload: {
+    email: string;
+    avatar: string;
+    phoneNumber: string;
+    userID: string;
+  };
+};
+
+export const initialState: AuthState = {
+  email: '',
   avatar: '',
-  isLoading: false,
+  phoneNumber: '',
+  userID: '',
   isAuthenticated: false,
-  errors: [],
 };
 
 const authState = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    makeAuthRequest(state: authStateStructure) {
-      state.isLoading = true;
+    loginUserSuccess(state: AuthState, { payload }: AuthAction) {
+      state.isAuthenticated = true;
+      state.email = payload.email;
+      state.avatar = payload.avatar;
+      state.phoneNumber = payload.phoneNumber;
+      state.userID = payload.userID;
+    },
+
+    logoutUserSuccess(state: AuthState) {
+      state.isAuthenticated = true;
+      state.email = initialState.email;
+      state.avatar = initialState.avatar;
+      state.phoneNumber = initialState.phoneNumber;
+      state.userID = initialState.userID;
     },
   },
 });
 
-export const { makeAuthRequest } = authState.actions;
+export const { loginUserSuccess, logoutUserSuccess } = authState.actions;
 export default authState.reducer;

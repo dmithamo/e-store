@@ -9,7 +9,6 @@ type InputProps = {
   value: string | number;
   onChange: any;
   placeholder?: string;
-  id?: string;
   required?: boolean;
 };
 
@@ -17,7 +16,6 @@ const Input: React.FC<InputProps> = ({
   type,
   value,
   onChange,
-  id,
   name,
   placeholder,
   label,
@@ -29,7 +27,6 @@ const Input: React.FC<InputProps> = ({
       type={type}
       value={value}
       onChange={onChange}
-      id={id}
       name={name}
       required={required}
     />
@@ -40,7 +37,6 @@ const Input: React.FC<InputProps> = ({
 
 Input.defaultProps = {
   placeholder: 'Enter something',
-  id: '',
   required: false,
 };
 

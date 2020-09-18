@@ -1,20 +1,25 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { FormEvent, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import colors from '../../assets/colors';
 import Button from '../../common/components/Button';
 import Input from '../../common/components/Input';
 import { RootState } from '../../common/store/rootReducer';
+import HTTPClient from '../../http-client';
 import AuthFormWrapper from './AuthFormWrapper';
+import { loginUserSuccess } from './_authState';
 
 type CreateAccountFormProps = {};
 
 const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
+  const [isLoading, setIsLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const [credentials, setCredentials] = useState({
-    userType: '',
     firstname: '',
     lastname: '',
     phoneNumber: '',
@@ -22,6 +27,8 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
     password: '',
     repeatPassword: '',
   });
+
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   function handleInput(e: FormEvent) {
     setCredentials({
@@ -31,16 +38,37 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
     });
   }
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-  }
+    try {
+      setIsLoading(true);
 
-  const { isLoading } = useSelector((state: RootState) => state.auth);
-  const history = useHistory();
+      const res = await HTTPClient.post('/users', credentials);
+      setIsLoading(false);
+      if (res.status === 201) {
+        dispatch(
+          loginUserSuccess({
+            email: res.data.email,
+            avatar: '',
+            phoneNumber: res.data.phoneNumber,
+            userID: res.data.userID,
+          }),
+        );
+        return;
+      }
+    } catch (error) {
+      setIsLoading(false);
+    }
+  }
 
   if (isLoading) {
     return <p>Loading ...</p>;
   }
+
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <AuthFormWrapper>
       <StyledCreateAccountForm>
