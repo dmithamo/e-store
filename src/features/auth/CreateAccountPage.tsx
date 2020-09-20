@@ -1,27 +1,46 @@
+/* eslint-disable indent */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
-import styled from 'styled-components';
-import colors from '../../assets/colors';
 import Button from '../../common/components/Button';
 import Input from '../../common/components/Input';
+import PasswordInput from '../../common/components/PasswordInput';
 import { RootState } from '../../common/store/rootReducer';
 import HTTPClient from '../../http-client';
 import AuthFormWrapper from './AuthFormWrapper';
-import { loginUserSuccess } from './_authState';
+import { loginUserSuccess } from './utils/stateMgmt';
+import validateCredentials from './utils/validators';
 
 type CreateAccountFormProps = {};
 
 const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false);
+  type ValidationErrors = {
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    email: string;
+    password: string;
+    repeatPassword: string;
+  };
+  const [validationErrors, setValidationErrors] = useState<ValidationErrors>({
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    email: '',
+    password: '',
+    repeatPassword: '',
+  });
+  const [isValidPageOne, setIsValidPageOne] = useState(true);
+  const [isValidPageTwo, setIsValidPageTwo] = useState(true);
   const [pageNumber, setPageNumber] = useState(1);
   const history = useHistory();
   const dispatch = useDispatch();
 
   const [credentials, setCredentials] = useState({
-    firstname: '',
-    lastname: '',
+    firstName: '',
+    lastName: '',
     phoneNumber: '',
     email: '',
     password: '',
@@ -31,33 +50,95 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   function handleInput(e: FormEvent) {
+    const { name, value, type } = e.target as HTMLTextAreaElement;
     setCredentials({
       ...credentials,
-      [(e.target as HTMLTextAreaElement)
-        .name]: (e.target as HTMLTextAreaElement).value,
+      [name]: value,
     });
+
+    setValidationErrors({
+      ...validationErrors,
+      [name]: validateCredentials([{ name, value, type }])[name],
+      repeatPassword: '',
+    });
+
+    setIsValidPageOne(true);
+    setIsValidPageTwo(true);
+  }
+
+  function validatePageOne() {
+    const errs = validateCredentials([
+      { name: 'firstName', type: 'text', value: credentials.firstName },
+      { name: 'lastName', type: 'text', value: credentials.lastName },
+      {
+        name: 'phoneNumber',
+        type: 'tel',
+        value: credentials.phoneNumber,
+      },
+    ]);
+
+    setValidationErrors({
+      ...validationErrors,
+      ...errs,
+    });
+
+    const pageOneValid =
+      errs.firstName === '' && errs.lastName === '' && errs.phoneNumber === '';
+
+    setIsValidPageOne(pageOneValid);
+    setPageNumber(pageOneValid ? 2 : 1);
+  }
+
+  function validatePageTwo() {
+    let errs = validateCredentials([
+      { name: 'email', type: 'email', value: credentials.email },
+      { name: 'password', type: 'password', value: credentials.password },
+    ]);
+
+    errs = {
+      ...errs,
+      repeatPassword:
+        credentials.password === credentials.repeatPassword
+          ? ''
+          : 'passwords do not match',
+    };
+
+    setValidationErrors({
+      ...validationErrors,
+      ...errs,
+    });
+
+    return errs;
   }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    try {
-      setIsLoading(true);
+    const errs = validatePageTwo();
 
-      const res = await HTTPClient.post('/users', credentials);
-      setIsLoading(false);
-      if (res.status === 201) {
-        dispatch(
-          loginUserSuccess({
-            email: res.data.email,
-            avatar: '',
-            phoneNumber: res.data.phoneNumber,
-            userID: res.data.userID,
-          }),
-        );
-        return;
+    const pageTwoValid =
+      errs.email === '' && errs.password === '' && errs.repeatPassword === '';
+
+    setIsValidPageTwo(pageTwoValid);
+
+    if (pageTwoValid) {
+      try {
+        setIsLoading(true);
+        const res = await HTTPClient.post('/auth', credentials);
+        setIsLoading(false);
+        if (res.status === 201) {
+          dispatch(
+            loginUserSuccess({
+              email: res.data.email,
+              avatar: '',
+              phoneNumber: res.data.phoneNumber,
+              userID: res.data.userID,
+            }),
+          );
+          return;
+        }
+      } catch (error) {
+        setIsLoading(false);
       }
-    } catch (error) {
-      setIsLoading(false);
     }
   }
 
@@ -71,202 +152,151 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
 
   return (
     <AuthFormWrapper>
-      <StyledCreateAccountForm>
-        <form
-          autoComplete="off"
-          method=""
-          onSubmit={(e: FormEvent) => {
-            handleSubmit(e);
-          }}
-        >
-          <h2 className="form-header">Sign up to get started</h2>
-          <span className="form-pagination">
-            <Button
-              title="Step 1 of 2"
-              category="link"
-              type="button"
-              onClick={() => {
-                setPageNumber(1);
-              }}
-            >
-              <FontAwesomeIcon icon="arrow-alt-circle-left" />
-            </Button>
-            <Button
-              title="Step 2 of 2"
-              category="link"
-              type="button"
-              onClick={() => {
-                setPageNumber(2);
-              }}
-            >
-              <FontAwesomeIcon icon="arrow-alt-circle-right" />
-            </Button>
-          </span>
-
-          {pageNumber === 1 && (
-            <div className="page-one">
-              <Input
-                required
-                type="text"
-                name="firstname"
-                placeholder="Enter your first name"
-                label="First name"
-                value={credentials.firstname}
-                onChange={(e: FormEvent) => {
-                  handleInput(e);
-                }}
-              />
-              <Input
-                required
-                type="text"
-                name="lastname"
-                placeholder="Enter your last name"
-                label="Last name"
-                value={credentials.lastname}
-                onChange={(e: FormEvent) => {
-                  handleInput(e);
-                }}
-              />
-              <Input
-                required
-                type="text"
-                name="phoneNumber"
-                placeholder="Enter your mobile phone number"
-                label="Mobile number"
-                value={credentials.phoneNumber}
-                onChange={(e: FormEvent) => {
-                  handleInput(e);
-                }}
-              />
-
-              <div className="buttons">
-                <Button
-                  type="submit"
-                  onClick={() => {
-                    setPageNumber(2);
-                  }}
-                >
-                  <span>Next</span>
-                  <FontAwesomeIcon icon="arrow-right" />
-                </Button>
-              </div>
-            </div>
-          )}
-
-          {pageNumber === 2 && (
-            <div className="page-two">
-              <Input
-                required
-                type="email"
-                name="email"
-                placeholder="Enter your email address"
-                label="Email address"
-                value={credentials.email}
-                onChange={(e: FormEvent) => {
-                  handleInput(e);
-                }}
-              />
-              <Input
-                required
-                type="password"
-                name="password"
-                placeholder="Create a strong password"
-                label="Password"
-                value={credentials.password}
-                onChange={(e: FormEvent) => {
-                  handleInput(e);
-                }}
-              />
-              <Input
-                required
-                type="password"
-                name="repeatPassword"
-                placeholder="Re-type your password"
-                label="Repeat Password"
-                value={credentials.repeatPassword}
-                onChange={(e: FormEvent) => {
-                  handleInput(e);
-                }}
-              />
-
-              <div className="buttons">
-                <Button
-                  type="submit"
-                  onClick={(e) => {
-                    handleSubmit(e);
-                  }}
-                >
-                  <span>Create your account</span>
-                  <FontAwesomeIcon icon="arrow-right" />
-                </Button>
-              </div>
-            </div>
-          )}
-        </form>
-        <div className="redirect">
+      <form
+        autoComplete="off"
+        method=""
+        onSubmit={(e: FormEvent) => {
+          handleSubmit(e);
+        }}
+      >
+        <h2 className="form-header">Sign up to get started</h2>
+        <span className="form-pagination">
           <Button
-            onClick={() => history.push('/sign-in')}
+            title="Step 1 of 2"
             category="link"
-            value="Already have an account? Sign in instead"
-          />
-        </div>
-      </StyledCreateAccountForm>
+            type="button"
+            onClick={() => {
+              setPageNumber(1);
+            }}
+          >
+            <FontAwesomeIcon icon="arrow-alt-circle-left" />
+          </Button>
+          <Button
+            title="Step 2 of 2"
+            category="link"
+            type="button"
+            onClick={() => {
+              validatePageOne();
+            }}
+            disabled={!isValidPageOne}
+          >
+            <FontAwesomeIcon icon="arrow-alt-circle-right" />
+          </Button>
+        </span>
+
+        {pageNumber === 1 && (
+          <div className="page-one">
+            <Input
+              required
+              type="text"
+              name="firstName"
+              placeholder="eg John"
+              label="First name"
+              value={credentials.firstName}
+              onChange={(e: FormEvent) => {
+                handleInput(e);
+              }}
+              error={validationErrors.firstName}
+            />
+            <Input
+              required
+              type="text"
+              name="lastName"
+              placeholder="eg Lark"
+              label="Last name"
+              value={credentials.lastName}
+              onChange={(e: FormEvent) => {
+                handleInput(e);
+              }}
+              error={validationErrors.lastName}
+            />
+            <Input
+              required
+              type="tel"
+              name="phoneNumber"
+              placeholder="eg 0700112233"
+              label="Mobile number"
+              value={credentials.phoneNumber}
+              onChange={(e: FormEvent) => {
+                handleInput(e);
+              }}
+              error={validationErrors.phoneNumber}
+            />
+
+            <div className="buttons">
+              <Button
+                type="submit"
+                onClick={() => {
+                  validatePageOne();
+                }}
+                disabled={!isValidPageOne}
+              >
+                <span>Next</span>
+                <FontAwesomeIcon icon="arrow-right" />
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {pageNumber === 2 && (
+          <div className="page-two">
+            <Input
+              required
+              type="email"
+              name="email"
+              placeholder="eg johnlark@email.com"
+              label="Email address"
+              value={credentials.email}
+              onChange={(e: FormEvent) => {
+                handleInput(e);
+              }}
+              error={validationErrors.email}
+            />
+            <PasswordInput
+              label="Password"
+              name="password"
+              value={credentials.password}
+              onChange={(e: FormEvent) => {
+                handleInput(e);
+              }}
+              error={
+                validationErrors.password || validationErrors.repeatPassword
+              }
+            />
+            <PasswordInput
+              label="Repeat password"
+              name="repeatPassword"
+              value={credentials.repeatPassword}
+              onChange={(e: FormEvent) => {
+                handleInput(e);
+              }}
+              error={validationErrors.repeatPassword}
+            />
+
+            <div className="buttons">
+              <Button
+                type="submit"
+                onClick={(e) => {
+                  handleSubmit(e);
+                }}
+                disabled={!isValidPageTwo}
+              >
+                <span>Create your account</span>
+                <FontAwesomeIcon icon="arrow-right" />
+              </Button>
+            </div>
+          </div>
+        )}
+      </form>
+      <div className="redirect">
+        <Button
+          onClick={() => history.push('/sign-in')}
+          category="link"
+          value="Already have an account? Sign in instead"
+        />
+      </div>
     </AuthFormWrapper>
   );
 };
-
-const StyledCreateAccountForm = styled.div`
-  /* box-shadow: 0 0 2px 2px ${colors.veryLightBlack};   */
-  background-color: ${colors.white};
-  padding: 4em 2em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0 15px 15px 0;
-
-  h2.form-header {
-    margin-bottom: 0.2em;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-
-  span.form-pagination {
-    padding: 0.5em 0;
-    font-size: 1.2em;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 50%;
-  }
-
-  form {
-    padding: 0.1em;
-    width: 90%;
-    div {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: space-evenly;
-    }
-
-    label {
-      margin-bottom: 2em;
-    }
-
-    div.buttons {
-      width: 100%;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-  div.redirect {
-    margin-top: 3em;
-  }
-`;
 
 export default CreateAccountForm;

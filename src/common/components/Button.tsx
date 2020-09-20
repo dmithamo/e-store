@@ -11,6 +11,7 @@ type ButtonProps = {
   value?: string;
   children?: JSX.Element | JSX.Element[];
   title?: string;
+  disabled?: boolean;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -20,14 +21,16 @@ const Button: React.FC<ButtonProps> = ({
   value,
   onClick,
   title,
+  disabled,
 }: ButtonProps): JSX.Element => (
   <StyledButton>
     <button
       title={title}
-      className={category}
+      className={`${category} ${disabled ? 'disabled' : ''}`}
       onClick={onClick}
       type={type}
       value={value}
+      disabled={disabled}
     >
       {value || children}
     </button>
@@ -40,23 +43,24 @@ Button.defaultProps = {
   value: '',
   title: '',
   children: <></>,
+  disabled: false,
 };
 
 const StyledButton = styled.span`
+  width: fit-content;
   width: 100%;
   button {
-    padding: 0.8em 1.1em;
+    padding: 0.7em 1.1em;
     font-size: 1em;
     font-weight: bolder;
-
     outline: none;
     border-radius: 5px;
-    width: 100%;
     cursor: pointer;
 
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 
     svg {
       font-size: 1.1em;
@@ -106,6 +110,16 @@ const StyledButton = styled.span`
 
     :hover {
       color: ${colors.black};
+    }
+  }
+
+  button.disabled {
+    cursor: not-allowed;
+    color: ${colors.grey};
+    background-color: ${colors.lightGrey};
+    :hover {
+      color: ${colors.grey};
+      background-color: ${colors.lightGrey};
     }
   }
 `;

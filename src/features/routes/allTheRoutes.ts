@@ -14,8 +14,8 @@ type Route = {
 
 const allTheRoutes: Route[] = [
   {
-    path: '/create-account',
-    name: 'create-account',
+    path: '/sign-up',
+    name: 'sign-up',
     icon: 'home',
     needsAuth: false,
     component: CreateAccountPage,

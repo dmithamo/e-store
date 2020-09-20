@@ -1,58 +1,64 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import colors from '../../assets/colors';
+import Button from '../../common/components/Button';
+import Logo from '../../common/components/Logo';
 import { breakpoints } from '../../common/constants';
-import allTheRoutes from '../routes/allTheRoutes';
-import NavbarItem from './NavbarItem';
+import { RootState } from '../../common/store/rootReducer';
+import SearchBar from './SearchBar';
+import ShoppingCart from './ShoppingCart';
+import UserAvatar from './UserAvatar';
 
 export default function Navbar() {
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const history = useHistory();
   return (
     <StyledNavbar>
       <div className="home">
-        <NavbarItem
-          key={allTheRoutes[0].path}
-          path={allTheRoutes[0].path}
-          name={allTheRoutes[0].name}
-          icon={allTheRoutes[0].icon}
-          needsAuth={false}
-        />
+        <Logo />
       </div>
-      <div className="rest">
-        {allTheRoutes.slice(1).map((r) => (
-          <NavbarItem
-            key={r.path}
-            path={r.path}
-            name={r.name}
-            needsAuth={r.needsAuth}
-            icon={r.icon}
+      <SearchBar />
+      <div className="far-left">
+        {isAuthenticated ? (
+          <>
+            <ShoppingCart />
+            <UserAvatar />
+          </>
+        ) : (
+          <Button
+            category="primary"
+            value="Get started"
+            onClick={() => {
+              history.push('/sign-up');
+            }}
           />
-        ))}
+        )}
       </div>
     </StyledNavbar>
   );
 }
 
 const StyledNavbar = styled.nav`
-  padding: 0.5em 0;
+  padding: 0.5em 0.8em;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 5vh;
+  height: 6vh;
   width: 100%;
+  background-color: ${colors.white};
 
   div.home {
-    width: 80%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    flex-grow: 1;
   }
 
-  div.rest {
+  div.far-left {
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-end;
     align-items: center;
-    flex-grow: 1;
   }
 
   a.active {

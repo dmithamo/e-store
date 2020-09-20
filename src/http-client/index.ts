@@ -40,7 +40,7 @@ function insertAuthTokenInRequestHeaders(
 
 export default {
   post: async (path: string, params: any) =>
-    path === '/users'
+    path === '/auth'
       ? tempAuthFnBeforeApiIsLive(params)
       : instantiateHTTPClient().post(path, params),
 

@@ -6,11 +6,15 @@ import {
   faArrowAltCircleRight,
   faArrowLeft,
   faArrowRight,
+  faEye,
+  faEyeSlash,
+  faShoppingCart,
 } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import store from './common/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import reduxStore from './common/store';
 
 library.add(
   fab,
@@ -19,6 +23,9 @@ library.add(
   faArrowLeft,
   faArrowAltCircleLeft,
   faArrowAltCircleRight,
+  faEye,
+  faEyeSlash,
+  faShoppingCart,
 );
 
 const render = () => {
@@ -26,8 +33,10 @@ const render = () => {
 
   ReactDOM.render(
     <React.StrictMode>
-      <Provider store={store}>
-        <App />
+      <Provider store={reduxStore.store}>
+        <PersistGate persistor={reduxStore.persistor} loading={null}>
+          <App />
+        </PersistGate>
       </Provider>
     </React.StrictMode>,
     document.getElementById('root'),

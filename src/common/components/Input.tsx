@@ -10,6 +10,7 @@ type InputProps = {
   onChange: any;
   placeholder?: string;
   required?: boolean;
+  error?: string;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -20,6 +21,7 @@ const Input: React.FC<InputProps> = ({
   placeholder,
   label,
   required,
+  error,
 }: InputProps): JSX.Element => (
   <StyledInputWithLabel htmlFor={name}>
     <input
@@ -29,15 +31,18 @@ const Input: React.FC<InputProps> = ({
       onChange={onChange}
       name={name}
       required={required}
+      className={error !== '' ? 'errored' : ''}
     />
 
     <span>{label}</span>
+    {error !== '' && <span className="errors">{error}</span>}
   </StyledInputWithLabel>
 );
 
 Input.defaultProps = {
   placeholder: 'Enter something',
   required: false,
+  error: '',
 };
 
 const StyledInputWithLabel = styled.label`
@@ -67,9 +72,16 @@ const StyledInputWithLabel = styled.label`
     border-radius: 5px;
   }
 
+  input.errored {
+    border: 1px solid ${colors.red};
+  }
+
   span {
     color: ${colors.lightBlack};
     padding: 0.2em 0.5em;
+  }
+  span.errors {
+    color: ${colors.red};
   }
 `;
 

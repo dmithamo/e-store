@@ -1,64 +1,139 @@
+/* eslint-disable indent */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { FormEvent, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
-import colors from '../../assets/colors';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect, useHistory } from 'react-router-dom';
 import Button from '../../common/components/Button';
 import Input from '../../common/components/Input';
+import PasswordInput from '../../common/components/PasswordInput';
+import { RootState } from '../../common/store/rootReducer';
+import HTTPClient from '../../http-client';
 import AuthFormWrapper from './AuthFormWrapper';
+import { loginUserSuccess } from './utils/stateMgmt';
+import validateCredentials from './utils/validators';
 
 type SignInFormProps = {};
 
-const SignInForm: React.FC<SignInFormProps> = (): JSX.Element => {
+const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
+  const [isLoading, setIsLoading] = useState(false);
+  type ValidationErrors = {
+    email: string;
+    password: string;
+  };
+  const [validationErrors, setValidationErrors] = useState<ValidationErrors>({
+    email: '',
+    password: '',
+  });
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
   });
 
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+
   function handleInput(e: FormEvent) {
+    const { name, value } = e.target as HTMLTextAreaElement;
     setCredentials({
       ...credentials,
-      [(e.target as HTMLTextAreaElement)
-        .name]: (e.target as HTMLTextAreaElement).value,
+      [name]: value,
+    });
+
+    setValidationErrors({
+      ...validationErrors,
+      [name]: '',
     });
   }
 
-  function handleSubmit(e: FormEvent) {
-    e.preventDefault();
+  function validateForm() {
+    let errs = validateCredentials([
+      { name: 'email', type: 'email', value: credentials.email },
+      { name: 'password', type: 'password', value: credentials.password },
+    ]);
+
+    errs = {
+      ...errs,
+      password: errs.password.includes('not a valid option')
+        ? ''
+        : errs.password,
+    };
+    setValidationErrors({
+      ...validationErrors,
+      ...errs,
+    });
+    return errs;
   }
 
-  const history = useHistory();
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    const errs = validateForm();
+    const formIsValid = errs.email === '' && errs.password === '';
+
+    if (formIsValid) {
+      try {
+        setIsLoading(true);
+        const res = await HTTPClient.post('/auth', credentials);
+        setIsLoading(false);
+        if (res.status === 201) {
+          dispatch(
+            loginUserSuccess({
+              email: res.data.email,
+              avatar: '',
+              phoneNumber: res.data.phoneNumber,
+              userID: res.data.userID,
+            }),
+          );
+          return;
+        }
+      } catch (error) {
+        setIsLoading(false);
+      }
+    }
+  }
+
+  if (isLoading) {
+    return <p>Loading ...</p>;
+  }
+
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <AuthFormWrapper>
-      <StyledSignInForm>
-        <form
-          autoComplete="off"
-          method=""
-          onSubmit={(e: FormEvent) => {
-            handleSubmit(e);
-          }}
-        >
-          <h2 className="form-header">Sign in now</h2>
+      <form
+        autoComplete="off"
+        method=""
+        onSubmit={(e: FormEvent) => {
+          handleSubmit(e);
+        }}
+      >
+        <h2 className="form-header">Sign in now</h2>
 
+        <div className="page-one" style={{ padding: '3em 0' }}>
           <Input
+            required
             type="email"
             name="email"
-            placeholder="Enter your email address"
+            placeholder="eg johnlark@email.com"
             label="Email address"
             value={credentials.email}
             onChange={(e: FormEvent) => {
               handleInput(e);
             }}
+            error={validationErrors.email}
           />
-          <Input
-            type="password"
-            name="password"
-            placeholder="Enter your password"
+          <PasswordInput
             label="Password"
+            name="password"
             value={credentials.password}
             onChange={(e: FormEvent) => {
+              setValidationErrors({ ...validationErrors, password: '' });
               handleInput(e);
             }}
+            error={validationErrors.password}
           />
 
           <div className="buttons">
@@ -67,64 +142,23 @@ const SignInForm: React.FC<SignInFormProps> = (): JSX.Element => {
               onClick={(e) => {
                 handleSubmit(e);
               }}
+              disabled={validationErrors.email !== ''}
             >
               <span>Sign in</span>
               <FontAwesomeIcon icon="arrow-right" />
             </Button>
           </div>
-        </form>
-        <div className="redirect">
-          <Button
-            onClick={() => history.push('/create-account')}
-            category="link"
-            value="New here? Create a free account now"
-          />
         </div>
-      </StyledSignInForm>
+      </form>
+      <div className="redirect">
+        <Button
+          onClick={() => history.push('/sign-up')}
+          category="link"
+          value="New here? Create an account for free"
+        />
+      </div>
     </AuthFormWrapper>
   );
 };
 
-const StyledSignInForm = styled.div`
-  /* box-shadow: 0 0 2px 2px ${colors.veryLightBlack};   */
-  background-color: ${colors.white};
-  padding: 6em 2em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0 15px 15px 0;
-  border-radius: 0 15px 15px 0;
-
-  h2.form-header {
-    margin-bottom: 1.2em;
-  }
-
-  form {
-    padding: 0.1em;
-    width: 90%;
-    div {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: space-evenly;
-    }
-
-    label {
-      margin-bottom: 2em;
-    }
-
-    div.buttons {
-      width: 100%;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-  div.redirect {
-    margin-top: 3em;
-  }
-`;
-
-export default SignInForm;
+export default SigninForm;

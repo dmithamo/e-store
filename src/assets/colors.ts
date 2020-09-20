@@ -9,4 +9,5 @@ export default {
   darkGrey: '#cccccc99',
   primary: '#0090ff',
   primaryDarker: '#0080ff',
+  red: '#ff0000',
 };

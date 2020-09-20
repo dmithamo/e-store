@@ -27,6 +27,7 @@ const UserAvatar: React.FC = (): JSX.Element => {
         <div className="dropdown-card">
           <span>{email}</span>
           <span>{userID}</span>
+          <span>user icon here</span>
         </div>
       )}
     </StyledUserAvatar>
