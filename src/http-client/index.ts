@@ -25,9 +25,6 @@ function insertAuthTokenInRequestHeaders(
   switch (config.url) {
     // no auth header needed
     case '/checkout':
-      return config;
-
-    default:
       return {
         ...config,
         headers: {
@@ -35,6 +32,9 @@ function insertAuthTokenInRequestHeaders(
           Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         },
       };
+
+    default:
+      return config;
   }
 }
 
