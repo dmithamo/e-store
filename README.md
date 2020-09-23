@@ -1,5 +1,7 @@
 # e store
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/52df5e1b-c395-4c8e-8074-6f305fe772ec/deploy-status)](https://app.netlify.com/sites/objective-brattain-4cbab7/deploys)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
