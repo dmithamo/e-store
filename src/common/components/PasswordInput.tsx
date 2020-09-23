@@ -70,6 +70,11 @@ const StyledInputWithLabel = styled.label`
     border-radius: 5px;
     position: relative;
 
+    :focus-within {
+      border: 1px solid ${colors.black};
+      background-color: ${colors.white};
+    }
+
     input {
       padding: 1em 0.5em;
       background-color: ${colors.offWhite};

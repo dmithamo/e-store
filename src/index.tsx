@@ -1,6 +1,9 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
-import { faUserCircle } from '@fortawesome/free-regular-svg-icons';
+import {
+  faTimesCircle,
+  faUserCircle,
+} from '@fortawesome/free-regular-svg-icons';
 import {
   faArrowAltCircleLeft,
   faArrowAltCircleRight,
@@ -26,6 +29,7 @@ library.add(
   faEye,
   faEyeSlash,
   faShoppingCart,
+  faTimesCircle,
 );
 
 const render = () => {
