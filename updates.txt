@@ -1,0 +1,46 @@
+CreateAccountForm
+  - add location
+
+Profile page
+  - d.o.b
+  - id number
+  - avatar
+
+  * Payment details
+    - primary(reg. Mpesa number)
+    - secondary(bank details) [DESIGN idea: Visa card-esque]
+        - name of bank
+        - a/c name
+        - a/c number
+
+User story
+* Registration
+- on sign up:
+ - inform user -a/c awaiting verfification
+  - send email with login link on successful verify
+
+* Landing page
+ - list of items available (categorised)
+
+onSelectItem:
+ - ...item :{bookedUntil - }
+ - price per day
+ - availability (date available)
+
+[calendar - days unavailable => greyed out]
+ - to book:
+   - click on available slot -> define range -> proceed to checkout
+
+ - checkout
+  * show how to pay
+  * (paybill number, total cost,)
+  * on pay -> enter verification code/mobile number used to pay (OR auto verify payment)
+  * STK push
+
+- contact vendor to request delivery
+- customer + vendor can confirm receipt/delivery of item
+
+
+Admin
+ - confirm new acount [approve, reject,contact for more info, -> send email]
+ - existing accounts : soft delete, rest password, messaging
