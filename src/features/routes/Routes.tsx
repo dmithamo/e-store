@@ -10,12 +10,13 @@ export default function Routes() {
       <Switch>
         {allTheRoutes.map((r) => (
           <RouteItem
-            key={r.name}
+            key={r.pageTitle}
             path={r.path}
             exact
             component={r.component}
             needsAuth={r.needsAuth}
             customLayout={r?.customLayout || null}
+            pageTitle={r.pageTitle}
           />
         ))}
 
@@ -26,6 +27,7 @@ export default function Routes() {
           path="*"
           exact={false}
           component={NotFound}
+          pageTitle="404"
         />
       </Switch>
     </BrowserRouter>

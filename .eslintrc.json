@@ -40,6 +40,7 @@
     ],
     "no-param-reassign": "off",
     "global-require": "off",
-    "operator-linebreak": "off"
+    "operator-linebreak": "off",
+    "import/order": "off"
   }
 }

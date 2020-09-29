@@ -50,7 +50,7 @@ const StyledButton = styled.span`
   width: fit-content;
   width: 100%;
   button {
-    padding: 0.6em 1.1em;
+    padding: 0.9em 1.1em;
     font-size: 1em;
     font-weight: bolder;
     outline: none;
@@ -104,7 +104,6 @@ const StyledButton = styled.span`
 
   button.link {
     padding: 0;
-    font-weight: 400;
     background: none;
     color: ${colors.lightBlack};
     border: none;

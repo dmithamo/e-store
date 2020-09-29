@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import Button from '../../common/components/Button';
 import Input from '../../common/components/Input';
-import PasswordInput from '../../common/components/PasswordInput';
 import { RootState } from '../../common/store/rootReducer';
 import HTTPClient from '../../http-client';
 import AuthFormWrapper from './AuthFormWrapper';
@@ -34,7 +33,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
   });
   const [isValidPageOne, setIsValidPageOne] = useState(true);
   const [isValidPageTwo, setIsValidPageTwo] = useState(true);
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState(2);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -159,7 +158,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
           handleSubmit(e);
         }}
       >
-        <h2 className="form-header">Sign up to get started</h2>
+        <h2 className="form-header title">Sign up to get started</h2>
         <span className="form-pagination">
           <Button
             title="Step 1 of 2"
@@ -252,9 +251,13 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
               }}
               error={validationErrors.email}
             />
-            <PasswordInput
-              label="Password"
+            <Input
+              required
+              type="password"
               name="password"
+              placeholder="eg exBd3Qwert"
+              label="Password"
+              hasHideToggle
               value={credentials.password}
               onChange={(e: FormEvent) => {
                 handleInput(e);
@@ -263,9 +266,13 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
                 validationErrors.password || validationErrors.repeatPassword
               }
             />
-            <PasswordInput
-              label="Repeat password"
+            <Input
+              required
+              type="password"
               name="repeatPassword"
+              placeholder="eg exBd3Qwert"
+              label="Repeat Password"
+              hasHideToggle
               value={credentials.repeatPassword}
               onChange={(e: FormEvent) => {
                 handleInput(e);
