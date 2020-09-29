@@ -41,6 +41,9 @@
     "no-param-reassign": "off",
     "global-require": "off",
     "operator-linebreak": "off",
-    "import/order": "off"
+    "import/order": "off",
+    "no-confusing-arrow": "off",
+    "implicit-arrow-linebreak": "off",
+    "object-curly-newline": "off"
   }
 }

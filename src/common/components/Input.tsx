@@ -14,6 +14,7 @@ type InputProps = {
   required?: boolean;
   error?: string;
   hasHideToggle?: boolean;
+  disabled?: boolean;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -26,13 +27,18 @@ const Input: React.FC<InputProps> = ({
   required,
   error,
   hasHideToggle,
+  disabled,
 }: InputProps): JSX.Element => {
   const [showContents, setShowContents] = useState(false);
 
   return (
     <StyledInputWithLabel htmlFor={name}>
-      <div className={`input ${error !== '' ? 'errored' : ''}`}>
+      <div
+        style={disabled ? { background: colors.grey } : {}}
+        className={`input ${error !== '' ? 'errored' : ''}`}
+      >
         <input
+          autoComplete="off"
           placeholder={placeholder}
           type={showContents ? (type === 'password' ? 'text' : type) : type}
           value={value}
@@ -63,6 +69,7 @@ Input.defaultProps = {
   required: false,
   error: '',
   hasHideToggle: false,
+  disabled: false,
 };
 
 const StyledInputWithLabel = styled.label`

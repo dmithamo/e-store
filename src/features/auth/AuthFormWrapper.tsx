@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import colors from '../../assets/colors';
-import FullPageImageBackground from '../../common/components/FullPageImageBackground';
+import FullPageOverlay from '../../common/components/FullPageOverlay';
 import InfoBanner from './InfoBanner';
 
 type AuthFormWrapperProps = {
@@ -11,7 +11,7 @@ type AuthFormWrapperProps = {
 const AuthFormWrapper: React.FC<AuthFormWrapperProps> = ({
   children,
 }: AuthFormWrapperProps): JSX.Element => (
-  <FullPageImageBackground>
+  <FullPageOverlay>
     <StyledAuthFormWrapper>
       <div className="container">
         <div className="info-banner">
@@ -21,7 +21,7 @@ const AuthFormWrapper: React.FC<AuthFormWrapperProps> = ({
         <div className="auth-form">{children}</div>
       </div>
     </StyledAuthFormWrapper>
-  </FullPageImageBackground>
+  </FullPageOverlay>
 );
 
 const StyledAuthFormWrapper = styled.div`

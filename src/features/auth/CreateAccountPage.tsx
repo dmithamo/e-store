@@ -6,10 +6,20 @@ import { Redirect, useHistory } from 'react-router-dom';
 import Button from '../../common/components/Button';
 import Input from '../../common/components/Input';
 import { RootState } from '../../common/store/rootReducer';
-import HTTPClient from '../../http-client';
 import AuthFormWrapper from './AuthFormWrapper';
-import { loginUserSuccess } from './utils/stateMgmt';
+import ConfirmAccountPage from './ConfirmAccountPage';
+import { createAccount } from './utils/nwRequests';
+import { registerUserFail, registerUserSuccess } from './utils/stateMgmt';
 import validateCredentials from './utils/validators';
+
+export type Credentials = {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email: string;
+  password: string;
+  repeatPassword: string;
+};
 
 type CreateAccountFormProps = {};
 
@@ -33,11 +43,11 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
   });
   const [isValidPageOne, setIsValidPageOne] = useState(true);
   const [isValidPageTwo, setIsValidPageTwo] = useState(true);
-  const [pageNumber, setPageNumber] = useState(2);
+  const [pageNumber, setPageNumber] = useState(1);
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const [credentials, setCredentials] = useState({
+  const [credentials, setCredentials] = useState<Credentials>({
     firstName: '',
     lastName: '',
     phoneNumber: '',
@@ -46,7 +56,9 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
     repeatPassword: '',
   });
 
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { isAuthenticated, isRegistered, isConfirmed, error } = useSelector(
+    (state: RootState) => state.auth,
+  );
 
   function handleInput(e: FormEvent) {
     const { name, value, type } = e.target as HTMLTextAreaElement;
@@ -122,21 +134,25 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
     if (pageTwoValid) {
       try {
         setIsLoading(true);
-        const res = await HTTPClient.post('/auth', credentials);
-        setIsLoading(false);
-        if (res.status === 201) {
+        const [createdSuccessfully, res] = await createAccount(credentials);
+        if (createdSuccessfully) {
           dispatch(
-            loginUserSuccess({
+            registerUserSuccess({
               email: res.data.email,
-              avatar: '',
-              phoneNumber: res.data.phoneNumber,
-              userID: res.data.userID,
+              phoneNumber: credentials.phoneNumber,
             }),
           );
-          return;
+        } else {
+          dispatch(
+            registerUserFail({
+              error: res,
+            }),
+          );
         }
-      } catch (error) {
         setIsLoading(false);
+      } catch (err) {
+        setIsLoading(false);
+        console.log(err, '<<<ERROR AT CREATE AC');
       }
     }
   }
@@ -145,12 +161,17 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
     return <p>Loading ...</p>;
   }
 
-  if (isAuthenticated) {
+  if (isRegistered && !isConfirmed) {
+    return <ConfirmAccountPage />;
+  }
+
+  if (isAuthenticated && isConfirmed) {
     return <Redirect to="/" />;
   }
 
   return (
     <AuthFormWrapper>
+      {error && <div className="error-container">{error}</div>}
       <form
         autoComplete="off"
         method=""

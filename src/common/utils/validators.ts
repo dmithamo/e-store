@@ -4,6 +4,7 @@
 const ALPHABETIC_STRING_REGEX = /^[A-Za-z]+$/;
 
 const PHONE_NUMBER_REGEX = /^[0-9]{10}$/;
+const CONFIRM_CODE_REGEX = /^[0-9]{6}$/;
 
 const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
 /*
@@ -36,11 +37,16 @@ export function isValidAlphabeticString(input: string): boolean {
 export function isValidPhoneNumber(input: string): boolean {
   return PHONE_NUMBER_REGEX.test(input);
 }
+
+export function isValidConfirmCode(input: string): boolean {
+  return CONFIRM_CODE_REGEX.test(input);
+}
 const VALIDATORS = {
   text: isValidAlphabeticString,
   email: isValidEmail,
   password: isValidPassword,
   tel: isValidPhoneNumber,
+  confirmCode: isValidConfirmCode,
 };
 
 export default VALIDATORS;

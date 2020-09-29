@@ -33,7 +33,7 @@ export default function RouteItem({
           <title>{pageTitle}</title>
           <meta
             name="description"
-            content="Welcome to hae. Hire everything and anything"
+            content="Welcome to hae. Hire anything and everything"
           />
         </Helmet>
         {Layout ? (

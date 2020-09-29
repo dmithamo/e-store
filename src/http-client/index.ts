@@ -39,21 +39,41 @@ function insertAuthTokenInRequestHeaders(
 }
 
 export default {
-  post: async (path: string, params: any) =>
-    path === '/auth'
-      ? tempAuthFnBeforeApiIsLive(params)
-      : instantiateHTTPClient().post(path, params),
+  post: async (path: string, params: any) => {
+    if (path === '/auth') {
+      return tempCreateAccountFnBeforeApiIsLive(params);
+    }
+    if (path === '/auth/verify-account') {
+      return tempVerifyAccountFnBeforeApiIsLive(params);
+    }
+    return instantiateHTTPClient().post(path, params);
+  },
 
   get: async (path: string) => instantiateHTTPClient().get(path),
 };
 
-function tempAuthFnBeforeApiIsLive(params: any) {
+function tempCreateAccountFnBeforeApiIsLive(params: any) {
   if (params.email && params.email !== '') {
     return {
       status: 201,
       data: {
-        userID: 'uuid-like-value-here',
         email: params.email,
+      },
+    };
+  }
+  return {
+    status: 400,
+    data: { error: { message: 'Missing required values: ...' } },
+  };
+}
+
+function tempVerifyAccountFnBeforeApiIsLive(params: any) {
+  if (params.email && params.confirmationCode) {
+    return {
+      status: 201,
+      data: {
+        email: params.email,
+        userID: 'new-user-uuid-01',
       },
     };
   }

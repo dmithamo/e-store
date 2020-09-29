@@ -6,16 +6,20 @@ type AuthState = {
   avatar: string;
   userID: string;
   isAuthenticated: boolean;
+  isRegistered: boolean;
+  isConfirmed: boolean;
+  error: any;
 };
 
 type AuthAction = {
   type: string;
-  payload: {
-    email: string;
-    avatar: string;
-    phoneNumber: string;
-    userID: string;
-  };
+  // payload: {
+  //   email: string;
+  //   phoneNumber: string;
+  //   avatar?: string;
+  //   userID?: string;
+  // };
+  payload: any;
 };
 
 export const initialState: AuthState = {
@@ -24,18 +28,35 @@ export const initialState: AuthState = {
   phoneNumber: '',
   userID: '',
   isAuthenticated: false,
+  isRegistered: false,
+  isConfirmed: false,
+  error: false,
 };
 
 const authState = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    registerUserSuccess(state: AuthState, { payload }: AuthAction) {
+      state.isRegistered = true;
+      state.email = payload.email;
+    },
+
+    registerUserFail(state: AuthState, { payload }: AuthAction) {
+      state.error = payload;
+    },
+
+    confirmAccountSuccess(state: AuthState, { payload }: AuthAction) {
+      state.isConfirmed = true;
+      state.email = payload.email;
+    },
+
     loginUserSuccess(state: AuthState, { payload }: AuthAction) {
       state.isAuthenticated = true;
       state.email = payload.email;
-      state.avatar = payload.avatar;
+      state.avatar = payload.avatar || '';
       state.phoneNumber = payload.phoneNumber;
-      state.userID = payload.userID;
+      state.userID = payload.userID || '';
     },
 
     logoutUserSuccess(state: AuthState) {
@@ -48,5 +69,12 @@ const authState = createSlice({
   },
 });
 
-export const { loginUserSuccess, logoutUserSuccess } = authState.actions;
+export const {
+  registerUserSuccess,
+  registerUserFail,
+  confirmAccountSuccess,
+  loginUserSuccess,
+  logoutUserSuccess,
+} = authState.actions;
+
 export default authState.reducer;

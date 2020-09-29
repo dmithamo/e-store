@@ -9,9 +9,10 @@ type ButtonProps = {
   type?: 'button' | 'submit';
   category?: string;
   value?: string;
-  children?: JSX.Element | JSX.Element[];
+  children?: JSX.Element | JSX.Element[] | null;
   title?: string;
   disabled?: boolean;
+  alignCenter?: boolean;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -22,6 +23,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   title,
   disabled,
+  alignCenter,
 }: ButtonProps): JSX.Element => (
   <StyledButton>
     <button
@@ -31,6 +33,7 @@ const Button: React.FC<ButtonProps> = ({
       type={type}
       value={value}
       disabled={disabled}
+      style={{ justifyContent: `${alignCenter ? 'center' : 'space-between'}` }}
     >
       {value || children}
     </button>
@@ -42,8 +45,9 @@ Button.defaultProps = {
   category: 'primary',
   value: '',
   title: '',
-  children: <></>,
+  children: null,
   disabled: false,
+  alignCenter: false,
 };
 
 const StyledButton = styled.span`
@@ -63,7 +67,7 @@ const StyledButton = styled.span`
     width: 100%;
 
     svg {
-      font-size: 1.1em;
+      font-size: 1.3em;
     }
   }
 
@@ -81,7 +85,7 @@ const StyledButton = styled.span`
     font-weight: normal;
     color: ${colors.black};
     background-color: ${colors.white};
-    border: 1px solid ${colors.lightBlack};
+    border: 1px solid ${colors.veryLightBlack};
 
     :hover {
       background-color: ${colors.lightGrey};
