@@ -12,6 +12,7 @@ import {
   faEye,
   faEyeSlash,
   faShoppingCart,
+  faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -30,6 +31,7 @@ library.add(
   faEyeSlash,
   faShoppingCart,
   faTimesCircle,
+  faSignOutAlt,
 );
 
 const render = () => {

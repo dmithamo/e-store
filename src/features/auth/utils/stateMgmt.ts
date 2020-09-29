@@ -39,7 +39,7 @@ const authState = createSlice({
     },
 
     logoutUserSuccess(state: AuthState) {
-      state.isAuthenticated = true;
+      state.isAuthenticated = false;
       state.email = initialState.email;
       state.avatar = initialState.avatar;
       state.phoneNumber = initialState.phoneNumber;

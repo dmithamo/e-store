@@ -78,13 +78,14 @@ const StyledButton = styled.span`
   }
 
   button.secondary {
-    color: ${colors.lightBlack};
+    font-weight: normal;
+    color: ${colors.black};
     background-color: ${colors.white};
-    border: 1px solid ${colors.veryLightBlack};
+    border: 1px solid ${colors.lightBlack};
 
     :hover {
       background-color: ${colors.lightGrey};
-      border: 1px solid ${colors.lightBlack};
+      border: 1px solid ${colors.black};
       color: ${colors.black};
     }
   }
