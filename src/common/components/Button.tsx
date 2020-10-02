@@ -1,13 +1,12 @@
 /* eslint-disable react/button-has-type */
 import React from 'react';
 import styled from 'styled-components';
-import colors from '../../assets/colors';
 
 type ButtonProps = {
   // eslint-disable-next-line no-unused-vars
   onClick: (e: any) => void;
   type?: 'button' | 'submit';
-  category?: string;
+  category?: 'primary' | 'secondary' | 'outline' | 'link';
   value?: string;
   children?: JSX.Element | JSX.Element[] | null;
   title?: string;
@@ -72,58 +71,58 @@ const StyledButton = styled.span`
   }
 
   button.primary {
-    color: ${colors.white};
-    background-color: ${colors.primary};
-    border: 1px solid ${colors.veryLightBlack};
+    color: var(--white);
+    background-color: var(--primaryBlue);
+    border: 1px solid var(--veryLightBlack);
 
     :hover {
-      background-color: ${colors.primaryDarker};
+      background-color: var(--primaryBlueDarker);
     }
   }
 
   button.secondary {
     font-weight: normal;
-    color: ${colors.black};
-    background-color: ${colors.white};
-    border: 1px solid ${colors.veryLightBlack};
+    color: var(--black);
+    background-color: var(--white);
+    border: 1px solid var(--veryLightBlack);
 
     :hover {
-      background-color: ${colors.lightGrey};
-      border: 1px solid ${colors.black};
-      color: ${colors.black};
+      background-color: var(--lightGrey);
+      border: 1px solid var(--black);
+      color: var(--black);
     }
   }
 
   button.outline {
     background: none;
-    color: ${colors.white};
-    border: 1px solid ${colors.white};
+    color: var(--white);
+    border: 1px solid var(--white);
 
     :hover {
-      background-color: ${colors.white};
-      border: 1px solid ${colors.white};
-      color: ${colors.black};
+      background-color: var(--white);
+      border: 1px solid var(--white);
+      color: var(--black);
     }
   }
 
   button.link {
     padding: 0;
     background: none;
-    color: ${colors.lightBlack};
+    color: var(--lightBlack);
     border: none;
 
     :hover {
-      color: ${colors.black};
+      color: var(--black);
     }
   }
 
   button.disabled {
     cursor: not-allowed;
-    color: ${colors.grey};
-    background-color: ${colors.lightGrey};
+    color: var(--grey);
+    background-color: var(--lightGrey);
     :hover {
-      color: ${colors.grey};
-      background-color: ${colors.lightGrey};
+      color: var(--grey);
+      background-color: var(--lightGrey);
     }
   }
 `;

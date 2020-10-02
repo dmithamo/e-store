@@ -58,6 +58,10 @@ function tempCreateAccountFnBeforeApiIsLive(params: any) {
       status: 201,
       data: {
         email: params.email,
+        firstName: params.firstName,
+        lastName: params.lastName,
+        avatar: params.avatar,
+        phoneNumber: params.phoneNumber,
       },
     };
   }

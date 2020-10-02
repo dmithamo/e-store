@@ -3,6 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 type AuthState = {
   email: string;
   phoneNumber: string;
+  firstName: string;
+  lastName: string;
   avatar: string;
   userID: string;
   isAuthenticated: boolean;
@@ -24,8 +26,10 @@ type AuthAction = {
 
 export const initialState: AuthState = {
   email: '',
-  avatar: '',
   phoneNumber: '',
+  firstName: '',
+  lastName: '',
+  avatar: '',
   userID: '',
   isAuthenticated: false,
   isRegistered: false,
@@ -54,6 +58,8 @@ const authState = createSlice({
     loginUserSuccess(state: AuthState, { payload }: AuthAction) {
       state.isAuthenticated = true;
       state.email = payload.email;
+      state.firstName = payload.firstName;
+      state.lastName = payload.lastName;
       state.avatar = payload.avatar || '';
       state.phoneNumber = payload.phoneNumber;
       state.userID = payload.userID || '';

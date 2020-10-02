@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import colors from '../../assets/colors';
 
 type DropDownMenuProps = {
   icon: () => JSX.Element | JSX.Element[];
@@ -12,7 +11,7 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({
   icon,
   children,
 }: DropDownMenuProps): JSX.Element => {
-  const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(true);
   const node = useRef<HTMLDivElement>(null);
 
   const handleClick = (e: any) => {
@@ -80,12 +79,12 @@ const StyledDropDownMenu = styled.div`
   }
 
   div.hidden-menu {
-    padding: 1.5em;
+    padding: 1.5em 2em;
     position: absolute;
     top: 2em;
     right: 1em;
-    background-color: ${colors.white};
-    box-shadow: 0 0 2px 2px ${colors.darkGrey};
+    background-color: var(--white);
+    box-shadow: 0 0 2px 2px var(--grey);
     width: 300px;
     border-radius: 5px;
     display: flex;

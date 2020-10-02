@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import colors from '../../assets/colors';
 import Button from './Button';
 import FullPageOverlay from './FullPageOverlay';
 
@@ -53,8 +52,8 @@ export default function FullPageModal({
 }
 
 const StyledFullPageModal = styled.div`
-  box-shadow: 0 0 4px 4px ${colors.lightGrey};
-  background-color: ${colors.white};
+  box-shadow: 0 0 4px 4px var(--lightGrey);
+  background-color: var(--white);
   border-radius: 10px;
   width: 650px;
   height: 40vh;
@@ -79,10 +78,10 @@ const StyledFullPageModal = styled.div`
     }
 
     .subtitle {
-      color: ${colors.black};
+      color: var(--black);
       font-size: 0.8em;
       margin-bottom: 1em;
-      border-bottom: 1px dotted ${colors.veryLightBlack};
+      border-bottom: 1px dotted var(--veryLightBlack);
     }
   }
 

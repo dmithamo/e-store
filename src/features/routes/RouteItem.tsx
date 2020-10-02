@@ -29,7 +29,7 @@ export default function RouteItem({
   ) : (
     <Route path={path} exact={exact}>
       <>
-        <Helmet titleTemplate="%s | hae">
+        <Helmet titleTemplate="%s | hae" defaultTitle="hae">
           <title>{pageTitle}</title>
           <meta
             name="description"

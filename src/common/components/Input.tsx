@@ -2,7 +2,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import colors from '../../assets/colors';
 
 type InputProps = {
   type: string;
@@ -14,7 +13,6 @@ type InputProps = {
   required?: boolean;
   error?: string;
   hasHideToggle?: boolean;
-  disabled?: boolean;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -27,16 +25,12 @@ const Input: React.FC<InputProps> = ({
   required,
   error,
   hasHideToggle,
-  disabled,
 }: InputProps): JSX.Element => {
   const [showContents, setShowContents] = useState(false);
 
   return (
     <StyledInputWithLabel htmlFor={name}>
-      <div
-        style={disabled ? { background: colors.grey } : {}}
-        className={`input ${error !== '' ? 'errored' : ''}`}
-      >
+      <div className={`input ${error !== '' ? 'errored' : ''}`}>
         <input
           autoComplete="off"
           placeholder={placeholder}
@@ -69,7 +63,6 @@ Input.defaultProps = {
   required: false,
   error: '',
   hasHideToggle: false,
-  disabled: false,
 };
 
 const StyledInputWithLabel = styled.label`
@@ -80,25 +73,25 @@ const StyledInputWithLabel = styled.label`
 
   :focus-within {
     span {
-      color: ${colors.black};
+      color: var(--black);
     }
   }
 
   div.input {
     padding: 0;
     margin: 0;
-    border: 1px solid ${colors.veryLightBlack};
+    border: 1px solid var(--veryLightBlack);
     border-radius: 5px;
     position: relative;
 
     :focus-within {
-      border: 1px solid ${colors.black};
-      background-color: ${colors.white};
+      border: 1px solid var(--black);
+      background-color: var(--white);
     }
 
     input {
       padding: 0.75em 0.5em;
-      background-color: ${colors.offWhite};
+      background-color: var(--offWhite);
       border: none;
       outline: none;
     }
@@ -109,23 +102,23 @@ const StyledInputWithLabel = styled.label`
       position: absolute;
       right: 5px;
       cursor: pointer;
-      color: ${colors.lightBlack};
+      color: var(--lightBlack);
       :hover {
-        color: ${colors.black};
+        color: var(--black);
       }
     }
   }
 
   div.errored {
-    border: 1px solid ${colors.red};
+    border: 1px solidvar(--red);
   }
 
   span {
-    color: ${colors.lightBlack};
+    color: var(--lightBlack);
     padding: 0.2em 0.5em;
   }
   span.errors {
-    color: ${colors.red};
+    color: var(--red);
   }
 `;
 

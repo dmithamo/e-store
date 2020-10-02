@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import colors from '../../assets/colors';
 import Button from '../../common/components/Button';
 import Logo from '../../common/components/Logo';
 import { breakpoints } from '../../common/constants';
@@ -46,12 +45,19 @@ const StyledNavbar = styled.nav`
   align-items: center;
   height: 6vh;
   width: 100%;
-  background-color: ${colors.white};
+  background-color: var(--white);
 
   div.navbar-item {
     display: flex;
     align-items: center;
     margin: 0;
+
+    svg {
+      color: var(--lightBlack);
+      :hover {
+        color: var(--black);
+      }
+    }
   }
 
   p.home {

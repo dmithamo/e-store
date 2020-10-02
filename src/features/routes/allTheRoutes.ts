@@ -1,6 +1,7 @@
 import CreateAccountPage from '../auth/CreateAccountPage';
 import SignInForm from '../auth/SignInForm';
 import NoNavbar from '../layouts/NoNavbar';
+import ProfilePage from '../profile-page/Profile';
 import WorkingOnIT from '../TempPage';
 
 type Route = {
@@ -35,6 +36,13 @@ const allTheRoutes: Route[] = [
     icon: 'home',
     needsAuth: false,
     component: WorkingOnIT,
+  },
+  {
+    path: '/profile',
+    pageTitle: 'profile',
+    icon: 'profile',
+    needsAuth: true,
+    component: ProfilePage,
   },
   {
     path: '/info',

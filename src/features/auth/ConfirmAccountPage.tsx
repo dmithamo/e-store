@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { FormEvent, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import colors from '../../assets/colors';
 import FullPageModal from '../../common/components/FullPageModal';
 import Input from '../../common/components/Input';
 import { RootState } from '../../common/store/rootReducer';

@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import colors from '../assets/colors';
 
 export default function NotFound() {
   return (
@@ -21,14 +20,14 @@ const Styled404Page = styled.div`
   width: 100%;
   height: 100vh;
   a {
-    background-color: ${colors.grey};
+    background-color: var(--grey);
     color: black;
     text-decoration: none;
     padding: 0.5em 0.75em;
     border-radius: 15px;
     font-weight: bold;
     :hover {
-      background-color: ${colors.darkGrey};
+      background-color: var(--grey);
     }
   }
 `;
