@@ -8,7 +8,7 @@ import { RootState } from '../../common/store/rootReducer';
 import NavbarLink from './NavbarLink';
 import SearchBar from './SearchBar';
 import ShoppingCart from './ShoppingCart';
-import UserAvatar from './UserAvatar';
+import UserDetails from './UserDetails';
 
 export default function Navbar() {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
@@ -26,7 +26,7 @@ export default function Navbar() {
         {isAuthenticated ? (
           <>
             <ShoppingCart />
-            <UserAvatar />
+            <UserDetails />
           </>
         ) : (
           <NavbarLink path="/sign-up">
@@ -52,10 +52,11 @@ const StyledNavbar = styled.nav`
     align-items: center;
     margin: 0;
 
-    svg {
-      color: var(--lightBlack);
+    svg.navbar-icon {
+      color: var(--black);
+      font-size: 2em;
       :hover {
-        color: var(--black);
+        color: var(--primaryBlueDarker);
       }
     }
   }

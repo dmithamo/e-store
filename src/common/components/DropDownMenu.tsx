@@ -11,7 +11,7 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({
   icon,
   children,
 }: DropDownMenuProps): JSX.Element => {
-  const [showMenu, setShowMenu] = useState(true);
+  const [showMenu, setShowMenu] = useState(false);
   const node = useRef<HTMLDivElement>(null);
 
   const handleClick = (e: any) => {
@@ -66,32 +66,37 @@ const StyledDropDownMenu = styled.div`
 
   svg.close-icon {
     position: absolute;
-    top: 1.9em;
+    top: 1.5em;
     right: 1em;
-    font-size: 1.5em;
+    font-size: 2em;
     cursor: pointer;
     z-index: 3;
-    opacity: 0.6;
     font-weight: normal;
+    color: var(--veryLightBlack);
     :hover {
-      opacity: 1;
+      color: var(--black);
     }
   }
 
   div.hidden-menu {
-    padding: 1.5em 2em;
+    padding: 1.5em 2.5em;
     position: absolute;
     top: 2em;
     right: 1em;
     background-color: var(--white);
-    box-shadow: 0 0 2px 2px var(--grey);
+    box-shadow: var(--subtleShadow);
     width: 300px;
+    height: 35vh;
     border-radius: 5px;
+    z-index: 2;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    z-index: 2;
+    justify-content: space-evenly;
+    align-items: center;
+
+    h2 {
+      font-size: 1.6em;
+    }
   }
 `;
 

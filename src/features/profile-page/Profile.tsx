@@ -40,21 +40,21 @@ const StyledProfile = styled.div`
   justify-content: center;
   align-items: center;
   padding: 3em;
+  background-color: var(--grey);
   img {
     width: 200px;
     height: auto;
     border-radius: 50%;
     padding: 1em;
-    border: 2px solid black;
   }
 
   div.container {
-    width: 95%;
+    background-color: var(--white);
+    width: 80%;
     height: 80vh;
     border-radius: 20px;
     margin: auto;
-    background-color: var(--offWhite);
-    box-shadow: 0 0 2px 2px var(--lightGrey);
+    box-shadow: var(--subtleShadow);
     padding: 1.5em;
   }
 `;

@@ -23,6 +23,7 @@
 }
 
 :root {
+  /* colors */
   --black: #040404;
   --textBlack: #00000095;
   --lightBlack: #00000075;
@@ -37,6 +38,9 @@
   --primaryLime: #c7db18;
   --primaryLimeDarker: #96a50e;
   --red: #ff0000;
+
+  /* shadows */
+  --subtleShadow: 0 0 4px 2px var(--veryLightBlack);
 }
 
 body {
@@ -44,7 +48,7 @@ body {
   margin: 0;
   width: 100%;
   font-size: 12px;
-  background-color: var(--lightGrey);
+  background-color: var(--grey);
   color: var(--textBlack);
 }
 
@@ -52,6 +56,8 @@ body {
   margin: 0;
   box-sizing: border-box !important;
   font-family: 'Poppins-Light';
+
+  transition: all 0.1s ease-in-out;
 }
 
 .title {
