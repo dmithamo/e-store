@@ -5,7 +5,7 @@ import WorkingOnIT from '../TempPage';
 
 type Route = {
   path: string;
-  name: string;
+  pageTitle: string;
   component: any;
   needsAuth: boolean;
   icon?: string;
@@ -15,7 +15,7 @@ type Route = {
 const allTheRoutes: Route[] = [
   {
     path: '/sign-up',
-    name: 'sign-up',
+    pageTitle: 'sign-up',
     icon: 'home',
     needsAuth: false,
     component: CreateAccountPage,
@@ -23,7 +23,7 @@ const allTheRoutes: Route[] = [
   },
   {
     path: '/sign-in',
-    name: 'sign in',
+    pageTitle: 'sign in',
     icon: 'home',
     needsAuth: false,
     component: SignInForm,
@@ -31,23 +31,16 @@ const allTheRoutes: Route[] = [
   },
   {
     path: '/',
-    name: 'home',
+    pageTitle: 'home',
     icon: 'home',
     needsAuth: false,
     component: WorkingOnIT,
   },
   {
     path: '/info',
-    name: 'info',
+    pageTitle: 'info',
     icon: 'info',
     needsAuth: false,
-    component: WorkingOnIT,
-  },
-  {
-    path: '/secured-route-test',
-    name: 'secured route',
-    icon: 'info',
-    needsAuth: true,
     component: WorkingOnIT,
   },
 ];

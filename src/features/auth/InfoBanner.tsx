@@ -15,8 +15,7 @@ const InfoBanner: React.FC = () => {
       <p>
         <span>Your account allows you to hire anything and everything.</span>
         <span>
-          You can also use your account to hire stuff out, and make an extra
-          buck!
+          You can also use your account to hire stuff out, make some extra cash!
         </span>
       </p>
 
@@ -24,6 +23,7 @@ const InfoBanner: React.FC = () => {
         onClick={() => history.push('/info')}
         value="Learn more"
         category="outline"
+        alignCenter
       />
     </StyledInfoBanner>
   );

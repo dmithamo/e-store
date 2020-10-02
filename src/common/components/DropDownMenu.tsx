@@ -73,6 +73,7 @@ const StyledDropDownMenu = styled.div`
     cursor: pointer;
     z-index: 3;
     opacity: 0.6;
+    font-weight: normal;
     :hover {
       opacity: 1;
     }

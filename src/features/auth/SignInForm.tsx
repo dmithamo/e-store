@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import Button from '../../common/components/Button';
 import Input from '../../common/components/Input';
-import PasswordInput from '../../common/components/PasswordInput';
 import { RootState } from '../../common/store/rootReducer';
 import HTTPClient from '../../http-client';
 import AuthFormWrapper from './AuthFormWrapper';
@@ -110,7 +109,7 @@ const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
           handleSubmit(e);
         }}
       >
-        <h2 className="form-header">Sign in now</h2>
+        <h2 className="form-header title">Sign in now</h2>
 
         <div className="page-one" style={{ padding: '3em 0' }}>
           <Input
@@ -125,12 +124,15 @@ const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
             }}
             error={validationErrors.email}
           />
-          <PasswordInput
-            label="Password"
+          <Input
+            required
+            type="password"
             name="password"
+            placeholder="eg exBd3Qwert"
+            label="Password"
+            hasHideToggle
             value={credentials.password}
             onChange={(e: FormEvent) => {
-              setValidationErrors({ ...validationErrors, password: '' });
               handleInput(e);
             }}
             error={validationErrors.password}

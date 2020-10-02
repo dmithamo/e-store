@@ -1,3 +1,8 @@
+import './index.css';
+import './assets/fonts/Poppins-Black.ttf';
+import './assets/fonts/Poppins-Regular.ttf';
+import './assets/fonts/Poppins-Light.ttf';
+
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import {
@@ -12,6 +17,8 @@ import {
   faEye,
   faEyeSlash,
   faShoppingCart,
+  faSignOutAlt,
+  faUserEdit,
 } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -30,6 +37,8 @@ library.add(
   faEyeSlash,
   faShoppingCart,
   faTimesCircle,
+  faSignOutAlt,
+  faUserEdit,
 );
 
 const render = () => {
