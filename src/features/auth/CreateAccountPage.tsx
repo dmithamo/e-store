@@ -138,7 +138,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
         if (createdSuccessfully) {
           dispatch(
             registerUserSuccess({
-              email: res.data.email,
+              email: res.email,
               phoneNumber: credentials.phoneNumber,
             }),
           );
@@ -210,7 +210,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
               required
               type="text"
               name="firstName"
-              placeholder="eg John"
+              placeholder="eg Deniece"
               label="First name"
               value={credentials.firstName}
               onChange={(e: FormEvent) => {
@@ -222,7 +222,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
               required
               type="text"
               name="lastName"
-              placeholder="eg Lark"
+              placeholder="eg Muthoni"
               label="Last name"
               value={credentials.lastName}
               onChange={(e: FormEvent) => {
@@ -264,7 +264,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
               required
               type="email"
               name="email"
-              placeholder="eg johnlark@email.com"
+              placeholder="eg dmuthoni@email.com"
               label="Email address"
               value={credentials.email}
               onChange={(e: FormEvent) => {

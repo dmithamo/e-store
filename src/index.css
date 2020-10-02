@@ -28,6 +28,7 @@
   --textBlack: #00000095;
   --lightBlack: #00000075;
   --veryLightBlack: #00000025;
+  --navyBlue: rgb(2, 34, 56);
   --white: #fff;
   --offWhite: #ffffff25;
   --grey: #ccc;
@@ -41,6 +42,13 @@
 
   /* shadows */
   --subtleShadow: 0 0 4px 2px var(--veryLightBlack);
+  --elevationLikeShadow: 0 0 2px -2px var(--white);
+
+  /* fonts shorthand*/
+  --primaryLight: 'Poppins-Light';
+  --primaryRegular: 'Poppins-Regular';
+  --primaryBold: 'Poppins-Bold';
+  --primaryVeryBold: 'Poppins-Black';
 }
 
 body {
@@ -55,7 +63,7 @@ body {
 * {
   margin: 0;
   box-sizing: border-box !important;
-  font-family: 'Poppins-Light';
+  font-family: var(--primaryLight);
 
   transition: all 0.1s ease-in-out;
 }

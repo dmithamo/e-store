@@ -20,14 +20,15 @@ const Styled404Page = styled.div`
   width: 100%;
   height: 100vh;
   a {
-    background-color: var(--grey);
+    background-color: var(--veryLightBlack);
     color: black;
     text-decoration: none;
     padding: 0.5em 0.75em;
     border-radius: 15px;
     font-weight: bold;
     :hover {
-      background-color: var(--grey);
+      background-color: var(--lightBlack);
+      color: var(--white);
     }
   }
 `;

@@ -1,5 +1,6 @@
 import CreateAccountPage from '../auth/CreateAccountPage';
 import SignInForm from '../auth/SignInForm';
+import CheckoutPage from '../checkout-page/CheckOut';
 import NoNavbar from '../layouts/NoNavbar';
 import ProfilePage from '../profile-page/Profile';
 import WorkingOnIT from '../TempPage';
@@ -17,7 +18,6 @@ const allTheRoutes: Route[] = [
   {
     path: '/sign-up',
     pageTitle: 'sign-up',
-    icon: 'home',
     needsAuth: false,
     component: CreateAccountPage,
     customLayout: NoNavbar,
@@ -25,7 +25,6 @@ const allTheRoutes: Route[] = [
   {
     path: '/sign-in',
     pageTitle: 'sign in',
-    icon: 'home',
     needsAuth: false,
     component: SignInForm,
     customLayout: NoNavbar,
@@ -33,21 +32,24 @@ const allTheRoutes: Route[] = [
   {
     path: '/',
     pageTitle: 'home',
-    icon: 'home',
     needsAuth: false,
     component: WorkingOnIT,
   },
   {
     path: '/profile',
     pageTitle: 'profile',
-    icon: 'profile',
     needsAuth: true,
     component: ProfilePage,
   },
   {
+    path: '/checkout',
+    pageTitle: 'checkout',
+    needsAuth: true,
+    component: CheckoutPage,
+  },
+  {
     path: '/info',
     pageTitle: 'info',
-    icon: 'info',
     needsAuth: false,
     component: WorkingOnIT,
   },

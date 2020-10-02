@@ -12,6 +12,7 @@ type ButtonProps = {
   title?: string;
   disabled?: boolean;
   alignCenter?: boolean;
+  classes?: string;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -23,11 +24,12 @@ const Button: React.FC<ButtonProps> = ({
   title,
   disabled,
   alignCenter,
+  classes,
 }: ButtonProps): JSX.Element => (
   <StyledButton>
     <button
       title={title}
-      className={`${category} ${disabled ? 'disabled' : ''}`}
+      className={`${classes} ${category} ${disabled ? 'disabled' : ''}`}
       onClick={onClick}
       type={type}
       value={value}
@@ -47,6 +49,7 @@ Button.defaultProps = {
   children: null,
   disabled: false,
   alignCenter: false,
+  classes: '',
 };
 
 const StyledButton = styled.span`
@@ -102,6 +105,16 @@ const StyledButton = styled.span`
       background-color: var(--white);
       border: 1px solid var(--white);
       color: var(--black);
+    }
+  }
+
+  button.selected {
+    background-color: var(--white);
+    border: 1px solid var(--white);
+    color: var(--black);
+    .checkmark {
+      color: var(--primaryBlue);
+      padding: 0 1em;
     }
   }
 

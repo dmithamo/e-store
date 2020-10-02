@@ -19,6 +19,9 @@ import {
   faShoppingCart,
   faSignOutAlt,
   faUserEdit,
+  faEnvelopeOpen,
+  faMobileAlt,
+  faCalendarAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -39,6 +42,9 @@ library.add(
   faTimesCircle,
   faSignOutAlt,
   faUserEdit,
+  faEnvelopeOpen,
+  faMobileAlt,
+  faCalendarAlt,
 );
 
 const render = () => {

@@ -116,7 +116,7 @@ const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
             required
             type="email"
             name="email"
-            placeholder="eg johnlark@email.com"
+            placeholder="eg dmuthoni@email.com"
             label="Email address"
             value={credentials.email}
             onChange={(e: FormEvent) => {

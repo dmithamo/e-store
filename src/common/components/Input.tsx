@@ -110,7 +110,7 @@ const StyledInputWithLabel = styled.label`
   }
 
   div.errored {
-    border: 1px solidvar(--red);
+    border: 1px solid var(--red);
   }
 
   span {
