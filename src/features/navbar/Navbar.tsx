@@ -15,7 +15,7 @@ export default function Navbar() {
   return (
     <StyledNavbar>
       <div className="navbar-item home">
-        <NavbarLink path="/">
+        <NavbarLink path={isAuthenticated ? '/shop' : '/'}>
           <Logo />
         </NavbarLink>
       </div>

@@ -79,10 +79,10 @@ const CheckoutPage: React.FC<CheckoutPageProps> = (): JSX.Element => {
             <Button
               category="outline"
               onClick={() => {
-                history.push('/');
+                history.push('/shop');
               }}
             >
-              <span>Continue shopping instead</span>
+              <span>Shop</span>
               <FontAwesomeIcon icon="arrow-left" />
             </Button>
           </div>

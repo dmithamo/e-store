@@ -36,6 +36,12 @@ const allTheRoutes: Route[] = [
     component: WorkingOnIT,
   },
   {
+    path: '/shop',
+    pageTitle: 'shop',
+    needsAuth: false,
+    component: WorkingOnIT,
+  },
+  {
     path: '/profile',
     pageTitle: 'profile',
     needsAuth: true,

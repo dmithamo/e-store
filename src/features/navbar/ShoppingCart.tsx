@@ -33,10 +33,10 @@ const ShoppingCart: React.FC = (): JSX.Element => {
       <Button
         category="secondary"
         onClick={() => {
-          history.push('/');
+          history.push('/shop');
         }}
       >
-        <span>Continue shopping</span>
+        <span>Shop</span>
         <FontAwesomeIcon icon="arrow-left" />
       </Button>
     </DropDownMenu>

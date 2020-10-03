@@ -97,7 +97,7 @@ const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
   }
 
   if (isAuthenticated) {
-    return <Redirect to="/" />;
+    return <Redirect to="/shop" />;
   }
 
   return (

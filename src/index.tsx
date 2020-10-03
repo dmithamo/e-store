@@ -4,7 +4,7 @@ import './assets/fonts/Poppins-Regular.ttf';
 import './assets/fonts/Poppins-Light.ttf';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { fab } from '@fortawesome/free-brands-svg-icons';
+import { fab, faCcVisa } from '@fortawesome/free-brands-svg-icons';
 import {
   faTimesCircle,
   faUserCircle,
@@ -45,6 +45,7 @@ library.add(
   faEnvelopeOpen,
   faMobileAlt,
   faCalendarAlt,
+  faCcVisa,
 );
 
 const render = () => {

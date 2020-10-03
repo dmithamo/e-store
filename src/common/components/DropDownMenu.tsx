@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useRef, useState } from 'react';
+import { useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
 type DropDownMenuProps = {
@@ -11,11 +12,16 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({
   icon,
   children,
 }: DropDownMenuProps): JSX.Element => {
+  const routeProps = useRouteMatch();
   const [showMenu, setShowMenu] = useState(false);
   const node = useRef<HTMLDivElement>(null);
 
   const handleClick = (e: any) => {
-    if (!node.current?.contains(e.target)) {
+    const isCurrentPage = routeProps.path.includes(
+      e.target?.textContent?.toLowerCase(),
+    );
+
+    if (!node.current?.contains(e.target) || isCurrentPage) {
       setShowMenu(false);
     }
   };
