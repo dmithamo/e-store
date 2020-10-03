@@ -65,7 +65,7 @@ body {
   box-sizing: border-box !important;
   font-family: var(--primaryLight);
 
-  transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-out;
 }
 
 .title {

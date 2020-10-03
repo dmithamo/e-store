@@ -4,11 +4,15 @@ import styled from 'styled-components';
 import { RootState } from '../../common/store/rootReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../../common/components/Button';
+import AmountSpentPreview from './AmountSpentPreview';
+import { useHistory } from 'react-router-dom';
+import MpesaDetailsForm from './MpesaDetails';
+import VisaDetailsForm from './VisaDetails';
 
 export type CheckoutPageProps = {};
 
 const CheckoutPage: React.FC<CheckoutPageProps> = (): JSX.Element => {
-  const [isEditingVisaCard, setIsEditingVisaCard] = useState(false);
+  const history = useHistory();
   type PaymentOptions = 'MPESA' | 'VISA';
 
   const [selectedPaymentOption, setSelectedPaymentOption] = useState<
@@ -19,25 +23,22 @@ const CheckoutPage: React.FC<CheckoutPageProps> = (): JSX.Element => {
     <StyledCheckoutPage>
       <div className="container">
         <div className="main-container">
-          {isEditingVisaCard ? '<EditVisaCard />' : '<ListPurchases />'}
+          {1 + 1 === 2 && '<ListOfPurchases />'}
         </div>
 
         <div className="payment-options">
-          <div className="total-amount">
-            <p>You have spent</p>
-            <h2>KES 4,582.00</h2>
-          </div>
+          <AmountSpentPreview amount={4850} />
           <div className="select-payment-option">
             <h2 className="title">Pay with</h2>
             <div className="options">
               <Button
                 classes={selectedPaymentOption === 'MPESA' ? 'selected' : ''}
-                alignCenter
                 category="outline"
                 onClick={() => {
                   setSelectedPaymentOption('MPESA');
                 }}
               >
+                <FontAwesomeIcon icon="mobile-alt" />
                 <span>Mpesa</span>
                 {selectedPaymentOption === 'MPESA' ? (
                   <span className="checkmark">&#10004;</span>
@@ -47,12 +48,12 @@ const CheckoutPage: React.FC<CheckoutPageProps> = (): JSX.Element => {
               </Button>
               <Button
                 classes={selectedPaymentOption === 'VISA' ? 'selected' : ''}
-                alignCenter
                 category="outline"
                 onClick={() => {
                   setSelectedPaymentOption('VISA');
                 }}
               >
+                <FontAwesomeIcon icon={['fab', 'cc-visa']} />
                 <span>Visa</span>
                 {selectedPaymentOption === 'VISA' ? (
                   <span className="checkmark">&#10004;</span>
@@ -61,18 +62,26 @@ const CheckoutPage: React.FC<CheckoutPageProps> = (): JSX.Element => {
                 )}
               </Button>
             </div>
+
+            <div className="card-details">
+              {selectedPaymentOption === 'MPESA' ? (
+                <MpesaDetailsForm />
+              ) : (
+                <VisaDetailsForm />
+              )}
+            </div>
           </div>
           <div className="actions">
-            <Button
-              category="primary"
-              onClick={() => {
-                setIsEditingVisaCard(!isEditingVisaCard);
-              }}
-            >
+            <Button category="primary" onClick={() => {}}>
               <span>Place order</span>
               <FontAwesomeIcon icon="arrow-right" />
             </Button>
-            <Button category="outline" onClick={() => {}}>
+            <Button
+              category="outline"
+              onClick={() => {
+                history.push('/');
+              }}
+            >
               <span>Continue shopping instead</span>
               <FontAwesomeIcon icon="arrow-left" />
             </Button>
@@ -131,28 +140,25 @@ const StyledCheckoutPage = styled.div`
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-      }
-
-      div.total-amount {
-        margin-bottom: 4em;
-        p {
-          opacity: 0.9;
-        }
-
-        h2 {
-          font-size: 2em;
-        }
+        width: 100%;
       }
 
       div.select-payment-option {
-        width: 100%;
+        margin-top: 2em;
+
         flex-grow: 1;
         div.options {
           flex-direction: row;
           width: 100%;
-          button:first-of-type {
-            margin-right: 2em;
+          button {
+            width: 90%;
           }
+        }
+
+        div.card-details {
+          justify-content: center;
+          align-items: center;
+          flex-grow: 1;
         }
       }
 

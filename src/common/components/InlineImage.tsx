@@ -1,27 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
-import defaultAvatar from '../../assets/img/default-avatar.png';
 
 type sizeProp = 'small' | 'medium' | 'large';
-type AvatarProps = {
+type InlineImageProps = {
   size: sizeProp;
-  src?: string;
+  src: string;
   alt?: string;
 };
 
-const Avatar: React.FC<AvatarProps> = ({
+const InlineImage: React.FC<InlineImageProps> = ({
   size: category,
   src,
   alt,
-}: AvatarProps): JSX.Element => (
+}: InlineImageProps): JSX.Element => (
   <StyledAvatarContainer>
     <img className={category} src={src} alt={alt} />
   </StyledAvatarContainer>
 );
 
-Avatar.defaultProps = {
-  alt: 'avatar of user',
-  src: defaultAvatar,
+InlineImage.defaultProps = {
+  alt: 'some inline art',
 };
 
 const StyledAvatarContainer = styled.div`
@@ -51,4 +49,4 @@ const StyledAvatarContainer = styled.div`
   }
 `;
 
-export default Avatar;
+export default InlineImage;

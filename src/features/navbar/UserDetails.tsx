@@ -2,11 +2,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import Avatar from '../../common/components/Avatar';
+import InlineImage from '../../common/components/InlineImage';
 import Button from '../../common/components/Button';
 import DropDownMenu from '../../common/components/DropDownMenu';
 import LogoutButton from '../../common/components/LogoutButton';
 import { RootState } from '../../common/store/rootReducer';
+import defaultAvatar from '../../assets/img/default-avatar.png';
 
 const UserDetails: React.FC = (): JSX.Element => {
   const history = useHistory();
@@ -17,11 +18,11 @@ const UserDetails: React.FC = (): JSX.Element => {
     avatar,
   } = useSelector((state: RootState) => state.auth);
   const fullName = `${firstName} ${lastName}`;
-  const icon = () => <Avatar size="small" />;
+  const icon = () => <InlineImage src={avatar || defaultAvatar} size="small" />;
 
   return (
     <DropDownMenu icon={icon}>
-      <Avatar src={avatar === '' ? undefined : avatar} size="medium" />
+      <InlineImage src={avatar || defaultAvatar} size="medium" />
       <h2 className="username">{fullName}</h2>
       <p className="email">{email}</p>
       <Button
