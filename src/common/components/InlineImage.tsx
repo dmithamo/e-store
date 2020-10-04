@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-type sizeProp = 'small' | 'medium' | 'large';
+type sizeProp = 'smallest' | 'small' | 'medium' | 'large';
 type InlineImageProps = {
   size: sizeProp;
   src: string;
@@ -36,6 +36,10 @@ const StyledAvatarContainer = styled.div`
     :hover {
       filter: brightness(1.1);
     }
+  }
+
+  img.smallest {
+    width: 40px;
   }
 
   img.small {

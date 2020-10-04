@@ -3,6 +3,8 @@ import SignInForm from '../auth/SignInForm';
 import CheckoutPage from '../checkout-page/CheckOut';
 import NoNavbar from '../layouts/NoNavbar';
 import ProfilePage from '../profile-page/Profile';
+import ShopFront from '../shop-front/ShopFront';
+import SpecificCategory from '../shop-front/SpecificCategory';
 import WorkingOnIT from '../TempPage';
 
 type Route = {
@@ -39,7 +41,13 @@ const allTheRoutes: Route[] = [
     path: '/shop',
     pageTitle: 'shop',
     needsAuth: false,
-    component: WorkingOnIT,
+    component: ShopFront,
+  },
+  {
+    path: '/shop/:category',
+    pageTitle: 'shop',
+    needsAuth: false,
+    component: SpecificCategory,
   },
   {
     path: '/profile',

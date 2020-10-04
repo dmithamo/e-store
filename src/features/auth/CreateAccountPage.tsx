@@ -8,7 +8,7 @@ import Input from '../../common/components/Input';
 import { RootState } from '../../common/store/rootReducer';
 import AuthFormWrapper from './AuthFormWrapper';
 import ConfirmAccountPage from './ConfirmAccountPage';
-import { createAccount } from './utils/nwRequests';
+import { createAccount } from './utils/businessLogic';
 import { registerUserFail, registerUserSuccess } from './utils/stateMgmt';
 import validateCredentials from './utils/validators';
 

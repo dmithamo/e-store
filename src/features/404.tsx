@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <Styled404Page>
       You must be lost.&nbsp;
-      <NavLink to="/">Let me take you home</NavLink>
+      <NavLink to="/shop">Let me take you home</NavLink>
     </Styled404Page>
   );
 }
@@ -18,7 +18,7 @@ const Styled404Page = styled.div`
   border-radius: 15px;
   margin: auto;
   width: 100%;
-  height: 100vh;
+  height: 80vh;
   a {
     background-color: var(--veryLightBlack);
     color: black;
