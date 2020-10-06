@@ -18,7 +18,7 @@ const Product: React.FC<ProductProps> = ({
     <StyledProduct>
       <h2 className="name">{product.name}</h2>
       <h3 className="rate">{`KES ${product.rate}/hr`}</h3>
-      <img src={product.img} alt={product.name} />
+      <img className="product-img" src={product.img} alt={product.name} />
       <div className="actions">
         <Button
           category="link"
@@ -71,11 +71,10 @@ const StyledProduct = styled.div`
     font-family: var(--primaryRegular);
   }
 
-  img {
-    width: 200px;
+  img.product-img {
+    width: 250px;
     height: auto;
     margin: auto;
-    flex-grow: 1;
   }
 
   div.actions {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../../common/components/Button';
@@ -11,30 +11,47 @@ import ShoppingCart from './ShoppingCart';
 import UserDetails from './UserDetails';
 
 export default function Navbar() {
+  const [isUploading, setIsUploading] = useState(false);
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   return (
-    <StyledNavbar>
-      <div className="navbar-item home">
-        <NavbarLink path={isAuthenticated ? '/shop' : '/'}>
-          <Logo />
-        </NavbarLink>
-      </div>
-      <div className="navbar-item">
-        <SearchBar />
-      </div>
-      <div className="navbar-item">
-        {isAuthenticated ? (
-          <>
-            <ShoppingCart />
-            <UserDetails />
-          </>
-        ) : (
-          <NavbarLink path="/sign-up">
-            <Button category="primary" value="Get started" onClick={() => {}} />
+    <>
+      <StyledNavbar>
+        <div className="navbar-item home">
+          <NavbarLink path={isAuthenticated ? '/shop' : '/'}>
+            <Logo />
           </NavbarLink>
-        )}
-      </div>
-    </StyledNavbar>
+        </div>
+        <div className="navbar-item">
+          <SearchBar />
+        </div>
+        <div className="navbar-item">
+          {isAuthenticated ? (
+            <>
+              <Button
+                value="Upload item"
+                category="primary"
+                alignCenter
+                onClick={() => {
+                  setIsUploading(true);
+                }}
+              />
+              <ShoppingCart />
+              <UserDetails />
+            </>
+          ) : (
+            <NavbarLink path="/sign-up">
+              <Button
+                category="primary"
+                value="Get started"
+                onClick={() => {}}
+              />
+            </NavbarLink>
+          )}
+        </div>
+      </StyledNavbar>
+
+      {isUploading && <p>Uploading all the things </p>}
+    </>
   );
 }
 

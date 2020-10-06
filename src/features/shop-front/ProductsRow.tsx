@@ -45,10 +45,11 @@ const ProductsRow: React.FC<ProductsRowProps> = ({
 
 const StyledProductsRow = styled.div`
   width: 100%;
-  padding: 1em;
+  padding: 0 1em;
+  margin-bottom: 3em;
 
   div.header {
-    width: 20%;
+    width: 25%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -63,8 +64,7 @@ const StyledProductsRow = styled.div`
   div.products {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 100%;
-    grid-gap: 20px;
+    grid-gap: 25px;
     vertical-align: center;
   }
 `;

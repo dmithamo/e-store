@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import { RootState } from '../../common/store/rootReducer';
 import ProductsRow from './ProductsRow';
+import ShopFrontWrapper from './ShopFrontWrapper';
 import { fetchItems } from './utils/businessLogic';
 import { fetchItemsFailure, fetchItemsSuccess } from './utils/stateMgmt';
 
@@ -50,7 +50,7 @@ const SpecificCategory: React.FC = (): JSX.Element => {
   }
 
   return (
-    <ShopFrontContainer>
+    <ShopFrontWrapper showNav>
       {Object.entries(items).map(([category, itemsInCategory]) => (
         <ProductsRow
           showCategory={false}
@@ -58,14 +58,8 @@ const SpecificCategory: React.FC = (): JSX.Element => {
           products={itemsInCategory}
         />
       ))}
-    </ShopFrontContainer>
+    </ShopFrontWrapper>
   );
 };
-
-export const ShopFrontContainer = styled.div`
-  display: grid;
-  grid-template-rows: reapeat(5, 1fr);
-  grid-gap: 20px;
-`;
 
 export default SpecificCategory;

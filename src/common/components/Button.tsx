@@ -53,10 +53,9 @@ Button.defaultProps = {
 };
 
 const StyledButton = styled.span`
-  width: fit-content;
   width: 100%;
   button {
-    padding: 0.9em 1.1em;
+    padding: 0.85em 1.1em;
     font-size: 1em;
     font-weight: bolder;
     outline: none;

@@ -1,8 +1,10 @@
+/* eslint-disable function-paren-newline */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { RootState } from '../../common/store/rootReducer';
 import ProductsRow from './ProductsRow';
+import ShopFrontWrapper from './ShopFrontWrapper';
 import { fetchItems } from './utils/businessLogic';
 import { fetchItemsFailure, fetchItemsSuccess } from './utils/stateMgmt';
 
@@ -43,15 +45,19 @@ const ShopFront: React.FC = (): JSX.Element => {
   }
 
   return (
-    <ShopFrontContainer>
-      {Object.entries(items).map(([category, itemsInCategory]) => (
-        <ProductsRow
-          showCategory
-          category={category}
-          products={itemsInCategory}
-        />
-      ))}
-    </ShopFrontContainer>
+    <ShopFrontWrapper>
+      {Object.entries(items).map(([category, itemsInCategory]) =>
+        itemsInCategory.length > 0 ? (
+          <ProductsRow
+            showCategory
+            category={category}
+            products={itemsInCategory}
+          />
+        ) : (
+          <></>
+        ),
+      )}
+    </ShopFrontWrapper>
   );
 };
 
