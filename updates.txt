@@ -43,4 +43,5 @@ onSelectItem:
 
 Admin
  - confirm new acount [approve, reject,contact for more info, -> send email]
- - existing accounts : soft delete, rest password, messaging
+ - existing accounts : soft delete, reset password, messaging
+ - manage products [hide, mark returned, mark leased, etc]

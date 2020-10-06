@@ -12,10 +12,7 @@ import defaultAvatar from '../../assets/img/default-avatar.png';
 const UserDetails: React.FC = (): JSX.Element => {
   const history = useHistory();
   const {
-    email,
-    firstName = 'Deniece',
-    lastName = 'Muthoni',
-    avatar,
+    user: { email, firstName = 'Deniece', lastName = 'Muthoni', avatar },
   } = useSelector((state: RootState) => state.auth);
   const fullName = `${firstName} ${lastName}`;
   const icon = () => <InlineImage src={avatar || defaultAvatar} size="small" />;

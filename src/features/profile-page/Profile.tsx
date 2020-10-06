@@ -13,9 +13,9 @@ export type ProfileProps = {};
 
 const ProfilePage: React.FC<ProfileProps> = (): JSX.Element => {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
-  const { email, firstName, lastName, phoneNumber, avatar } = useSelector(
-    (state: RootState) => state.auth,
-  );
+  const {
+    user: { email, firstName, lastName, phoneNumber, avatar },
+  } = useSelector((state: RootState) => state.auth);
   const fullName = `${firstName || 'Deniece'} ${lastName || 'Muthoni'}`;
   return (
     <StyledProfile>

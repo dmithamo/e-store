@@ -12,12 +12,14 @@ import UserDetails from './UserDetails';
 
 export default function Navbar() {
   const [isUploading, setIsUploading] = useState(false);
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const {
+    user: { isLoggedIn },
+  } = useSelector((state: RootState) => state.auth);
   return (
     <>
       <StyledNavbar>
         <div className="navbar-item home">
-          <NavbarLink path={isAuthenticated ? '/shop' : '/'}>
+          <NavbarLink path={isLoggedIn ? '/shop' : '/'}>
             <Logo />
           </NavbarLink>
         </div>
@@ -25,7 +27,7 @@ export default function Navbar() {
           <SearchBar />
         </div>
         <div className="navbar-item">
-          {isAuthenticated ? (
+          {isLoggedIn ? (
             <>
               <Button
                 value="Upload item"

@@ -7,7 +7,7 @@ import Button from '../../common/components/Button';
 import Input from '../../common/components/Input';
 import { RootState } from '../../common/store/rootReducer';
 import AuthFormWrapper from './AuthFormWrapper';
-import ConfirmAccountPage from './ConfirmAccountPage';
+import VerifyAccountPage from './VerifyAccountPage';
 import { createAccount } from './utils/businessLogic';
 import { registerUserFail, registerUserSuccess } from './utils/stateMgmt';
 import validateCredentials from './utils/validators';
@@ -56,7 +56,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
     repeatPassword: '',
   });
 
-  const { isAuthenticated, isRegistered, isConfirmed, error } = useSelector(
+  const { user, isRegistered, error } = useSelector(
     (state: RootState) => state.auth,
   );
 
@@ -152,7 +152,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
         setIsLoading(false);
       } catch (err) {
         setIsLoading(false);
-        console.log(err, '<<<ERROR AT CREATE AC');
+        registerUserFail({ error: err });
       }
     }
   }
@@ -161,11 +161,11 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
     return <p>Loading ...</p>;
   }
 
-  if (isRegistered && !isConfirmed) {
-    return <ConfirmAccountPage />;
+  if (isRegistered && !user.isVerified) {
+    return <VerifyAccountPage />;
   }
 
-  if (isAuthenticated && isConfirmed) {
+  if (user.isVerified) {
     return <Redirect to="/" />;
   }
 

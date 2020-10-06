@@ -22,9 +22,11 @@ export default function RouteItem({
   needsAuth,
   pageTitle,
 }: RouteItemProps): JSX.Element {
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const {
+    user: { isLoggedIn },
+  } = useSelector((state: RootState) => state.auth);
 
-  return needsAuth && !isAuthenticated ? (
+  return needsAuth && !isLoggedIn ? (
     <Redirect to="/sign-in" />
   ) : (
     <Route path={path} exact={exact}>

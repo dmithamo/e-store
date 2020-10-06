@@ -31,7 +31,9 @@ const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
     password: '',
   });
 
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const {
+    user: { isLoggedIn },
+  } = useSelector((state: RootState) => state.auth);
 
   function handleInput(e: FormEvent) {
     const { name, value } = e.target as HTMLTextAreaElement;
@@ -96,7 +98,7 @@ const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
     return <p>Loading ...</p>;
   }
 
-  if (isAuthenticated) {
+  if (isLoggedIn) {
     return <Redirect to="/shop" />;
   }
 
