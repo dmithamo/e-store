@@ -52,7 +52,7 @@ export default {
   },
 
   get: async (path: string) => {
-    if (path.includes('/items?category')) {
+    if (path.includes('/items')) {
       return tempFetchItemsBeforeApiIsLive(path);
     }
     return instantiateHTTPClient().get(path);
@@ -95,7 +95,14 @@ function tempVerifyAccountFnBeforeApiIsLive(params: any) {
 }
 
 function tempFetchItemsBeforeApiIsLive(path: string) {
-  const category = path.split('?category=')[1];
+  const category = path.includes('category')
+    ? path.split('?category=')[1]
+    : undefined;
+
+  const itemID = path.includes('itemID')
+    ? path.split('?itemID=')[1]
+    : undefined;
+
   const data = [
     {
       id: '0000-111-222-333-440',
@@ -145,66 +152,7 @@ function tempFetchItemsBeforeApiIsLive(path: string) {
       img:
         'https://s3-eu-west-1.amazonaws.com/media.santu.com/92/drill1_12458962984411.jpg',
     },
-    {
-      id: '0000-111-222-333-445',
-      name: 'Power Drill',
-      rate: 1000,
-      category: 'Electronics',
-      quantityAvailable: 2,
-      dateAvailable: addDays(new Date(), 14),
-      img:
-        'https://s3-eu-west-1.amazonaws.com/media.santu.com/92/drill1_12458962984411.jpg',
-    },
-    {
-      id: '0000-111-222-333-446',
-      name: 'Conference Chair',
-      rate: 1000,
-      category: 'Furniture',
-      quantityAvailable: 200,
-      dateAvailable: addDays(new Date(), 14),
-      img:
-        'https://cdn.ambientedirect.com/chameleon/mediapool/thumbs/c/6e/Knoll-International_Saarinen-Conference-Stuhl-Gestell-Walnuss_863x863-ID1948494-401b8190e334205ea8e842bd1b4a3770.jpg',
-    },
-    {
-      id: '0000-111-222-333-446',
-      name: 'Conference Chair',
-      rate: 1000,
-      category: 'Furniture',
-      quantityAvailable: 200,
-      dateAvailable: addDays(new Date(), 14),
-      img:
-        'https://cdn.ambientedirect.com/chameleon/mediapool/thumbs/c/6e/Knoll-International_Saarinen-Conference-Stuhl-Gestell-Walnuss_863x863-ID1948494-401b8190e334205ea8e842bd1b4a3770.jpg',
-    },
-    {
-      id: '0000-111-222-333-446',
-      name: 'Conference Chair',
-      rate: 1000,
-      category: 'Furniture',
-      quantityAvailable: 200,
-      dateAvailable: addDays(new Date(), 14),
-      img:
-        'https://cdn.ambientedirect.com/chameleon/mediapool/thumbs/c/6e/Knoll-International_Saarinen-Conference-Stuhl-Gestell-Walnuss_863x863-ID1948494-401b8190e334205ea8e842bd1b4a3770.jpg',
-    },
-    {
-      id: '0000-111-222-333-446',
-      name: 'Conference Chair',
-      rate: 1000,
-      category: 'Furniture',
-      quantityAvailable: 200,
-      dateAvailable: addDays(new Date(), 14),
-      img:
-        'https://cdn.ambientedirect.com/chameleon/mediapool/thumbs/c/6e/Knoll-International_Saarinen-Conference-Stuhl-Gestell-Walnuss_863x863-ID1948494-401b8190e334205ea8e842bd1b4a3770.jpg',
-    },
-    {
-      id: '0000-111-222-333-446',
-      name: 'Conference Chair',
-      rate: 1000,
-      category: 'Furniture',
-      quantityAvailable: 200,
-      dateAvailable: addDays(new Date(), 14),
-      img:
-        'https://cdn.ambientedirect.com/chameleon/mediapool/thumbs/c/6e/Knoll-International_Saarinen-Conference-Stuhl-Gestell-Walnuss_863x863-ID1948494-401b8190e334205ea8e842bd1b4a3770.jpg',
-    },
+
     {
       id: '0000-111-222-333-446',
       name: 'Conference Chair',
@@ -219,12 +167,14 @@ function tempFetchItemsBeforeApiIsLive(path: string) {
 
   const filterData = () => {
     switch (true) {
-      case category === 'all' || category === undefined:
-        return data;
-      case category === 'uncategorised':
-        return data.filter((item) => item.category === '');
-      default:
+      case !!category && category !== 'uncategorised':
         return data.filter((item) => item.category.toLowerCase() === category);
+
+      case !!itemID:
+        return data.find((item) => item.id === itemID);
+
+      default:
+        return data;
     }
   };
   return {

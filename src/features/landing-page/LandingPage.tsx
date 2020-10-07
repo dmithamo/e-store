@@ -1,6 +1,6 @@
 import React from 'react';
-import WorkingOnIT from '../TempPage';
+import ShopFront from '../shop-front/ShopFront';
 
 export default function LandingPage() {
-  return <WorkingOnIT />;
+  return <ShopFront />;
 }

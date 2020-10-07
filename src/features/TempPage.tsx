@@ -8,7 +8,7 @@ export default function WorkingOnIT() {
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
-        height: '90vh',
+        height: '80vh',
       }}
     >
       Working on IT &trade;

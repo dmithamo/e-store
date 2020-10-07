@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { RootState } from '../../common/store/rootReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../../common/components/Button';
 import AmountSpentPreview from './AmountSpentPreview';
@@ -103,7 +101,7 @@ const StyledCheckoutPage = styled.div`
   div.container {
     background-color: var(--white);
     color: var(--black);
-    width: 80%;
+    width: 95%;
     height: 80vh;
     border-radius: 20px;
     margin: auto;

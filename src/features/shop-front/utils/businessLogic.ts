@@ -2,11 +2,9 @@ import api from '../../../http-client';
 import { sortByCategory } from './helperFns';
 import { ShopItem } from './stateMgmt';
 
-export async function fetchItems(
-  category: string | undefined = undefined,
-): Promise<any> {
+export async function fetchItems(): Promise<any> {
   try {
-    const res = await api.get(`/items?category=${category || 'all'}`);
+    const res = await api.get('/items');
     if (res && res.status === 200) {
       return [
         true,
@@ -32,4 +30,28 @@ export async function fetchItems(
   }
 }
 
-export function placeOrder() {}
+export async function fetchByCategory(category: string): Promise<any> {
+  try {
+    const res = await api.get(`/items?category=${category}`);
+    if (res && res.status === 200) {
+      return [true, res.data];
+    }
+
+    return [false, res ? 'Server error' : 'Something went wrong'];
+  } catch (error) {
+    return [false, error];
+  }
+}
+
+export async function fetchSingleItem(itemID: string): Promise<any> {
+  try {
+    const res = await api.get(`/items?itemID=${itemID}`);
+    if (res && res.status === 200) {
+      return [true, res.data];
+    }
+
+    return [false, res ? 'Server error' : 'Something went wrong'];
+  } catch (error) {
+    return [false, error];
+  }
+}

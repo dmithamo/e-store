@@ -1,13 +1,13 @@
 import { ShopItem } from './stateMgmt';
 
-type Categories = { [category: string]: ShopItem[]; uncategorised: ShopItem[] };
+type Categories = { [category: string]: ShopItem[] };
 
 /**
  * @description Sort store items into categories
  * @param items
  */
 export function sortByCategory(items: ShopItem[]): Categories {
-  let categorisedProducts: Categories = { uncategorised: [] };
+  let categorisedProducts: Categories = {};
 
   const isPresent = (category: string) =>
     categorisedProducts[category]?.length > 0;
@@ -17,9 +17,7 @@ export function sortByCategory(items: ShopItem[]): Categories {
       case isPresent(item.category.toLowerCase()):
         acc[item.category.toLowerCase()].push(item);
         break;
-      case !item.category || item.category === '':
-        acc.uncategorised.push({ ...item, category: 'uncategorised' });
-        break;
+
       default:
         acc[item.category.toLowerCase()] = [item];
     }

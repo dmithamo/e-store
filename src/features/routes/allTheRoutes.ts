@@ -2,10 +2,10 @@ import ManageAccounts from '../admin/ManageAccounts';
 import CreateAccountPage from '../auth/CreateAccountPage';
 import SignInForm from '../auth/SignInForm';
 import CheckoutPage from '../checkout-page/CheckOut';
+import LandingPage from '../landing-page/LandingPage';
 import NoNavbar from '../layouts/NoNavbar';
 import ProfilePage from '../profile-page/Profile';
 import ShopFront from '../shop-front/ShopFront';
-import SpecificCategory from '../shop-front/SpecificCategory';
 import WorkingOnIT from '../TempPage';
 
 type Route = {
@@ -40,7 +40,7 @@ const allTheRoutes: Route[] = [
     pageTitle: 'home',
     needsAuth: false,
     adminOnly: false,
-    component: WorkingOnIT,
+    component: LandingPage,
   },
   {
     path: '/shop',
@@ -54,7 +54,14 @@ const allTheRoutes: Route[] = [
     pageTitle: 'shop',
     needsAuth: false,
     adminOnly: false,
-    component: SpecificCategory,
+    component: ShopFront,
+  },
+  {
+    path: '/shop/:category/:itemID',
+    pageTitle: 'shop',
+    needsAuth: false,
+    adminOnly: false,
+    component: ShopFront,
   },
   {
     path: '/profile',

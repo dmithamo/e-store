@@ -1,26 +1,46 @@
-/* eslint-disable function-paren-newline */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { RootState } from '../../common/store/rootReducer';
 import ProductsRow from './ProductsRow';
 import ShopFrontWrapper from './ShopFrontWrapper';
+import SpecificCategory from './SpecificCategory';
+import SpecificProduct from './SpecificProduct';
 import { fetchItems } from './utils/businessLogic';
-import { fetchItemsFailure, fetchItemsSuccess } from './utils/stateMgmt';
+import {
+  fetchItemsFailure,
+  fetchItemsSuccess,
+  setSelectedCategory,
+  setSelectedItemID,
+} from './utils/stateMgmt';
+
+export type RouteParams = {
+  category?: string;
+  itemID?: string;
+};
 
 const ShopFront: React.FC = (): JSX.Element => {
+  const params = useParams<RouteParams>();
+  const { category, itemID } = params;
+
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const { items, fetchError } = useSelector(
+  const { items, selectedCategory, selectedItemID, fetchError } = useSelector(
     (state: RootState) => state.shopFront,
   );
 
   useEffect(() => {
-    async function fetchAllItems() {
+    async function fetchHelper() {
       setIsLoading(true);
+
       const [isFetchedSuccessfully, res] = await fetchItems();
+
       if (isFetchedSuccessfully) {
         dispatch(fetchItemsSuccess(res));
+        dispatch(setSelectedCategory(category || null));
+        dispatch(setSelectedItemID(itemID || null));
+
         setIsLoading(false);
       } else {
         dispatch(fetchItemsFailure(res));
@@ -28,8 +48,8 @@ const ShopFront: React.FC = (): JSX.Element => {
       }
     }
 
-    fetchAllItems();
-  }, []);
+    fetchHelper();
+  }, [category, itemID]);
 
   if (isLoading) {
     return <h2 className="title">Fetching items...</h2>;
@@ -44,19 +64,32 @@ const ShopFront: React.FC = (): JSX.Element => {
     );
   }
 
+  if (selectedCategory && selectedItemID) {
+    const product = items[selectedCategory].find(
+      (item) => item.id === selectedItemID,
+    );
+    return product ? <SpecificProduct product={product} /> : <></>;
+  }
+
+  if (selectedCategory) {
+    return (
+      <SpecificCategory
+        category={selectedCategory}
+        products={items[selectedCategory]}
+      />
+    );
+  }
+
   return (
     <ShopFrontWrapper>
-      {Object.entries(items).map(([category, itemsInCategory]) =>
-        itemsInCategory.length > 0 ? (
-          <ProductsRow
-            showCategory
-            category={category}
-            products={itemsInCategory}
-          />
-        ) : (
-          <></>
-        ),
-      )}
+      {Object.entries(items).map(([cat, itemsInCategory]) => (
+        <ProductsRow
+          key={cat}
+          showCategory
+          category={cat}
+          products={itemsInCategory}
+        />
+      ))}
     </ShopFrontWrapper>
   );
 };

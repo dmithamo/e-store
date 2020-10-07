@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 type ShopFrontState = {
-  items: { [category: string]: ShopItem[] } | {};
-  inCart: {
-    [itemName: string]: InCartItem;
-  };
+  items: { [category: string]: ShopItem[] };
+
+  selectedCategory?: string;
+  selectedItemID?: string;
+
+  inCart: { [itemID: string]: InCartItem };
   fetchError: any;
 };
 
@@ -30,6 +32,8 @@ type ShopFrontAction = {
 
 export const initialState: ShopFrontState = {
   items: {},
+  selectedCategory: '',
+  selectedItemID: '',
   inCart: {},
   fetchError: false,
 };
@@ -40,6 +44,14 @@ const shopFrontState = createSlice({
   reducers: {
     fetchItemsSuccess(state: ShopFrontState, { payload }: ShopFrontAction) {
       state.items = payload;
+    },
+
+    setSelectedCategory(state: ShopFrontState, { payload }: ShopFrontAction) {
+      state.selectedCategory = payload;
+    },
+
+    setSelectedItemID(state: ShopFrontState, { payload }: ShopFrontAction) {
+      state.selectedItemID = payload;
     },
 
     fetchItemsFailure(state: ShopFrontState, { payload }) {
@@ -65,6 +77,8 @@ export const {
   fetchItemsFailure,
   addItemToCart,
   removeFromCart,
+  setSelectedCategory,
+  setSelectedItemID,
 } = shopFrontState.actions;
 
 export default shopFrontState.reducer;

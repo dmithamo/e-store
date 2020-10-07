@@ -11,28 +11,20 @@ type ProductProps = {
 };
 
 const Product: React.FC<ProductProps> = ({
-  product,
+  product: { name, rate, img, category, id },
 }: ProductProps): JSX.Element => {
   const history = useHistory();
   return (
     <StyledProduct>
-      <h2 className="name">{product.name}</h2>
-      <h3 className="rate">{`KES ${product.rate}/hr`}</h3>
-      <img className="product-img" src={product.img} alt={product.name} />
+      <h2 className="name">{name}</h2>
+      <h3 className="rate">{`KES ${rate}/hr`}</h3>
+      <img className="product-img" src={img} alt={name} />
       <div className="actions">
         <Button
           category="link"
           classes="details-button"
           onClick={() => {
-            history.push(
-              [
-                'shop',
-                product.category
-                  ? product.category.toLowerCase()
-                  : 'uncategorised',
-                product.id,
-              ].join('/'),
-            );
+            history.push(`/shop/${category.toLowerCase()}/${id}`);
           }}
           value="Details"
         />

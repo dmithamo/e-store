@@ -20,7 +20,7 @@ const ProductsRow: React.FC<ProductsRowProps> = ({
   const history = useHistory();
 
   return (
-    <StyledProductsRow>
+    <StyledProductsRow key={category}>
       {showCategory && (
         <div className="header">
           <Button
@@ -36,7 +36,7 @@ const ProductsRow: React.FC<ProductsRowProps> = ({
       )}
       <div className="products">
         {products.map((product) => (
-          <Product product={product} />
+          <Product key={product.id} product={product} />
         ))}
       </div>
     </StyledProductsRow>

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import NavByCategory from './NavByCategory';
 
 type ShopFrontWrapperProps = {
-  children: JSX.Element | JSX.Element[];
+  children: JSX.Element | JSX.Element[] | null;
   showNav?: boolean;
 };
 
