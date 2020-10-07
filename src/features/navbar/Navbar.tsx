@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -13,13 +14,15 @@ import UserDetails from './UserDetails';
 export default function Navbar() {
   const [isUploading, setIsUploading] = useState(false);
   const {
-    user: { isLoggedIn },
+    user: { isLoggedIn, role },
   } = useSelector((state: RootState) => state.auth);
+
+  const isAdmin = role === 'ADMIN';
   return (
     <>
       <StyledNavbar>
         <div className="navbar-item home">
-          <NavbarLink path={isLoggedIn ? '/shop' : '/'}>
+          <NavbarLink path={isAdmin ? '/admin/accounts' : '/shop'}>
             <Logo />
           </NavbarLink>
         </div>
@@ -29,15 +32,23 @@ export default function Navbar() {
         <div className="navbar-item">
           {isLoggedIn ? (
             <>
-              <Button
-                value="Upload item"
-                category="primary"
-                alignCenter
-                onClick={() => {
-                  setIsUploading(true);
-                }}
-              />
-              <ShoppingCart />
+              {!isAdmin ? (
+                <div style={{ width: '150px' }}>
+                  <Button
+                    category="primary"
+                    onClick={() => {
+                      setIsUploading(true);
+                    }}
+                  >
+                    <FontAwesomeIcon icon="plus-circle" />
+                    <span>Upload an item</span>
+                  </Button>
+                </div>
+              ) : (
+                <></>
+              )}
+
+              {!isAdmin ? <ShoppingCart /> : <></>}
               <UserDetails />
             </>
           ) : (

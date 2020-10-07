@@ -7,6 +7,8 @@ export interface User {
   lastName: string;
   avatar: string;
   userID: string;
+  role: 'ADMIN' | 'NORMAL';
+  created: Date;
   isVerified: boolean;
   isLoggedIn: boolean;
 }
@@ -30,6 +32,8 @@ export const initialState: AuthState = {
     lastName: '',
     avatar: '',
     userID: '',
+    role: 'NORMAL',
+    created: new Date(),
     isVerified: false,
     isLoggedIn: false,
   },
@@ -65,6 +69,10 @@ const authState = createSlice({
       state.user.isLoggedIn = true;
     },
 
+    loginUserFailure(state: AuthState, { payload }: AuthAction) {
+      state.error = payload;
+    },
+
     logoutUserSuccess(state: AuthState) {
       state.user = initialState.user;
     },
@@ -76,6 +84,7 @@ export const {
   registerUserFail,
   verifyAccountSuccess,
   loginUserSuccess,
+  loginUserFailure,
   logoutUserSuccess,
   verifyAccountCancel,
 } = authState.actions;

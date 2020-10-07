@@ -22,6 +22,7 @@ import {
   faEnvelopeOpen,
   faMobileAlt,
   faCalendarAlt,
+  faPlusCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -46,6 +47,7 @@ library.add(
   faMobileAlt,
   faCalendarAlt,
   faCcVisa,
+  faPlusCircle,
 );
 
 const render = () => {

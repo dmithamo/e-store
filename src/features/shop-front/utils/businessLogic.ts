@@ -5,7 +5,7 @@ import { ShopItem } from './stateMgmt';
 export async function fetchItems(): Promise<any> {
   try {
     const res = await api.get('/items');
-    if (res && res.status === 200) {
+    if (res && (res as any).status === 200) {
       return [
         true,
         sortByCategory(
@@ -33,7 +33,7 @@ export async function fetchItems(): Promise<any> {
 export async function fetchByCategory(category: string): Promise<any> {
   try {
     const res = await api.get(`/items?category=${category}`);
-    if (res && res.status === 200) {
+    if (res && (res as any).status === 200) {
       return [true, res.data];
     }
 
@@ -46,7 +46,7 @@ export async function fetchByCategory(category: string): Promise<any> {
 export async function fetchSingleItem(itemID: string): Promise<any> {
   try {
     const res = await api.get(`/items?itemID=${itemID}`);
-    if (res && res.status === 200) {
+    if (res && (res as any).status === 200) {
       return [true, res.data];
     }
 

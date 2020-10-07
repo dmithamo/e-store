@@ -14,9 +14,9 @@ export type ProfileProps = {};
 const ProfilePage: React.FC<ProfileProps> = (): JSX.Element => {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const {
-    user: { email, firstName, lastName, phoneNumber, avatar },
+    user: { email, firstName, lastName, phoneNumber, avatar, created },
   } = useSelector((state: RootState) => state.auth);
-  const fullName = `${firstName || 'Deniece'} ${lastName || 'Muthoni'}`;
+  const fullName = `${firstName} ${lastName}`;
   return (
     <StyledProfile>
       <div className="container">
@@ -39,7 +39,10 @@ const ProfilePage: React.FC<ProfileProps> = (): JSX.Element => {
             </p>
             <p className="meta-item">
               <FontAwesomeIcon icon="calendar-alt" />
-              <span>Since 10th Sep 2020</span>
+              <span>
+                Since&nbsp;
+                {created.toDateString()}
+              </span>
             </p>
           </div>
 

@@ -44,6 +44,10 @@ export default {
     if (path === '/auth') {
       return tempCreateAccountFnBeforeApiIsLive(params);
     }
+    if (path === '/auth/sign-in') {
+      return tempSignInBeforeApiIsLive(params);
+    }
+
     if (path === '/auth/verify-account') {
       return tempVerifyAccountFnBeforeApiIsLive(params);
     }
@@ -55,9 +59,27 @@ export default {
     if (path.includes('/items')) {
       return tempFetchItemsBeforeApiIsLive(path);
     }
+    if (path.includes('/users')) {
+      return tempFetchUsersBeforeApiIsLive();
+    }
     return instantiateHTTPClient().get(path);
   },
 };
+
+function tempSignInBeforeApiIsLive(params: any) {
+  if (!!params.email && !!params.password) {
+    return {
+      status: 200,
+      data: params.email.includes('add')
+        ? { ...USERS[0], role: 'ADMIN' }
+        : USERS[1],
+    };
+  }
+  return {
+    status: 400,
+    data: { error: { message: 'Missing required values: ...' } },
+  };
+}
 
 function tempCreateAccountFnBeforeApiIsLive(params: any) {
   if (params.email && params.email !== '') {
@@ -182,3 +204,58 @@ function tempFetchItemsBeforeApiIsLive(path: string) {
     data: filterData(),
   };
 }
+
+function tempFetchUsersBeforeApiIsLive() {
+  return { res: 200, data: USERS };
+}
+
+const USERS = [
+  {
+    email: 'ab@email.com',
+    phoneNumber: '0711223344',
+    firstName: 'Alpha',
+    lastName: 'Beta',
+    avatar: '',
+    userID: '000-111-222-333-444',
+    role: 'NORMAL',
+    created: new Date(),
+    isVerified: true,
+    isLoggedIn: false,
+  },
+  {
+    email: 'bc@email.com',
+    phoneNumber: '0722334455',
+    firstName: 'Beta',
+    lastName: 'Charlie',
+    avatar: '',
+    userID: '000-111-222-333-445',
+    role: 'NORMAL',
+    created: new Date(),
+    isVerified: true,
+    isLoggedIn: false,
+  },
+  {
+    email: 'cd@email.com',
+    phoneNumber: '0733445566',
+    firstName: 'Charlie',
+    lastName: 'Delta',
+    avatar: '',
+    userID: '000-111-222-333-446',
+    role: 'NORMAL',
+    created: new Date(),
+    isVerified: false,
+    isLoggedIn: false,
+  },
+  {
+    email: 'de@email.com',
+    phoneNumber: '074455667788',
+    firstName: 'Delta',
+    lastName: 'Epsilon',
+    avatar: '',
+    userID: '000-111-222-333-447',
+    role: 'NORMAL',
+    created: new Date(),
+    isVerified: false,
+    isLoggedIn: true,
+  },
+];

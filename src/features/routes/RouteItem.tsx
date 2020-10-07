@@ -9,6 +9,7 @@ export type RouteItemProps = {
   path: string;
   component: any;
   needsAuth: boolean;
+  adminOnly: boolean;
   customLayout?: any;
   exact: boolean;
   pageTitle?: string;
@@ -20,15 +21,22 @@ export default function RouteItem({
   customLayout: Layout,
   exact,
   needsAuth,
+  adminOnly,
   pageTitle,
 }: RouteItemProps): JSX.Element {
   const {
-    user: { isLoggedIn },
+    user: { isLoggedIn, role },
   } = useSelector((state: RootState) => state.auth);
 
-  return needsAuth && !isLoggedIn ? (
-    <Redirect to="/sign-in" />
-  ) : (
+  const isAdmin = role === 'ADMIN';
+  if (needsAuth && !isLoggedIn) {
+    return <Redirect to="/sign-in" />;
+  }
+  if (adminOnly && !isAdmin) {
+    return <Redirect to="/not-what-u-r-looking-for" />;
+  }
+
+  return (
     <Route path={path} exact={exact}>
       <>
         <Helmet titleTemplate="%s | hae" defaultTitle="hae">
