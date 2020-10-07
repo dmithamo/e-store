@@ -22,11 +22,11 @@ const adminState = createSlice({
   name: 'admin',
   initialState,
   reducers: {
-    fetchItemsSuccess(state: AdminState, { payload }: AdminAction) {
+    fetchUsersSuccess(state: AdminState, { payload }: AdminAction) {
       state.users = payload;
     },
 
-    fetchItemsFailure(state: AdminState, { payload }) {
+    fetchUsersFailure(state: AdminState, { payload }) {
       state.fetchError = payload;
     },
 
@@ -42,6 +42,6 @@ const adminState = createSlice({
   },
 });
 
-export const { fetchItemsSuccess, fetchItemsFailure } = adminState.actions;
+export const { fetchUsersSuccess, fetchUsersFailure } = adminState.actions;
 
 export default adminState.reducer;

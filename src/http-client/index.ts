@@ -206,7 +206,8 @@ function tempFetchItemsBeforeApiIsLive(path: string) {
 }
 
 function tempFetchUsersBeforeApiIsLive() {
-  return { res: 200, data: USERS };
+  console.log({ status: 200, data: USERS }, '<<<<USERS');
+  return { status: 200, data: USERS };
 }
 
 const USERS = [

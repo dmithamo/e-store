@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import ErrorPage from '../../common/components/ErrorPage';
 import { RootState } from '../../common/store/rootReducer';
 import ProductsRow from './ProductsRow';
 import ShopFrontWrapper from './ShopFrontWrapper';
@@ -56,12 +57,7 @@ const ShopFront: React.FC = (): JSX.Element => {
   }
 
   if (fetchError) {
-    return (
-      <div style={{ color: 'red' }}>
-        <h2 className="title">Error fetching items</h2>
-        {JSON.stringify(fetchError, null, 2)}
-      </div>
-    );
+    return <ErrorPage error={fetchError} />;
   }
 
   if (selectedCategory && selectedItemID) {

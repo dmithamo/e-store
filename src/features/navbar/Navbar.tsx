@@ -52,13 +52,18 @@ export default function Navbar() {
               <UserDetails />
             </>
           ) : (
-            <NavbarLink path="/sign-up">
-              <Button
-                category="primary"
-                value="Get started"
-                onClick={() => {}}
-              />
-            </NavbarLink>
+            <>
+              <NavbarLink path="/sign-in">
+                <Button category="link" value="Sign in" onClick={() => {}} />
+              </NavbarLink>
+              <NavbarLink path="/sign-up">
+                <Button
+                  category="primary"
+                  value="Get started"
+                  onClick={() => {}}
+                />
+              </NavbarLink>
+            </>
           )}
         </div>
       </StyledNavbar>
