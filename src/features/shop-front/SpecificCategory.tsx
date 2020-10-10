@@ -12,7 +12,7 @@ const SpecificCategory: React.FC<SpecificCategoryProps> = ({
   category,
   products,
 }: SpecificCategoryProps): JSX.Element => (
-  <ShopFrontWrapper showNav>
+  <ShopFrontWrapper focusedCategory={category} showNav>
     <ProductsRow
       key={category}
       showCategory={false}

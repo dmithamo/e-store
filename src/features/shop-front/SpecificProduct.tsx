@@ -10,8 +10,8 @@ type SpecificProductProps = {
 const SpecificProduct: React.FC<SpecificProductProps> = ({
   product,
 }: SpecificProductProps): JSX.Element => (
-  <ShopFrontWrapper showNav>
-    <Product product={product} />
+  <ShopFrontWrapper showNav focusedCategory={product.category} showViewMoreLink>
+    <Product product={product} hideDetailsBtn />
     <h2>PAGE DESIGN INCOMPLETE&trade;</h2>
   </ShopFrontWrapper>
 );

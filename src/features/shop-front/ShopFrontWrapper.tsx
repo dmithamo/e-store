@@ -5,20 +5,31 @@ import NavByCategory from './NavByCategory';
 type ShopFrontWrapperProps = {
   children: JSX.Element | JSX.Element[] | null;
   showNav?: boolean;
+  focusedCategory?: string;
+  showViewMoreLink?: boolean;
 };
 
 const ShopFrontWrapper: React.FC<ShopFrontWrapperProps> = ({
   children,
   showNav,
+  focusedCategory,
+  showViewMoreLink,
 }: ShopFrontWrapperProps): JSX.Element => (
   <StyledShopFrontWrapper>
-    {showNav && <NavByCategory />}
+    {showNav && (
+      <NavByCategory
+        focusedCategory={focusedCategory}
+        showViewMoreLink={showViewMoreLink}
+      />
+    )}
     <section className="product-rows">{children}</section>
   </StyledShopFrontWrapper>
 );
 
 ShopFrontWrapper.defaultProps = {
   showNav: false,
+  focusedCategory: '',
+  showViewMoreLink: false,
 };
 
 const StyledShopFrontWrapper = styled.div`

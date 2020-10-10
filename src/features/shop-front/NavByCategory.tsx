@@ -1,16 +1,27 @@
 import React from 'react';
-// import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../../common/components/Button';
-// import { RootState } from '../../common/store/rootReducer';
+import ViewMoreButton from './ViewMoreBtn';
 
-const NavByCategory: React.FC = (): JSX.Element => {
+type NavByCategoryProps = {
+  focusedCategory?: string;
+  showViewMoreLink?: boolean;
+};
+
+const NavByCategory: React.FC<NavByCategoryProps> = ({
+  focusedCategory: category = '',
+  showViewMoreLink,
+}: NavByCategoryProps): JSX.Element => {
   const history = useHistory();
-  // const { items } = useSelector((state: RootState) => state.shopFront);
 
   return (
     <StyledNavByCategory>
+      {showViewMoreLink ? (
+        <ViewMoreButton category={category} />
+      ) : (
+        <h2>{category}</h2>
+      )}
       <Button
         category="link"
         value="All Categories"
@@ -18,32 +29,29 @@ const NavByCategory: React.FC = (): JSX.Element => {
           history.push('/shop');
         }}
       />
-      {/* {Object.keys(items).map((category) => (
-        <Button
-          alignCenter
-          category="link"
-          value={category}
-          onClick={() => {
-            history.push(['shop', category.toLowerCase()].join('/'));
-          }}
-        />
-      ))} */}
     </StyledNavByCategory>
   );
+};
+
+NavByCategory.defaultProps = {
+  focusedCategory: '',
+  showViewMoreLink: false,
 };
 
 const StyledNavByCategory = styled.nav`
   font-size: 1em;
   font-family: var(--primaryBold);
-  width: 100%;
+  width: 30%;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: space-between;
+  align-items: center;
   text-transform: capitalize;
   button {
-    width: 10%;
     color: var(--black);
     text-decoration: underline;
+  }
+  h2 {
+    margin-right: 1em;
   }
 `;
 

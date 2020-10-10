@@ -17,7 +17,7 @@ const ViewMoreButton: React.FC<ViewMoreButtonProps> = ({
         category="link"
         value={`More ${category}`}
         onClick={() => {
-          history.push(`/shop/${category}`);
+          history.push(`/shop/${category.toLowerCase()}`);
         }}
       />
     </StyledViewMoreButton>

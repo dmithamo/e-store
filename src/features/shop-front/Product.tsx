@@ -8,10 +8,12 @@ import { useHistory } from 'react-router-dom';
 
 type ProductProps = {
   product: ShopItem;
+  hideDetailsBtn?: boolean;
 };
 
 const Product: React.FC<ProductProps> = ({
   product: { name, rate, img, category, id },
+  hideDetailsBtn,
 }: ProductProps): JSX.Element => {
   const history = useHistory();
   return (
@@ -20,14 +22,18 @@ const Product: React.FC<ProductProps> = ({
       <h3 className="rate">{`KES ${rate}/hr`}</h3>
       <img className="product-img" src={img} alt={name} />
       <div className="actions">
-        <Button
-          category="link"
-          classes="details-button"
-          onClick={() => {
-            history.push(`/shop/${category.toLowerCase()}/${id}`);
-          }}
-          value="Details"
-        />
+        {!hideDetailsBtn ? (
+          <Button
+            category="link"
+            classes="details-button"
+            onClick={() => {
+              history.push(`/shop/${category.toLowerCase()}/${id}`);
+            }}
+            value="Details"
+          />
+        ) : (
+          <></>
+        )}
         <Button category="secondary" classes="buy-button" onClick={() => {}}>
           <InlineImage src={shoppingCart} size="smallest" alt="shopping cart" />
           <span>Hire item</span>
@@ -37,7 +43,7 @@ const Product: React.FC<ProductProps> = ({
   );
 };
 
-Product.defaultProps = {};
+Product.defaultProps = { hideDetailsBtn: false };
 
 const StyledProduct = styled.div`
   background-color: var(--white);
