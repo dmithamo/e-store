@@ -130,11 +130,9 @@ const StyledButton = styled.span`
 
   button.disabled {
     cursor: not-allowed;
-    color: var(--grey);
-    background-color: var(--lightGrey);
+    opacity: 0.55;
     :hover {
-      color: var(--grey);
-      background-color: var(--lightGrey);
+      opacity: 0.56;
     }
   }
 `;

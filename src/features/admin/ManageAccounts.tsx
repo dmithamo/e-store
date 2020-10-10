@@ -39,8 +39,13 @@ const ManageAccounts: React.FC = (): JSX.Element => {
 
   const columns = [
     {
-      Header: '#',
+      Header: 'Internal ID',
       accessor: 'userID',
+      modifier: (value: string) => value.slice(0, 8),
+    },
+    {
+      Header: 'Email',
+      accessor: 'email',
     },
     {
       Header: 'First Name',
@@ -49,10 +54,6 @@ const ManageAccounts: React.FC = (): JSX.Element => {
     {
       Header: 'Last Name',
       accessor: 'lastName',
-    },
-    {
-      Header: 'Email',
-      accessor: 'email',
     },
     {
       Header: 'Phone No.',

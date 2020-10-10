@@ -1,7 +1,8 @@
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable implicit-arrow-linebreak */
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { addDays, subDays } from 'date-fns';
+import { addDays } from 'date-fns';
+import { makeFakeUsers } from '../common/utils/makeFakeData';
 
 /**
  * @description Instantiate axios client
@@ -70,9 +71,9 @@ function tempSignInBeforeApiIsLive(params: any) {
   if (!!params.email && !!params.password) {
     return {
       status: 200,
-      data: params.email.includes('add')
-        ? { ...USERS[0], role: 'ADMIN' }
-        : USERS[1],
+      data: params.email.includes('addmin')
+        ? { ...USERS[0], role: 'ADMIN', isLoggedIn: true }
+        : { ...USERS[1], isLoggedIn: true },
     };
   }
   return {
@@ -209,53 +210,4 @@ function tempFetchUsersBeforeApiIsLive() {
   return { status: 200, data: USERS };
 }
 
-const USERS = [
-  {
-    email: 'ab@email.com',
-    phoneNumber: '0711223344',
-    firstName: 'Alpha',
-    lastName: 'Beta',
-    avatar: '',
-    userID: '000-111-222-333-444',
-    role: 'NORMAL',
-    created: new Date(),
-    isVerified: true,
-    isLoggedIn: false,
-  },
-  {
-    email: 'bc@email.com',
-    phoneNumber: '0722334455',
-    firstName: 'Beta',
-    lastName: 'Charlie',
-    avatar: '',
-    userID: '000-111-222-333-445',
-    role: 'NORMAL',
-    created: new Date(),
-    isVerified: true,
-    isLoggedIn: false,
-  },
-  {
-    email: 'cd@email.com',
-    phoneNumber: '0733445566',
-    firstName: 'Charlie',
-    lastName: 'Delta',
-    avatar: '',
-    userID: '000-111-222-333-446',
-    role: 'NORMAL',
-    created: subDays(new Date(), 5),
-    isVerified: false,
-    isLoggedIn: false,
-  },
-  {
-    email: 'de@email.com',
-    phoneNumber: '074455667788',
-    firstName: 'Delta',
-    lastName: 'Epsilon',
-    avatar: '',
-    userID: '000-111-222-333-447',
-    role: 'NORMAL',
-    created: subDays(new Date(), 5),
-    isVerified: false,
-    isLoggedIn: true,
-  },
-];
+const USERS = makeFakeUsers(50);

@@ -23,6 +23,10 @@ import {
   faMobileAlt,
   faCalendarAlt,
   faPlusCircle,
+  faFastBackward,
+  faBackward,
+  faForward,
+  faFastForward,
 } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -48,6 +52,10 @@ library.add(
   faCalendarAlt,
   faCcVisa,
   faPlusCircle,
+  faFastBackward,
+  faBackward,
+  faForward,
+  faFastForward,
 );
 
 const render = () => {

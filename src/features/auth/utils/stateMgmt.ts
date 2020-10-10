@@ -7,6 +7,7 @@ export interface User {
   lastName: string;
   avatar: string;
   userID: string;
+  address: string;
   role: 'ADMIN' | 'NORMAL';
   created: Date;
   isVerified: boolean;
@@ -32,6 +33,7 @@ export const initialState: AuthState = {
     lastName: '',
     avatar: '',
     userID: '',
+    address: '',
     role: 'NORMAL',
     created: new Date(),
     isVerified: false,
