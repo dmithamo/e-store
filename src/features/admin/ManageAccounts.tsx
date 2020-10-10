@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import ErrorPage from '../../common/components/ErrorPage';
+import Table from '../../common/components/Table';
 import { RootState } from '../../common/store/rootReducer';
 import { fetchUsers } from './utils/businessLogic';
 import { fetchUsersSuccess, fetchUsersFailure } from './utils/stateMgmt';
+import { format } from 'date-fns';
 
 const ManageAccounts: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -35,10 +37,58 @@ const ManageAccounts: React.FC = (): JSX.Element => {
     return <ErrorPage error={fetchError} />;
   }
 
+  const columns = [
+    {
+      Header: '#',
+      accessor: 'userID',
+    },
+    {
+      Header: 'First Name',
+      accessor: 'firstName',
+    },
+    {
+      Header: 'Last Name',
+      accessor: 'lastName',
+    },
+    {
+      Header: 'Email',
+      accessor: 'email',
+    },
+    {
+      Header: 'Phone No.',
+      accessor: 'phoneNumber',
+    },
+    {
+      Header: 'User Type',
+      accessor: 'role',
+    },
+    {
+      Header: 'Member Since',
+      accessor: 'created',
+      modifier: (date: Date) => (
+        <p title={date.toDateString()}>
+          {/* {`${formatDistance(date, new Date())
+            .replace('less than a minute', '< 1 min')
+            .replace('minute', 'min')} ago`} */}
+          {format(date, 'dd MMMM yyyy')}
+        </p>
+      ),
+    },
+    {
+      Header: 'Verified?',
+      accessor: 'isVerified',
+      modifier: (value: boolean) => (value ? 'YES' : 'NOPE'),
+    },
+    {
+      Header: 'Online?',
+      accessor: 'isLoggedIn',
+      modifier: (value: boolean) => (value ? 'ONLINE' : 'OFFLINE'),
+    },
+  ];
   return (
     <StyledManageAccounts>
       <h2>Users</h2>
-      <pre>{JSON.stringify(users, null, 4)}</pre>
+      <Table tableColumns={columns} tableData={users} />
     </StyledManageAccounts>
   );
 };

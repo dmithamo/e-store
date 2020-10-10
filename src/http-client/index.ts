@@ -1,7 +1,7 @@
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable implicit-arrow-linebreak */
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { addDays } from 'date-fns';
+import { addDays, subDays } from 'date-fns';
 
 /**
  * @description Instantiate axios client
@@ -206,7 +206,6 @@ function tempFetchItemsBeforeApiIsLive(path: string) {
 }
 
 function tempFetchUsersBeforeApiIsLive() {
-  console.log({ status: 200, data: USERS }, '<<<<USERS');
   return { status: 200, data: USERS };
 }
 
@@ -243,7 +242,7 @@ const USERS = [
     avatar: '',
     userID: '000-111-222-333-446',
     role: 'NORMAL',
-    created: new Date(),
+    created: subDays(new Date(), 5),
     isVerified: false,
     isLoggedIn: false,
   },
@@ -255,7 +254,7 @@ const USERS = [
     avatar: '',
     userID: '000-111-222-333-447',
     role: 'NORMAL',
-    created: new Date(),
+    created: subDays(new Date(), 5),
     isVerified: false,
     isLoggedIn: true,
   },

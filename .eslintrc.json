@@ -46,6 +46,7 @@
     "implicit-arrow-linebreak": "off",
     "object-curly-newline": "off",
     "import/prefer-default-export": "off",
-    "function-paren-newline": "off"
+    "function-paren-newline": "off",
+    "react/jsx-props-no-spreading": "off"
   }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 import { RootState } from '../../common/store/rootReducer';
-import WithNavbar from '../layouts/WithNavbar';
+import WithNavbar from '../../common/components/layouts/WithNavbar';
 import { Helmet } from 'react-helmet';
 
 export type RouteItemProps = {
@@ -34,6 +34,10 @@ export default function RouteItem({
   }
   if (adminOnly && !isAdmin) {
     return <Redirect to="/not-what-u-r-looking-for" />;
+  }
+
+  if (!adminOnly && isAdmin) {
+    return <Redirect to="/admin/accounts" />;
   }
 
   return (

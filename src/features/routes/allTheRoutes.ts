@@ -3,7 +3,7 @@ import CreateAccountPage from '../auth/CreateAccountPage';
 import SignInForm from '../auth/SignInForm';
 import CheckoutPage from '../checkout-page/CheckOut';
 import LandingPage from '../landing-page/LandingPage';
-import NoNavbar from '../layouts/NoNavbar';
+import NoNavbar from '../../common/components/layouts/NoNavbar';
 import ProfilePage from '../profile-page/Profile';
 import ShopFront from '../shop-front/ShopFront';
 import WorkingOnIT from '../TempPage';
