@@ -27,6 +27,13 @@ import {
   faBackward,
   faForward,
   faFastForward,
+  faCheckCircle,
+  faMinusCircle,
+  faDotCircle,
+  faUserShield,
+  faUserAlt,
+  faEllipsisV,
+  faEllipsisH,
 } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -56,6 +63,13 @@ library.add(
   faBackward,
   faForward,
   faFastForward,
+  faCheckCircle,
+  faMinusCircle,
+  faDotCircle,
+  faUserShield,
+  faUserAlt,
+  faEllipsisV,
+  faEllipsisH,
 );
 
 const render = () => {

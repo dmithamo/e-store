@@ -1,5 +1,3 @@
-/* eslint-disable no-confusing-arrow */
-/* eslint-disable implicit-arrow-linebreak */
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { addDays } from 'date-fns';
 import { makeFakeUsers } from '../common/utils/makeFakeData';

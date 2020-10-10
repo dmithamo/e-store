@@ -1,30 +1,54 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useMemo } from 'react';
 import { usePagination, useTable } from 'react-table';
 import styled from 'styled-components';
+import Button from '../Button';
 import TablePagination from './TablePagination';
-
-type TableColumn = { Header: string; accessor: string; modifier?: Function };
-type TableData = { [key: string]: any }[];
+import { TableData, TableColumn, TableActions } from './types';
 
 type TableProps = {
   tableColumns: TableColumn[];
   tableData: TableData;
+  tableActions: TableActions;
 };
 
 const numberColumn = {
   Header: 'No.',
   accessor: 'index',
+  align: 'center',
+};
+
+const actionsColumn = {
+  Header: <FontAwesomeIcon icon="ellipsis-v" />,
+
+  accessor: 'actions',
+  align: 'center',
 };
 
 const Table: React.FC<TableProps> = ({
   tableColumns,
   tableData,
+  tableActions,
 }: TableProps): JSX.Element => {
-  const columns = useMemo(() => [numberColumn, ...tableColumns], []);
-  const data = useMemo(
-    () => tableData.map((d, i) => ({ index: i + 1, ...d })),
+  const columns = useMemo(
+    () => [numberColumn, ...tableColumns, actionsColumn],
     [],
   );
+  const data = useMemo(
+    () =>
+      tableData.map((d, i) => ({
+        index: i + 1,
+        ...d,
+        actions: (
+          <Button category="link" onClick={() => {}} alignCenter>
+            <FontAwesomeIcon icon="ellipsis-h" />
+          </Button>
+        ),
+      })),
+    [],
+  );
+
+  const actions = useMemo(() => tableActions, []);
 
   const tableOptions = {
     columns,
@@ -57,6 +81,10 @@ const Table: React.FC<TableProps> = ({
       ? (cell.column as any).modifier(cell.value)
       : cell.render('Cell');
 
+  // align the contents of a header/cell
+  const getColumnAlignment = (header: any) => header.align || 'left';
+  const getCellAlignment = (cell: any) => cell.column.align || 'left';
+
   return (
     <StyledTable>
       <div className="table-container">
@@ -64,8 +92,12 @@ const Table: React.FC<TableProps> = ({
           <thead>
             {headerGroups.map((hgroup: any) => (
               <tr {...hgroup.getHeaderGroupProps()}>
-                {hgroup.headers.map((header: any) => (
-                  <th {...header.getHeaderProps()}>
+                {hgroup.headers.map((header: any, i: number) => (
+                  <th
+                    className={i === 1 ? 'fix-col' : ''}
+                    style={{ textAlign: getColumnAlignment(header) }}
+                    {...header.getHeaderProps()}
+                  >
                     {header.render('Header')}
                   </th>
                 ))}
@@ -77,8 +109,14 @@ const Table: React.FC<TableProps> = ({
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()}>
-                  {row.cells.map((cell: any) => (
-                    <td {...cell.getCellProps()}>{modifyData(cell)}</td>
+                  {row.cells.map((cell: any, i: number) => (
+                    <td
+                      className={i === 1 ? 'fix-col' : ''}
+                      style={{ textAlign: getCellAlignment(cell) }}
+                      {...cell.getCellProps()}
+                    >
+                      {modifyData(cell)}
+                    </td>
                   ))}
                 </tr>
               );
@@ -104,12 +142,13 @@ const Table: React.FC<TableProps> = ({
 
 const StyledTable = styled.div`
   position: relative;
-  padding: 2em 0;
+  padding: 3em 0;
 
   div.table-container {
-    width: 80%;
-    height: 65vh;
+    width: 91%;
+    height: 68vh;
     overflow: auto;
+    overflow-y: visible;
 
     /* <table />, <tr />, <td /> */
     tr,
@@ -158,22 +197,36 @@ const StyledTable = styled.div`
       tr {
         td,
         th {
-          width: 125px;
+          width: 155px;
           padding: 1.5em;
-          text-align: left;
 
           :first-child {
             font-weight: bold;
             width: 50px;
-            text-align: center;
           }
 
-          :nth-of-type(3) {
-            width: 200px;
+          :nth-of-type(2) {
+            width: 250px;
           }
         }
       }
     }
+  }
+
+  td.fix-col,
+  th.fix-col {
+    color: red;
+    position: sticky;
+    z-index: 2000;
+    top: auto;
+    left: 0;
+    width: 6em;
+    background-color: inherit;
+    color: inherit;
+  }
+
+  th.fix-col {
+    background-color: var(--navyBlue);
   }
 `;
 
