@@ -1,6 +1,6 @@
 /* eslint-disable no-plusplus */
 import { subDays } from 'date-fns';
-import faker, { fake } from 'faker';
+import faker from 'faker';
 import { User } from '../../features/auth/utils/stateMgmt';
 import { ShopItem } from '../../features/shop-front/utils/stateMgmt';
 

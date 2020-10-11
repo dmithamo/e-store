@@ -26,7 +26,7 @@ const Button: React.FC<ButtonProps> = ({
   alignCenter,
   classes,
 }: ButtonProps): JSX.Element => (
-  <StyledButton>
+  <StyledButton className="button">
     <button
       title={title}
       className={`${classes} ${category} ${disabled ? 'disabled' : ''}`}

@@ -8,6 +8,8 @@ import { fetchUsers } from './utils/businessLogic';
 import { fetchUsersSuccess, fetchUsersFailure } from './utils/stateMgmt';
 import { format } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { TableActions } from '../../common/components/Table/types';
+import { User } from '../auth/utils/stateMgmt';
 
 const ManageAccounts: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -45,12 +47,12 @@ const ManageAccounts: React.FC = (): JSX.Element => {
       accessor: 'email',
       modifier: (value: string) => value.toLowerCase(),
     },
-    {
-      align: 'left',
-      Header: 'Internal ID',
-      accessor: 'userID',
-      modifier: (value: string) => value.slice(0, 8),
-    },
+    // {
+    //   align: 'left',
+    //   Header: 'Internal ID',
+    //   accessor: 'userID',
+    //   modifier: (value: string) => value.slice(0, 8),
+    // },
     {
       align: 'left',
       Header: 'First Name',
@@ -141,7 +143,64 @@ const ManageAccounts: React.FC = (): JSX.Element => {
     },
   ];
 
-  const actions = [];
+  const actions: TableActions = [
+    {
+      name: 'Edit',
+      onClick: (user: User) => {
+        console.log('Editing:', user);
+      },
+      allowBulk: false,
+    },
+    {
+      name: 'Archive',
+      onClick: (user: User) => {
+        console.log('Archiving:', user);
+      },
+      allowBulk: true,
+    },
+    {
+      name: 'Approve',
+      onClick: (user: User) => {
+        console.log('Approving:', user);
+      },
+      allowBulk: true,
+    },
+    {
+      name: 'View details',
+      onClick: (user: User) => {
+        console.log('Viewing:', user);
+      },
+      allowBulk: false,
+    },
+    {
+      name: 'Reset password',
+      onClick: (user: User) => {
+        console.log('Resetting pwd:', user);
+      },
+      allowBulk: true,
+    },
+    {
+      name: 'Suspend',
+      onClick: (user: User) => {
+        console.log('Temp suspension of:', user);
+      },
+      allowBulk: true,
+    },
+    {
+      name: 'Elevate role',
+      onClick: (user: User) => {
+        console.log('Elevating to admin:', user);
+      },
+      allowBulk: true,
+    },
+    {
+      name: 'Downgrade role',
+      onClick: (user: User) => {
+        console.log('Downgrading to normal:', user);
+      },
+      allowBulk: true,
+    },
+  ];
   return (
     <StyledManageAccounts>
       <h2>Users</h2>

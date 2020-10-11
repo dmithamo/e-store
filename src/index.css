@@ -42,7 +42,7 @@
 
   /* shadows */
   --subtleShadow: 0 0 4px 2px var(--veryLightBlack);
-  --subtleShadow2: 0 0 5px 2px var(--veryLightBlack);
+  --subtleShadow2: 0 0 1px 1px var(--lightBlack);
 
   /* fonts shorthand*/
   --primaryLight: 'Poppins-Light';

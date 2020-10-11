@@ -10,4 +10,6 @@ export type TableColumn = {
   modifier?: Function;
 };
 
+export const ALL_ROWS = 'ALL_ROWS';
+
 export type TableData = { [key: string]: any }[];

@@ -8,6 +8,8 @@ import { fab, faCcVisa } from '@fortawesome/free-brands-svg-icons';
 import {
   faTimesCircle,
   faUserCircle,
+  faCircle,
+  faCheckCircle,
 } from '@fortawesome/free-regular-svg-icons';
 import {
   faArrowAltCircleLeft,
@@ -27,13 +29,14 @@ import {
   faBackward,
   faForward,
   faFastForward,
-  faCheckCircle,
+  faCheckCircle as filledCheckCircle,
   faMinusCircle,
   faDotCircle,
   faUserShield,
   faUserAlt,
   faEllipsisV,
   faEllipsisH,
+  faExternalLinkAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -70,6 +73,9 @@ library.add(
   faUserAlt,
   faEllipsisV,
   faEllipsisH,
+  faCircle,
+  filledCheckCircle,
+  faExternalLinkAlt,
 );
 
 const render = () => {

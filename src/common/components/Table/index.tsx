@@ -1,10 +1,16 @@
+/* eslint-disable no-unused-expressions */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { usePagination, useTable } from 'react-table';
 import styled from 'styled-components';
 import Button from '../Button';
 import TablePagination from './TablePagination';
-import { TableData, TableColumn, TableActions } from './types';
+import { TableData, TableColumn, TableActions, ALL_ROWS } from './types';
+import RowSelector from './RowSelector';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/rootReducer';
+import GroupActionsContainer from './GroupActionsContainer';
+import { breakpoints } from '../../constants';
 
 type TableProps = {
   tableColumns: TableColumn[];
@@ -12,51 +18,60 @@ type TableProps = {
   tableActions: TableActions;
 };
 
-const numberColumn = {
-  Header: 'No.',
-  accessor: 'index',
-  align: 'center',
-};
-
-const actionsColumn = {
-  Header: <FontAwesomeIcon icon="ellipsis-v" />,
-
-  accessor: 'actions',
-  align: 'center',
-};
-
 const Table: React.FC<TableProps> = ({
   tableColumns,
   tableData,
   tableActions,
 }: TableProps): JSX.Element => {
+  const numberColumn = {
+    Header: 'No.',
+    accessor: 'index',
+    align: 'center',
+  };
+  const insertNumber = (i: number) => ({ index: i + 1 });
+
+  const actionsColumn = {
+    Header: <FontAwesomeIcon icon="ellipsis-v" />,
+    accessor: 'actions',
+    align: 'center',
+  };
+  const insertActions = () => ({
+    actions: (
+      <Button category="link" onClick={() => {}} alignCenter>
+        <FontAwesomeIcon icon="ellipsis-h" />
+      </Button>
+    ),
+  });
+
+  const selectionColumn = {
+    Header: (
+      <RowSelector
+        title={`Select all ${tableData.length} items`}
+        allRows={tableData}
+        row={ALL_ROWS}
+      />
+    ),
+    accessor: 'checkbox',
+    align: 'center',
+  };
+  const insertCheckbox = (selectedItem: any) => ({
+    checkbox: <RowSelector allRows={tableData} row={selectedItem} />,
+  });
+
   const columns = useMemo(
-    () => [numberColumn, ...tableColumns, actionsColumn],
+    () => [selectionColumn, numberColumn, ...tableColumns, actionsColumn],
     [],
   );
   const data = useMemo(
     () =>
       tableData.map((d, i) => ({
-        index: i + 1,
+        ...insertCheckbox(d),
+        ...insertNumber(i),
         ...d,
-        actions: (
-          <Button category="link" onClick={() => {}} alignCenter>
-            <FontAwesomeIcon icon="ellipsis-h" />
-          </Button>
-        ),
+        ...insertActions(),
       })),
     [],
   );
-
-  const actions = useMemo(() => tableActions, []);
-
-  const tableOptions = {
-    columns,
-    data,
-    initialState: { pageIndex: 0, pageSize: 10 },
-  };
-
-  const instance = useTable(tableOptions as any, usePagination);
 
   const {
     getTableProps,
@@ -73,7 +88,10 @@ const Table: React.FC<TableProps> = ({
     previousPage,
     setPageSize,
     state: { pageIndex, pageSize },
-  } = instance as any;
+  } = useTable(
+    { columns, data, initialState: { pageSize: 10, pageIndex: 0 } } as any,
+    usePagination,
+  ) as any;
 
   // modify data as specified by column modifier
   const modifyData = (cell: any) =>
@@ -85,8 +103,64 @@ const Table: React.FC<TableProps> = ({
   const getColumnAlignment = (header: any) => header.align || 'left';
   const getCellAlignment = (cell: any) => cell.column.align || 'left';
 
+  /**
+   * @description apply a class to fix the first three columns:
+   * fix-col-0: fixes selection column
+   * fix-col-1: fixes number column
+   * fix-col-2: fixes primary identifier of row
+   */
+  const getClassName = (i: number): string => {
+    switch (i) {
+      case 0:
+        return 'fix-col fix-col-0';
+      case 1:
+        return 'fix-col fix-col-1';
+      case 2:
+        return 'fix-col fix-col-2';
+      default:
+        return '';
+    }
+  };
+
+  const { tableSelection } = useSelector(
+    (state: RootState) => state.tableSelection,
+  );
+  const [showOptions, setShowOptions] = useState(false);
+
   return (
     <StyledTable>
+      {showOptions ? (
+        <GroupActionsContainer
+          actions={tableActions.filter((action) => action.allowBulk)}
+          data={
+            tableSelection.has(ALL_ROWS)
+              ? tableData
+              : tableData.filter((item) => tableSelection.has(item))
+          }
+          primaryColumn={tableColumns[0]}
+          onClose={() => {
+            setShowOptions(false);
+          }}
+        />
+      ) : (
+        <></>
+      )}
+
+      {tableSelection.size > 0 ? (
+        <div className="options-toggle">
+          <Button
+            category="primary"
+            onClick={() => {
+              setShowOptions(!showOptions);
+            }}
+          >
+            <span>{`See options for ${tableSelection.size} selected items`}</span>
+            <FontAwesomeIcon icon="external-link-alt" />
+          </Button>
+        </div>
+      ) : (
+        <></>
+      )}
       <div className="table-container">
         <table {...getTableProps()}>
           <thead>
@@ -94,7 +168,7 @@ const Table: React.FC<TableProps> = ({
               <tr {...hgroup.getHeaderGroupProps()}>
                 {hgroup.headers.map((header: any, i: number) => (
                   <th
-                    className={i === 1 ? 'fix-col' : ''}
+                    className={getClassName(i)}
                     style={{ textAlign: getColumnAlignment(header) }}
                     {...header.getHeaderProps()}
                   >
@@ -111,7 +185,7 @@ const Table: React.FC<TableProps> = ({
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell: any, i: number) => (
                     <td
-                      className={i === 1 ? 'fix-col' : ''}
+                      className={getClassName(i)}
                       style={{ textAlign: getCellAlignment(cell) }}
                       {...cell.getCellProps()}
                     >
@@ -142,10 +216,20 @@ const Table: React.FC<TableProps> = ({
 
 const StyledTable = styled.div`
   position: relative;
-  padding: 3em 0;
+  width: 80%;
+  margin: auto;
+
+  @media (max-width: ${breakpoints.smallLaptop}) {
+    width: 99%;
+  }
+
+  div.options-toggle {
+    padding: 2em 0;
+    width: 20%;
+  }
 
   div.table-container {
-    width: 91%;
+    width: 100%;
     height: 68vh;
     overflow: auto;
     overflow-y: visible;
@@ -202,11 +286,6 @@ const StyledTable = styled.div`
 
           :first-child {
             font-weight: bold;
-            width: 50px;
-          }
-
-          :nth-of-type(2) {
-            width: 250px;
           }
         }
       }
@@ -215,18 +294,55 @@ const StyledTable = styled.div`
 
   td.fix-col,
   th.fix-col {
-    color: red;
-    position: sticky;
-    z-index: 2000;
+    position: sticky !important;
+    z-index: 4;
     top: auto;
-    left: 0;
-    width: 6em;
     background-color: inherit;
     color: inherit;
   }
 
+  td.fix-col-0,
+  th.fix-col-0 {
+    left: 0 !important;
+    width: 50px !important;
+  }
+
+  td.fix-col-1,
+  th.fix-col-1 {
+    left: 50px !important;
+    width: 50px !important;
+  }
+
+  td.fix-col-2,
+  th.fix-col-2 {
+    left: 100px !important;
+    width: 250px !important;
+  }
+
   th.fix-col {
     background-color: var(--navyBlue);
+    svg {
+      color: var(--white);
+    }
+  }
+
+  td.fix-col {
+    svg {
+      color: var(--navyBlue);
+    }
+  }
+
+  td {
+    svg {
+      font-size: 1.2em;
+    }
+  }
+
+  td.fix-col,
+  th.fix-col {
+    svg {
+      font-size: 1.5em;
+    }
   }
 `;
 
