@@ -61,7 +61,6 @@ const StyledButton = styled.span`
     outline: none;
     border-radius: 5px;
     cursor: pointer;
-    text-transform: capitalize;
     display: flex;
     justify-content: space-between;
     align-items: center;

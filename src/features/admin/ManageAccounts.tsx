@@ -203,7 +203,12 @@ const ManageAccounts: React.FC = (): JSX.Element => {
   ];
   return (
     <AdminViewWrapper header="users">
-      <Table tableActions={actions} tableColumns={columns} tableData={users} />
+      <Table
+        stateName="users"
+        tableActions={actions}
+        tableColumns={columns}
+        tableData={users}
+      />
     </AdminViewWrapper>
   );
 };

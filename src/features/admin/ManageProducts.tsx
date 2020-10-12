@@ -123,6 +123,7 @@ const ManageProducts: React.FC = (): JSX.Element => {
   return (
     <AdminViewWrapper header="products">
       <Table
+        stateName="products"
         tableActions={actions}
         tableColumns={columns}
         tableData={products}

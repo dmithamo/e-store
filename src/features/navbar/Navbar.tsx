@@ -82,6 +82,10 @@ const StyledNavbar = styled.nav`
   width: 100%;
   background-color: var(--white);
 
+  position: sticky;
+  top: 0;
+  z-index: 800;
+
   div.navbar-item {
     display: flex;
     align-items: center;

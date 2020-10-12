@@ -1,27 +1,29 @@
 /* eslint-disable no-unused-expressions */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { usePagination, useTable } from 'react-table';
 import styled from 'styled-components';
 import Button from '../Button';
 import TablePagination from './TablePagination';
 import { TableData, TableColumn, TableActions, ALL_ROWS } from './types';
 import RowSelector from './RowSelector';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/rootReducer';
 import GroupActionsContainer from './GroupActionsContainer';
 import { breakpoints } from '../../constants';
+import { clearSelection } from './utils/stateMgmt';
+import { useDispatch } from 'react-redux';
 
 type TableProps = {
   tableColumns: TableColumn[];
   tableData: TableData;
   tableActions: TableActions;
+  stateName: string;
 };
 
 const Table: React.FC<TableProps> = ({
   tableColumns,
   tableData,
   tableActions,
+  stateName,
 }: TableProps): JSX.Element => {
   const numberColumn = {
     Header: 'No.',
@@ -47,15 +49,22 @@ const Table: React.FC<TableProps> = ({
     Header: (
       <RowSelector
         title={`Select all ${tableData.length} items`}
-        allRows={tableData}
         row={ALL_ROWS}
+        allRows={tableData}
+        primaryColum={tableColumns[0]}
       />
     ),
     accessor: 'checkbox',
     align: 'center',
   };
   const insertCheckbox = (selectedItem: any) => ({
-    checkbox: <RowSelector allRows={tableData} row={selectedItem} />,
+    checkbox: (
+      <RowSelector
+        row={selectedItem[tableColumns[0].accessor]}
+        allRows={tableData}
+        primaryColum={tableColumns[0]}
+      />
+    ),
   });
 
   const columns = useMemo(
@@ -122,45 +131,25 @@ const Table: React.FC<TableProps> = ({
     }
   };
 
-  const { tableSelection } = useSelector(
-    (state: RootState) => state.tableSelection,
+  const dispatch = useDispatch();
+
+  useEffect(
+    () => () => {
+      // on unmount, clear selection
+      dispatch(clearSelection());
+    },
+    [],
   );
-  const [showOptions, setShowOptions] = useState(false);
 
   return (
     <StyledTable>
-      {showOptions ? (
-        <GroupActionsContainer
-          actions={tableActions}
-          data={
-            tableSelection.has(ALL_ROWS)
-              ? tableData
-              : tableData.filter((item) => tableSelection.has(item))
-          }
-          primaryColumn={tableColumns[0]}
-          onClose={() => {
-            setShowOptions(false);
-          }}
-        />
-      ) : (
-        <></>
-      )}
+      <GroupActionsContainer
+        stateName={stateName}
+        actions={tableActions}
+        allRows={tableData}
+        primaryColumn={tableColumns[0]}
+      />
 
-      {tableSelection.size > 0 ? (
-        <div className="options-toggle">
-          <Button
-            category="primary"
-            onClick={() => {
-              setShowOptions(!showOptions);
-            }}
-          >
-            <span>{`See options for ${tableSelection.size} selected items`}</span>
-            <FontAwesomeIcon icon="external-link-alt" />
-          </Button>
-        </div>
-      ) : (
-        <></>
-      )}
       <div className="table-container">
         <table {...getTableProps()}>
           <thead>
@@ -209,6 +198,8 @@ const Table: React.FC<TableProps> = ({
         pageIndex={pageIndex}
         pageSize={pageSize}
         setPageSize={setPageSize}
+        totalRows={tableData.length}
+        stateName={stateName}
       />
     </StyledTable>
   );
@@ -225,7 +216,10 @@ const StyledTable = styled.div`
 
   div.options-toggle {
     padding: 2em 0;
-    width: 20%;
+    width: fit-content;
+    svg {
+      margin-left: 0.5em;
+    }
   }
 
   div.table-container {

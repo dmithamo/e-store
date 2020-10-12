@@ -1,81 +1,116 @@
 import styled from 'styled-components';
-import React from 'react';
-import { TableActions, TableColumn } from './types';
+import React, { useEffect, useState } from 'react';
+import { ALL_ROWS, TableActions } from './types';
 import Button from '../Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useDispatch } from 'react-redux';
-import { removeFromSelection } from './utils/stateMgmt';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearSelection, removeFromSelection } from './utils/stateMgmt';
+import { RootState } from '../../store/rootReducer';
 
 type GAProps = {
   actions: TableActions;
-  data: any;
-  primaryColumn: TableColumn;
-  onClose: Function;
+  stateName: string;
+  allRows: Array<any>;
+  primaryColumn: any;
 };
 
 const GroupActionsContainer: React.FC<GAProps> = ({
   actions,
-  data,
+  stateName,
+  allRows,
   primaryColumn,
-  onClose,
 }: GAProps): JSX.Element => {
+  const { tableSelection } = useSelector(
+    (state: RootState) => state.tableSelection,
+  );
+  const [showOptions, setShowOptions] = useState(false);
+
   const dispatch = useDispatch();
-  if (data.length === 0) onClose();
-  return (
-    <div
-      style={{
-        position: 'fixed',
-        left: '0',
-        top: '0',
-        width: '100%',
-        height: '100vh',
-        background: 'var(--overlayBlack)',
-        zIndex: 999,
-      }}
-    >
-      <StyledGAContainer>
-        <div className="header">
-          <h2>{`${data.length} selected items `}</h2>
-          <Button
-            classes="close-btn"
-            category="outline"
-            onClick={() => {
-              onClose();
-            }}
-          >
-            <FontAwesomeIcon icon="arrow-alt-circle-left" />
-            <span>Back</span>
-          </Button>
-        </div>
-        <div className="selected-items">
-          {data.map((d: any) => (
-            <div key={d[primaryColumn.accessor]} className="item">
-              <p>{d[primaryColumn.accessor]}</p>
-              <FontAwesomeIcon
-                onClick={() => {
-                  dispatch(removeFromSelection(d));
-                }}
-                className="close-btn"
-                icon={['far', 'times-circle']}
-              />
-            </div>
-          ))}
-        </div>
-        <div className="actions">
-          {actions
-            .filter((action) => (data.length > 1 ? action.allowBulk : action))
-            .map((action) => (
+
+  const allSelected = () =>
+    tableSelection.has(ALL_ROWS) ? allRows.length : tableSelection.size;
+
+  const arrayFromSelected = () =>
+    tableSelection.has(ALL_ROWS)
+      ? allRows.map((r) => r[primaryColumn.accessor])
+      : Array.from(tableSelection);
+
+  return allSelected() > 0 ? (
+    <>
+      <div className="options-toggle">
+        <Button
+          category="primary"
+          onClick={() => {
+            setShowOptions(!showOptions);
+          }}
+        >
+          <span>{`${allSelected()} Selected. Options`}</span>
+          <FontAwesomeIcon icon="external-link-alt" />
+        </Button>
+      </div>
+      {showOptions ? (
+        <div
+          style={{
+            position: 'fixed',
+            left: '0',
+            top: '0',
+            width: '100%',
+            height: '100vh',
+            background: 'var(--overlayBlack)',
+            zIndex: 999,
+          }}
+        >
+          <StyledGAContainer>
+            <div className="header">
+              <h2>{`${allSelected()} selected ${stateName}`}</h2>
               <Button
-                alignCenter
-                key={action.name}
-                category="primary"
-                onClick={() => action.onClick(data)}
-                value={action.name}
-              />
-            ))}
+                classes="close-btn"
+                category="outline"
+                onClick={() => {
+                  setShowOptions(false);
+                }}
+              >
+                <FontAwesomeIcon icon="arrow-alt-circle-left" />
+                <span>Back</span>
+              </Button>
+            </div>
+            <div className="selected-items">
+              {arrayFromSelected().map((d: any) => (
+                <div key={d} className="item">
+                  <p>{d}</p>
+                  <FontAwesomeIcon
+                    onClick={() => {
+                      dispatch(removeFromSelection(d));
+                    }}
+                    className="close-btn"
+                    icon={['far', 'times-circle']}
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="actions">
+              {actions
+                .filter((action) =>
+                  allSelected() > 1 ? action.allowBulk : action,
+                )
+                .map((action) => (
+                  <Button
+                    alignCenter
+                    key={action.name}
+                    category="primary"
+                    onClick={() => action.onClick(arrayFromSelected())}
+                    value={action.name}
+                  />
+                ))}
+            </div>
+          </StyledGAContainer>
         </div>
-      </StyledGAContainer>
-    </div>
+      ) : (
+        <></>
+      )}
+    </>
+  ) : (
+    <></>
   );
 };
 

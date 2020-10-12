@@ -14,6 +14,8 @@ type TablePaginationProps = {
   pageIndex: any;
   pageSize: any;
   setPageSize: any;
+  totalRows: any;
+  stateName: string;
 };
 
 const TablePagination: React.FC<TablePaginationProps> = ({
@@ -27,8 +29,16 @@ const TablePagination: React.FC<TablePaginationProps> = ({
   pageIndex,
   pageSize,
   setPageSize,
+  totalRows,
+  stateName,
 }: TablePaginationProps): JSX.Element => (
   <StyledTablePagination>
+    <span className="metadata">
+      {totalRows}
+      &nbsp;total&nbsp;
+      {stateName}
+    </span>
+
     <span className="rows-per-page-selector">
       <select
         value={pageSize}
@@ -39,7 +49,7 @@ const TablePagination: React.FC<TablePaginationProps> = ({
         {[5, 10, 20, 30, 40].map((pSize) => (
           <option key={pSize} value={pSize}>
             {pSize}
-            &nbsp; rows
+            &nbsp; rows per page
           </option>
         ))}
       </select>
@@ -112,6 +122,11 @@ const StyledTablePagination = styled.div`
   span {
     padding: 0 2em;
   }
+
+  span.metadata {
+    text-transform: lowercase;
+  }
+
   span.buttons {
     display: flex;
     justify-content: space-between;

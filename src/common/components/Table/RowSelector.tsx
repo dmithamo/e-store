@@ -1,9 +1,10 @@
+/* eslint-disable indent */
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { RootState } from '../../store/rootReducer';
 import CustomCheckBox from '../CustomCheckBox';
-import { TableData, ALL_ROWS } from './types';
+import { ALL_ROWS, TableColumn } from './types';
 import {
   addToSelection,
   clearSelection,
@@ -11,12 +12,18 @@ import {
   replaceSelection,
 } from './utils/stateMgmt';
 
-type RowSelectorProps = { row: any; allRows: TableData; title?: string };
+type RowSelectorProps = {
+  row: any;
+  title?: string;
+  allRows: Array<any>;
+  primaryColum: TableColumn;
+};
 
 const RowSelector: React.FC<RowSelectorProps> = ({
   row,
-  allRows,
   title,
+  allRows,
+  primaryColum,
 }: RowSelectorProps): JSX.Element => {
   const dispatch = useDispatch();
   const { tableSelection } = useSelector(
@@ -27,9 +34,11 @@ const RowSelector: React.FC<RowSelectorProps> = ({
     switch (true) {
       case row === ALL_ROWS:
         dispatch(
-          tableSelection.size === allRows.length
+          tableSelection.has(ALL_ROWS)
             ? clearSelection()
-            : replaceSelection(new Set(allRows)),
+            : replaceSelection(
+                new Set(allRows.map((r) => r[primaryColum.accessor])),
+              ),
         );
         break;
 
