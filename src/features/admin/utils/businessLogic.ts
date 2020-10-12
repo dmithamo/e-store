@@ -17,6 +17,19 @@ export async function fetchUsers(): Promise<any> {
   }
 }
 
+export async function fetchProducts(): Promise<any> {
+  try {
+    const res = await api.get('/items');
+    if (res && (res as any).status === 200) {
+      return [true, (res as any).data];
+    }
+
+    return [false, res ? 'Server error' : 'Something went wrong'];
+  } catch (error) {
+    return [false, error];
+  }
+}
+
 /**
  * @description Update a user's property
  * @param update object

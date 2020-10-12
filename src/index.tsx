@@ -37,6 +37,8 @@ import {
   faEllipsisV,
   faEllipsisH,
   faExternalLinkAlt,
+  faCartArrowDown,
+  faChartLine,
 } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -76,6 +78,8 @@ library.add(
   faCircle,
   filledCheckCircle,
   faExternalLinkAlt,
+  faCartArrowDown,
+  faChartLine,
 );
 
 const render = () => {

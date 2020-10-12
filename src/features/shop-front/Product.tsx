@@ -12,7 +12,7 @@ type ProductProps = {
 };
 
 const Product: React.FC<ProductProps> = ({
-  product: { name, rate, img, category, id },
+  product: { name, rate, avatar: img, category, id },
   hideDetailsBtn,
 }: ProductProps): JSX.Element => {
   const history = useHistory();

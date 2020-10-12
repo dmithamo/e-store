@@ -22,9 +22,7 @@ const StyledWithNavbar = styled.div`
   flex-direction: column;
   section {
     flex-grow: 1;
-    margin: 2em auto;
     width: 100%;
     overflow: auto;
-    padding: 2em;
   }
 `;

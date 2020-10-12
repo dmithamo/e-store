@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
 import ErrorPage from '../../common/components/ErrorPage';
 import Table from '../../common/components/Table';
 import { RootState } from '../../common/store/rootReducer';
@@ -10,6 +9,7 @@ import { format } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TableActions } from '../../common/components/Table/types';
 import { User } from '../auth/utils/stateMgmt';
+import AdminViewWrapper from './AdminViewWrapper';
 
 const ManageAccounts: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -202,13 +202,10 @@ const ManageAccounts: React.FC = (): JSX.Element => {
     },
   ];
   return (
-    <StyledManageAccounts>
-      <h2>Users</h2>
+    <AdminViewWrapper header="users">
       <Table tableActions={actions} tableColumns={columns} tableData={users} />
-    </StyledManageAccounts>
+    </AdminViewWrapper>
   );
 };
-
-const StyledManageAccounts = styled.div``;
 
 export default ManageAccounts;

@@ -48,7 +48,8 @@ export const makeFakeProduct = (num: number): ShopItem[] => {
       category: faker.commerce.department(),
       quantityAvailable: 10,
       dateAvailable: i % 3 === 0 ? faker.date.past() : new Date(),
-      img: faker.image.image(),
+      avatar: faker.image.image(),
+      userID: faker.git.commitSha(),
     };
     products.push(p);
     i--;

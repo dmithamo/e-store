@@ -4,9 +4,11 @@ import SignInForm from '../auth/SignInForm';
 import CheckoutPage from '../checkout-page/CheckOut';
 import LandingPage from '../landing-page/LandingPage';
 import NoNavbar from '../../common/components/layouts/NoNavbar';
+import WithSidebar from '../../common/components/layouts/WithSidebar';
 import ProfilePage from '../profile-page/Profile';
 import ShopFront from '../shop-front/ShopFront';
 import WorkingOnIT from '../TempPage';
+import ManageProducts from '../admin/ManageProducts';
 
 type Route = {
   path: string;
@@ -103,7 +105,7 @@ const allTheRoutes: Route[] = [
     pageTitle: 'products',
     needsAuth: true,
     adminOnly: true,
-    component: WorkingOnIT,
+    component: ManageProducts,
   },
 ];
 

@@ -29,13 +29,13 @@ const GroupActionsContainer: React.FC<GAProps> = ({
         top: '0',
         width: '100%',
         height: '100vh',
-        background: 'var(--lightBlack)',
+        background: 'var(--overlayBlack)',
         zIndex: 999,
       }}
     >
       <StyledGAContainer>
         <div className="header">
-          <h2>Work on multiple items</h2>
+          <h2>{`${data.length} selected items `}</h2>
           <Button
             classes="close-btn"
             category="outline"
@@ -49,7 +49,7 @@ const GroupActionsContainer: React.FC<GAProps> = ({
         </div>
         <div className="selected-items">
           {data.map((d: any) => (
-            <div className="item">
+            <div key={d[primaryColumn.accessor]} className="item">
               <p>{d[primaryColumn.accessor]}</p>
               <FontAwesomeIcon
                 onClick={() => {
@@ -62,8 +62,17 @@ const GroupActionsContainer: React.FC<GAProps> = ({
           ))}
         </div>
         <div className="actions">
-          <h2>ACTIONS</h2>
-          <pre>{JSON.stringify(actions, null, 4)}</pre>
+          {actions
+            .filter((action) => (data.length > 1 ? action.allowBulk : action))
+            .map((action) => (
+              <Button
+                alignCenter
+                key={action.name}
+                category="primary"
+                onClick={() => action.onClick(data)}
+                value={action.name}
+              />
+            ))}
         </div>
       </StyledGAContainer>
     </div>
@@ -76,9 +85,13 @@ const StyledGAContainer = styled.div`
   left: 12.5%;
   z-index: 1000;
   width: 75%;
-
+  height: 60vh;
   background-color: var(--white);
   box-shadow: var(--subtleShadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
 
   div {
     padding: 2em;
@@ -99,6 +112,7 @@ const StyledGAContainer = styled.div`
 
   div.selected-items {
     width: 100%;
+    padding: 4em;
     overflow: auto;
     display: grid;
     grid-template-columns: repeat(10, 1fr);
@@ -106,7 +120,7 @@ const StyledGAContainer = styled.div`
 
     div.item {
       width: 250px;
-      background-color: var(--grey);
+      background-color: var(--veryLightBlack);
       padding: 1em 1.2em;
 
       border-radius: 20px;
@@ -122,6 +136,8 @@ const StyledGAContainer = styled.div`
       p {
         width: 80%;
         margin-right: 1em;
+        font-weight: bold;
+        font-size: 0.9em;
       }
 
       svg.close-btn {
@@ -136,7 +152,17 @@ const StyledGAContainer = styled.div`
   }
 
   div.actions {
+    background-color: var(--grey);
     display: flex;
+    justify-content: space-around;
+    padding: 2em;
+    margin-top: 2em;
+    width: 100%;
+    overflow: auto;
+    span.button {
+      margin: 1em;
+      width: 20%;
+    }
   }
 `;
 export default GroupActionsContainer;

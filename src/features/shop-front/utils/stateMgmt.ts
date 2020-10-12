@@ -17,7 +17,8 @@ export type ShopItem = {
   category: string;
   quantityAvailable: number;
   dateAvailable: Date;
-  img: string;
+  avatar: string;
+  userID: string;
 };
 
 export type InCartItem = {

@@ -28,12 +28,13 @@
   --textBlack: #00000095;
   --lightBlack: #00000075;
   --veryLightBlack: #00000025;
+  --overlayBlack: #414141c7;
   --navyBlue: rgb(2, 34, 56);
   --white: #fff;
   --offWhite: #fffffff1;
+  --veryGrey: #11111125;
   --grey: #ccc;
-  --lightGrey: #cccccc50;
-  --veryLightGrey: #cccccc25;
+  --lightGrey: #ccccccbe;
   --primaryBlue: #048cbc;
   --primaryBlueDarker: #057fac;
   --primaryLime: #c7db18;

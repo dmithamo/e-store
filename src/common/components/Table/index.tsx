@@ -131,7 +131,7 @@ const Table: React.FC<TableProps> = ({
     <StyledTable>
       {showOptions ? (
         <GroupActionsContainer
-          actions={tableActions.filter((action) => action.allowBulk)}
+          actions={tableActions}
           data={
             tableSelection.has(ALL_ROWS)
               ? tableData
@@ -216,7 +216,7 @@ const Table: React.FC<TableProps> = ({
 
 const StyledTable = styled.div`
   position: relative;
-  width: 80%;
+  width: 100%;
   margin: auto;
 
   @media (max-width: ${breakpoints.smallLaptop}) {

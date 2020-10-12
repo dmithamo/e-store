@@ -37,6 +37,7 @@ const StyledShopFrontWrapper = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
+  padding: 2em 4em;
 
   section.product-rows {
     flex-grow: 1;

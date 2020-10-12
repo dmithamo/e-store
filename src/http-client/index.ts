@@ -132,8 +132,9 @@ function tempFetchItemsBeforeApiIsLive(path: string) {
       category: 'Electronics',
       quantityAvailable: 5,
       dateAvailable: new Date(),
-      img:
+      avatar:
         'https://static.bhphoto.com/images/multiple_images/images2500x2500/1580213746_IMG_1310300.jpg',
+      userID: '111-222-333-444-555',
     },
     {
       id: '0000-111-222-333-441',
@@ -142,8 +143,9 @@ function tempFetchItemsBeforeApiIsLive(path: string) {
       category: 'Electronics',
       quantityAvailable: 5,
       dateAvailable: new Date(),
-      img:
+      avatar:
         'https://www.sony.com/image/465f8a49b9faee76afee2d2e0d84ed80?fmt=pjpeg&bgcolor=FFFFFF&bgc=FFFFFF&wid=2515&hei=1320',
+      userID: '111-222-333-444-555',
     },
     {
       id: '0000-111-222-333-442',
@@ -152,7 +154,8 @@ function tempFetchItemsBeforeApiIsLive(path: string) {
       category: 'Kitchenware',
       quantityAvailable: 2,
       dateAvailable: new Date(),
-      img: 'https://d12prgon3aw7l1.cloudfront.net/6785337_iv2_673x711.jpg',
+      avatar: 'https://d12prgon3aw7l1.cloudfront.net/6785337_iv2_673x711.jpg',
+      userID: '111-222-333-444-550',
     },
     {
       id: '0000-111-222-333-443',
@@ -161,7 +164,8 @@ function tempFetchItemsBeforeApiIsLive(path: string) {
       category: 'Electronics',
       quantityAvailable: 2,
       dateAvailable: addDays(new Date(), 3),
-      img: 'https://miro.medium.com/max/602/1*XXMZyObfljLWDk0QJLmtbA.png',
+      avatar: 'https://miro.medium.com/max/602/1*XXMZyObfljLWDk0QJLmtbA.png',
+      userID: '111-222-333-444-556',
     },
     {
       id: '0000-111-222-333-445',
@@ -170,8 +174,9 @@ function tempFetchItemsBeforeApiIsLive(path: string) {
       category: 'Electronics',
       quantityAvailable: 2,
       dateAvailable: addDays(new Date(), 14),
-      img:
+      avatar:
         'https://s3-eu-west-1.amazonaws.com/media.santu.com/92/drill1_12458962984411.jpg',
+      userID: '111-222-333-444-551',
     },
 
     {
@@ -181,8 +186,9 @@ function tempFetchItemsBeforeApiIsLive(path: string) {
       category: 'Furniture',
       quantityAvailable: 200,
       dateAvailable: addDays(new Date(), 14),
-      img:
+      avatar:
         'https://cdn.ambientedirect.com/chameleon/mediapool/thumbs/c/6e/Knoll-International_Saarinen-Conference-Stuhl-Gestell-Walnuss_863x863-ID1948494-401b8190e334205ea8e842bd1b4a3770.jpg',
+      userID: '111-222-333-444-553',
     },
   ];
 
