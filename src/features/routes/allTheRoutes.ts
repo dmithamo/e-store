@@ -1,5 +1,5 @@
 import ManageAccounts from '../admin/ManageAccounts';
-import CreateAccountPage from '../auth/CreateAccountPage';
+import CreateAccountPage from '../auth/CreateAccountForm/CreateAccountPage';
 import SignInForm from '../auth/SignInForm';
 import CheckoutPage from '../checkout-page/CheckOut';
 import LandingPage from '../landing-page/LandingPage';

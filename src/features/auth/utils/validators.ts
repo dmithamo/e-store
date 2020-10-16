@@ -10,15 +10,11 @@ export default function validateCredentials(
     name: string;
     type: string;
   }[],
-) {
+): Errors {
   let errs: Errors = {};
 
   errs = credentials.reduce((errors, cred) => {
-    if (
-      !IS_VALID_INPUT[cred.name === 'password' ? 'password' : cred.type](
-        cred.value,
-      )
-    ) {
+    if (!IS_VALID_INPUT[cred.type](cred.value)) {
       errors = {
         ...errors,
         [cred.name]: checkIsEmptyHelper(cred.value, cred.name),

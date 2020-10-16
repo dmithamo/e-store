@@ -1,5 +1,5 @@
 import api from '../../../http-client';
-import { Credentials } from '../CreateAccountPage';
+import { Credentials } from '../CreateAccountForm/CreateAccountPage';
 
 /**
  * @description Create a new account with given credentials

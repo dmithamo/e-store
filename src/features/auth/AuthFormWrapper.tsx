@@ -78,14 +78,6 @@ const StyledAuthFormWrapper = styled.div`
       label {
         margin-bottom: 2em;
       }
-
-      div.buttons {
-        width: 100%;
-        margin: auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
     }
     div.redirect {
       margin-top: 3em;
