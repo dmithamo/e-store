@@ -15,6 +15,7 @@ export default function Routes() {
             exact
             component={r.component}
             needsAuth={r.needsAuth}
+            adminOnly={r.adminOnly}
             customLayout={r?.customLayout || null}
             pageTitle={r.pageTitle}
           />
@@ -26,6 +27,7 @@ export default function Routes() {
           key="404"
           path="*"
           exact={false}
+          adminOnly={false}
           component={NotFound}
           pageTitle="404"
         />

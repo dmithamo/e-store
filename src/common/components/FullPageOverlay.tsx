@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import BackgroudImage from '../../assets/shopping-cart.jpg';
+import BackgroudImage from '../../assets/img/shopping-cart.jpg';
 
 type FullPageOverlayProps = {
   children: JSX.Element | JSX.Element[];
@@ -25,6 +25,10 @@ FullPageOverlay.defaultProps = {
 };
 
 const NoImageWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
   height: 100vh;
   width: 100%;
   display: flex;

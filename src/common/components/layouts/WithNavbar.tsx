@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Navbar from '../navbar/Navbar';
+import Navbar from '../../../features/navbar/Navbar';
 
 export type WithNavbarProps = {
   children: JSX.Element[] | JSX.Element;
@@ -22,5 +22,7 @@ const StyledWithNavbar = styled.div`
   flex-direction: column;
   section {
     flex-grow: 1;
+    width: 100%;
+    overflow: auto;
   }
 `;

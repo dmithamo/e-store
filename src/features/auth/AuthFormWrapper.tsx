@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import colors from '../../assets/colors';
 import FullPageOverlay from '../../common/components/FullPageOverlay';
 import InfoBanner from './InfoBanner';
 
@@ -29,8 +28,8 @@ const StyledAuthFormWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${colors.primary};
-  box-shadow: 0 0 5px 3px ${colors.veryLightBlack};
+  background-color: var(--primaryBlue);
+  box-shadow: 0 0 5px 3px var(--veryLightBlack);
   border-radius: 15px;
 
   div.container {
@@ -41,7 +40,7 @@ const StyledAuthFormWrapper = styled.div`
   }
 
   div.auth-form {
-    background-color: ${colors.white};
+    background-color: var(--white);
     padding: 2em;
     display: flex;
     flex-direction: column;

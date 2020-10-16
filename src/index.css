@@ -22,19 +22,51 @@
     url('./assets/fonts/Poppins-Black.ttf') format('truetype');
 }
 
+:root {
+  /* colors */
+  --black: #040404;
+  --textBlack: #00000095;
+  --lightBlack: #00000075;
+  --veryLightBlack: #00000025;
+  --overlayBlack: #414141c7;
+  --navyBlue: rgb(2, 34, 56);
+  --white: #fff;
+  --offWhite: #fffffff1;
+  --veryGrey: #11111125;
+  --grey: #ccc;
+  --lightGrey: #ccccccbe;
+  --primaryBlue: #048cbc;
+  --primaryBlueDarker: #057fac;
+  --primaryLime: #c7db18;
+  --primaryLimeDarker: #96a50e;
+  --red: #ff0000;
+
+  /* shadows */
+  --subtleShadow: 0 0 4px 2px var(--veryLightBlack);
+  --subtleShadow2: 0 0 1px 1px var(--lightBlack);
+
+  /* fonts shorthand*/
+  --primaryLight: 'Poppins-Light';
+  --primaryRegular: 'Poppins-Regular';
+  --primaryBold: 'Poppins-Bold';
+  --primaryVeryBold: 'Poppins-Black';
+}
+
 body {
   padding: 0;
   margin: 0;
   width: 100%;
   font-size: 12px;
-  background-color: #b1b1b186;
-  color: #3a3a3a;
+  background-color: var(--grey);
+  color: var(--textBlack);
 }
 
 * {
   margin: 0;
   box-sizing: border-box !important;
-  font-family: 'Poppins-Light';
+  font-family: var(--primaryLight);
+
+  transition: all 0.1s ease-out;
 }
 
 .title {

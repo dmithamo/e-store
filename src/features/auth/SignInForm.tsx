@@ -6,9 +6,9 @@ import { Redirect, useHistory } from 'react-router-dom';
 import Button from '../../common/components/Button';
 import Input from '../../common/components/Input';
 import { RootState } from '../../common/store/rootReducer';
-import HTTPClient from '../../http-client';
 import AuthFormWrapper from './AuthFormWrapper';
-import { loginUserSuccess } from './utils/stateMgmt';
+import { signIn } from './utils/businessLogic';
+import { loginUserSuccess, loginUserFailure } from './utils/stateMgmt';
 import validateCredentials from './utils/validators';
 
 type SignInFormProps = {};
@@ -31,7 +31,9 @@ const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
     password: '',
   });
 
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const {
+    user: { isLoggedIn, role },
+  } = useSelector((state: RootState) => state.auth);
 
   function handleInput(e: FormEvent) {
     const { name, value } = e.target as HTMLTextAreaElement;
@@ -73,18 +75,12 @@ const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
     if (formIsValid) {
       try {
         setIsLoading(true);
-        const res = await HTTPClient.post('/auth', credentials);
+        const [isSuccessfullySignedIn, res] = await signIn(credentials);
         setIsLoading(false);
-        if (res.status === 201) {
-          dispatch(
-            loginUserSuccess({
-              email: res.data.email,
-              avatar: '',
-              phoneNumber: res.data.phoneNumber,
-              userID: res.data.userID,
-            }),
-          );
-          return;
+        if (isSuccessfullySignedIn) {
+          dispatch(loginUserSuccess(res));
+        } else {
+          dispatch(loginUserFailure(res));
         }
       } catch (error) {
         setIsLoading(false);
@@ -96,8 +92,8 @@ const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
     return <p>Loading ...</p>;
   }
 
-  if (isAuthenticated) {
-    return <Redirect to="/" />;
+  if (isLoggedIn) {
+    return <Redirect to={role === 'ADMIN' ? '/admin/accounts' : '/shop'} />;
   }
 
   return (
@@ -116,7 +112,7 @@ const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
             required
             type="email"
             name="email"
-            placeholder="eg johnlark@email.com"
+            placeholder="eg dmuthoni@email.com"
             label="Email address"
             value={credentials.email}
             onChange={(e: FormEvent) => {

@@ -7,8 +7,8 @@ import Button from '../../common/components/Button';
 import Input from '../../common/components/Input';
 import { RootState } from '../../common/store/rootReducer';
 import AuthFormWrapper from './AuthFormWrapper';
-import ConfirmAccountPage from './ConfirmAccountPage';
-import { createAccount } from './utils/nwRequests';
+import VerifyAccountPage from './VerifyAccountPage';
+import { createAccount } from './utils/businessLogic';
 import { registerUserFail, registerUserSuccess } from './utils/stateMgmt';
 import validateCredentials from './utils/validators';
 
@@ -56,7 +56,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
     repeatPassword: '',
   });
 
-  const { isAuthenticated, isRegistered, isConfirmed, error } = useSelector(
+  const { user, isRegistered, error } = useSelector(
     (state: RootState) => state.auth,
   );
 
@@ -138,7 +138,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
         if (createdSuccessfully) {
           dispatch(
             registerUserSuccess({
-              email: res.data.email,
+              email: res.email,
               phoneNumber: credentials.phoneNumber,
             }),
           );
@@ -152,7 +152,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
         setIsLoading(false);
       } catch (err) {
         setIsLoading(false);
-        console.log(err, '<<<ERROR AT CREATE AC');
+        registerUserFail({ error: err });
       }
     }
   }
@@ -161,11 +161,11 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
     return <p>Loading ...</p>;
   }
 
-  if (isRegistered && !isConfirmed) {
-    return <ConfirmAccountPage />;
+  if (isRegistered && !user.isVerified) {
+    return <VerifyAccountPage />;
   }
 
-  if (isAuthenticated && isConfirmed) {
+  if (user.isVerified) {
     return <Redirect to="/" />;
   }
 
@@ -210,7 +210,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
               required
               type="text"
               name="firstName"
-              placeholder="eg John"
+              placeholder="eg Deniece"
               label="First name"
               value={credentials.firstName}
               onChange={(e: FormEvent) => {
@@ -222,7 +222,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
               required
               type="text"
               name="lastName"
-              placeholder="eg Lark"
+              placeholder="eg Muthoni"
               label="Last name"
               value={credentials.lastName}
               onChange={(e: FormEvent) => {
@@ -264,7 +264,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
               required
               type="email"
               name="email"
-              placeholder="eg johnlark@email.com"
+              placeholder="eg dmuthoni@email.com"
               label="Email address"
               value={credentials.email}
               onChange={(e: FormEvent) => {

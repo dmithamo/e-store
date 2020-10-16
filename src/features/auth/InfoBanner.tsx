@@ -1,7 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import colors from '../../assets/colors';
 import Button from '../../common/components/Button';
 
 const InfoBanner: React.FC = () => {
@@ -34,7 +33,7 @@ const StyledInfoBanner = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  color: ${colors.white};
+  color: var(--white);
   padding: 2em;
   height: 100%;
   width: 100%;
@@ -44,7 +43,7 @@ const StyledInfoBanner = styled.div`
     font-size: 1.5em;
 
     span {
-      border-bottom: 5px solid ${colors.white};
+      border-bottom: 5px solid var(--white);
     }
   }
 

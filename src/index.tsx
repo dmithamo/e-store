@@ -4,10 +4,12 @@ import './assets/fonts/Poppins-Regular.ttf';
 import './assets/fonts/Poppins-Light.ttf';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { fab } from '@fortawesome/free-brands-svg-icons';
+import { fab, faCcVisa } from '@fortawesome/free-brands-svg-icons';
 import {
   faTimesCircle,
   faUserCircle,
+  faCircle,
+  faCheckCircle,
 } from '@fortawesome/free-regular-svg-icons';
 import {
   faArrowAltCircleLeft,
@@ -19,6 +21,24 @@ import {
   faShoppingCart,
   faSignOutAlt,
   faUserEdit,
+  faEnvelopeOpen,
+  faMobileAlt,
+  faCalendarAlt,
+  faPlusCircle,
+  faFastBackward,
+  faBackward,
+  faForward,
+  faFastForward,
+  faCheckCircle as filledCheckCircle,
+  faMinusCircle,
+  faDotCircle,
+  faUserShield,
+  faUserAlt,
+  faEllipsisV,
+  faEllipsisH,
+  faExternalLinkAlt,
+  faCartArrowDown,
+  faChartLine,
 } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -39,6 +59,27 @@ library.add(
   faTimesCircle,
   faSignOutAlt,
   faUserEdit,
+  faEnvelopeOpen,
+  faMobileAlt,
+  faCalendarAlt,
+  faCcVisa,
+  faPlusCircle,
+  faFastBackward,
+  faBackward,
+  faForward,
+  faFastForward,
+  faCheckCircle,
+  faMinusCircle,
+  faDotCircle,
+  faUserShield,
+  faUserAlt,
+  faEllipsisV,
+  faEllipsisH,
+  faCircle,
+  filledCheckCircle,
+  faExternalLinkAlt,
+  faCartArrowDown,
+  faChartLine,
 );
 
 const render = () => {

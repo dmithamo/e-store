@@ -1,6 +1,10 @@
 import api from '../../../http-client';
 import { Credentials } from '../CreateAccountPage';
 
+/**
+ * @description Create a new account with given credentials
+ * @param credentials object
+ */
 export async function createAccount(credentials: Credentials): Promise<any> {
   try {
     const res = await api.post('/auth', credentials);
@@ -38,4 +42,21 @@ export async function verifyAccount(
   }
 
   return [true, ''];
+}
+
+/**
+ * @description Sign in with given credentials
+ * @param credentials object
+ */
+export async function signIn(credentials: Partial<Credentials>): Promise<any> {
+  try {
+    const res = await api.post('/auth/sign-in', credentials);
+    if (res && res.status === 200) {
+      return [true, res.data];
+    }
+
+    return [false, res ? 'Server error' : 'Something went wrong'];
+  } catch (error) {
+    return [false, error];
+  }
 }

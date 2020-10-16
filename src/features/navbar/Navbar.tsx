@@ -1,7 +1,7 @@
-import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import colors from '../../assets/colors';
 import Button from '../../common/components/Button';
 import Logo from '../../common/components/Logo';
 import { breakpoints } from '../../common/constants';
@@ -9,33 +9,67 @@ import { RootState } from '../../common/store/rootReducer';
 import NavbarLink from './NavbarLink';
 import SearchBar from './SearchBar';
 import ShoppingCart from './ShoppingCart';
-import UserAvatar from './UserAvatar';
+import UserDetails from './UserDetails';
 
 export default function Navbar() {
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const [isUploading, setIsUploading] = useState(false);
+  const {
+    user: { isLoggedIn, role },
+  } = useSelector((state: RootState) => state.auth);
+
+  const isAdmin = role === 'ADMIN';
   return (
-    <StyledNavbar>
-      <div className="navbar-item home">
-        <NavbarLink path="/">
-          <Logo />
-        </NavbarLink>
-      </div>
-      <div className="navbar-item">
-        <SearchBar />
-      </div>
-      <div className="navbar-item">
-        {isAuthenticated ? (
-          <>
-            <ShoppingCart />
-            <UserAvatar />
-          </>
-        ) : (
-          <NavbarLink path="/sign-up">
-            <Button category="primary" value="Get started" onClick={() => {}} />
+    <>
+      <StyledNavbar>
+        <div className="navbar-item home">
+          <NavbarLink path={isAdmin ? '/admin/accounts' : '/shop'}>
+            <Logo />
           </NavbarLink>
-        )}
-      </div>
-    </StyledNavbar>
+        </div>
+        <div className="navbar-item">
+          <SearchBar />
+        </div>
+        <div className="navbar-item">
+          {isLoggedIn ? (
+            <>
+              {!isAdmin ? (
+                <div style={{ width: '150px' }}>
+                  <Button
+                    category="primary"
+                    onClick={() => {
+                      setIsUploading(true);
+                    }}
+                  >
+                    <FontAwesomeIcon icon="plus-circle" />
+                    <span>Upload an item</span>
+                  </Button>
+                </div>
+              ) : (
+                <></>
+              )}
+
+              {!isAdmin ? <ShoppingCart /> : <></>}
+              <UserDetails />
+            </>
+          ) : (
+            <>
+              <NavbarLink path="/sign-in">
+                <Button category="link" value="Sign in" onClick={() => {}} />
+              </NavbarLink>
+              <NavbarLink path="/sign-up">
+                <Button
+                  category="primary"
+                  value="Get started"
+                  onClick={() => {}}
+                />
+              </NavbarLink>
+            </>
+          )}
+        </div>
+      </StyledNavbar>
+
+      {isUploading && <p>Uploading all the things </p>}
+    </>
   );
 }
 
@@ -46,12 +80,24 @@ const StyledNavbar = styled.nav`
   align-items: center;
   height: 6vh;
   width: 100%;
-  background-color: ${colors.white};
+  background-color: var(--white);
+
+  position: sticky;
+  top: 0;
+  z-index: 800;
 
   div.navbar-item {
     display: flex;
     align-items: center;
     margin: 0;
+
+    svg.navbar-icon {
+      color: var(--black);
+      font-size: 2em;
+      :hover {
+        color: var(--primaryBlueDarker);
+      }
+    }
   }
 
   p.home {

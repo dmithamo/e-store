@@ -1,35 +1,45 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-type AuthState = {
+export interface User {
   email: string;
   phoneNumber: string;
+  firstName: string;
+  lastName: string;
   avatar: string;
   userID: string;
-  isAuthenticated: boolean;
+  address: string;
+  role: 'ADMIN' | 'NORMAL';
+  created: Date;
+  isVerified: boolean;
+  isLoggedIn: boolean;
+}
+
+interface AuthState {
+  user: User;
   isRegistered: boolean;
-  isConfirmed: boolean;
   error: any;
-};
+}
 
 type AuthAction = {
   type: string;
-  // payload: {
-  //   email: string;
-  //   phoneNumber: string;
-  //   avatar?: string;
-  //   userID?: string;
-  // };
   payload: any;
 };
 
 export const initialState: AuthState = {
-  email: '',
-  avatar: '',
-  phoneNumber: '',
-  userID: '',
-  isAuthenticated: false,
+  user: {
+    email: '',
+    phoneNumber: '',
+    firstName: '',
+    lastName: '',
+    avatar: '',
+    userID: '',
+    address: '',
+    role: 'NORMAL',
+    created: new Date(),
+    isVerified: false,
+    isLoggedIn: false,
+  },
   isRegistered: false,
-  isConfirmed: false,
   error: false,
 };
 
@@ -39,32 +49,34 @@ const authState = createSlice({
   reducers: {
     registerUserSuccess(state: AuthState, { payload }: AuthAction) {
       state.isRegistered = true;
-      state.email = payload.email;
+      state.user = payload;
     },
 
     registerUserFail(state: AuthState, { payload }: AuthAction) {
       state.error = payload;
     },
 
-    confirmAccountSuccess(state: AuthState, { payload }: AuthAction) {
-      state.isConfirmed = true;
-      state.email = payload.email;
+    verifyAccountSuccess(state: AuthState, { payload }: AuthAction) {
+      state.user.isVerified = true;
+      state.user = payload;
+    },
+
+    verifyAccountCancel(state: AuthState) {
+      state.user = initialState.user;
+      state.isRegistered = false;
     },
 
     loginUserSuccess(state: AuthState, { payload }: AuthAction) {
-      state.isAuthenticated = true;
-      state.email = payload.email;
-      state.avatar = payload.avatar || '';
-      state.phoneNumber = payload.phoneNumber;
-      state.userID = payload.userID || '';
+      state.user = payload;
+      state.user.isLoggedIn = true;
+    },
+
+    loginUserFailure(state: AuthState, { payload }: AuthAction) {
+      state.error = payload;
     },
 
     logoutUserSuccess(state: AuthState) {
-      state.isAuthenticated = false;
-      state.email = initialState.email;
-      state.avatar = initialState.avatar;
-      state.phoneNumber = initialState.phoneNumber;
-      state.userID = initialState.userID;
+      state.user = initialState.user;
     },
   },
 });
@@ -72,9 +84,11 @@ const authState = createSlice({
 export const {
   registerUserSuccess,
   registerUserFail,
-  confirmAccountSuccess,
+  verifyAccountSuccess,
   loginUserSuccess,
+  loginUserFailure,
   logoutUserSuccess,
+  verifyAccountCancel,
 } = authState.actions;
 
 export default authState.reducer;

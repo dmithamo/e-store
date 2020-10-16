@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useRef, useState } from 'react';
+import { useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
-import colors from '../../assets/colors';
 
 type DropDownMenuProps = {
   icon: () => JSX.Element | JSX.Element[];
@@ -12,11 +12,16 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({
   icon,
   children,
 }: DropDownMenuProps): JSX.Element => {
+  const routeProps = useRouteMatch();
   const [showMenu, setShowMenu] = useState(false);
   const node = useRef<HTMLDivElement>(null);
 
   const handleClick = (e: any) => {
-    if (!node.current?.contains(e.target)) {
+    const isCurrentPage = routeProps.path.includes(
+      e.target?.textContent?.toLowerCase(),
+    );
+
+    if (!node.current?.contains(e.target) || isCurrentPage) {
       setShowMenu(false);
     }
   };
@@ -67,32 +72,37 @@ const StyledDropDownMenu = styled.div`
 
   svg.close-icon {
     position: absolute;
-    top: 1.9em;
+    top: 1.5em;
     right: 1em;
-    font-size: 1.5em;
+    font-size: 2em;
     cursor: pointer;
     z-index: 3;
-    opacity: 0.6;
     font-weight: normal;
+    color: var(--veryLightBlack);
     :hover {
-      opacity: 1;
+      color: var(--black);
     }
   }
 
   div.hidden-menu {
-    padding: 1.5em;
+    padding: 1.5em 2.5em;
     position: absolute;
     top: 2em;
     right: 1em;
-    background-color: ${colors.white};
-    box-shadow: 0 0 2px 2px ${colors.darkGrey};
+    background-color: var(--white);
+    box-shadow: var(--subtleShadow);
     width: 300px;
+    height: 35vh;
     border-radius: 5px;
+    z-index: 2;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    z-index: 2;
+    justify-content: space-evenly;
+    align-items: center;
+
+    h2 {
+      font-size: 1.6em;
+    }
   }
 `;
 

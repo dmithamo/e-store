@@ -2,7 +2,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import colors from '../../assets/colors';
 import { breakpoints } from '../../common/constants';
 
 export type NavbarLinkProps = {
@@ -19,7 +18,7 @@ export default function NavbarItem({ path, children }: NavbarLinkProps) {
 
 const StyledNavbarItem = styled(NavLink)`
   text-decoration: none;
-  color: ${colors.black};
+  color: var(--black);
   display: flex;
   justify-content: center;
   align-items: center;

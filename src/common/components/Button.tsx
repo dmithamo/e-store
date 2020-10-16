@@ -1,18 +1,18 @@
 /* eslint-disable react/button-has-type */
 import React from 'react';
 import styled from 'styled-components';
-import colors from '../../assets/colors';
 
 type ButtonProps = {
   // eslint-disable-next-line no-unused-vars
   onClick: (e: any) => void;
   type?: 'button' | 'submit';
-  category?: string;
+  category?: 'primary' | 'secondary' | 'outline' | 'link';
   value?: string;
   children?: JSX.Element | JSX.Element[] | null;
   title?: string;
   disabled?: boolean;
   alignCenter?: boolean;
+  classes?: string;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -24,11 +24,12 @@ const Button: React.FC<ButtonProps> = ({
   title,
   disabled,
   alignCenter,
+  classes,
 }: ButtonProps): JSX.Element => (
-  <StyledButton>
+  <StyledButton className="button">
     <button
       title={title}
-      className={`${category} ${disabled ? 'disabled' : ''}`}
+      className={`${classes} ${category} ${disabled ? 'disabled' : ''}`}
       onClick={onClick}
       type={type}
       value={value}
@@ -48,19 +49,18 @@ Button.defaultProps = {
   children: null,
   disabled: false,
   alignCenter: false,
+  classes: '',
 };
 
 const StyledButton = styled.span`
-  width: fit-content;
   width: 100%;
   button {
-    padding: 0.9em 1.1em;
+    padding: 0.85em 1.1em;
     font-size: 1em;
     font-weight: bolder;
     outline: none;
     border-radius: 5px;
     cursor: pointer;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -72,58 +72,66 @@ const StyledButton = styled.span`
   }
 
   button.primary {
-    color: ${colors.white};
-    background-color: ${colors.primary};
-    border: 1px solid ${colors.veryLightBlack};
+    color: var(--white);
+    background-color: var(--primaryBlue);
+    border: 1px solid var(--veryLightBlack);
 
     :hover {
-      background-color: ${colors.primaryDarker};
+      background-color: var(--primaryBlueDarker);
     }
   }
 
   button.secondary {
     font-weight: normal;
-    color: ${colors.black};
-    background-color: ${colors.white};
-    border: 1px solid ${colors.veryLightBlack};
+    color: var(--black);
+    background-color: var(--white);
+    border: 1px solid var(--veryLightBlack);
 
     :hover {
-      background-color: ${colors.lightGrey};
-      border: 1px solid ${colors.black};
-      color: ${colors.black};
+      background-color: var(--lightGrey);
+      border: 1px solid var(--black);
+      color: var(--black);
     }
   }
 
   button.outline {
     background: none;
-    color: ${colors.white};
-    border: 1px solid ${colors.white};
+    color: var(--white);
+    border: 1px solid var(--white);
 
     :hover {
-      background-color: ${colors.white};
-      border: 1px solid ${colors.white};
-      color: ${colors.black};
+      background-color: var(--white);
+      border: 1px solid var(--white);
+      color: var(--black);
+    }
+  }
+
+  button.selected {
+    background-color: var(--white);
+    border: 1px solid var(--white);
+    color: var(--black);
+    .checkmark {
+      color: var(--primaryBlue);
+      padding: 0 1em;
     }
   }
 
   button.link {
     padding: 0;
     background: none;
-    color: ${colors.lightBlack};
+    color: var(--lightBlack);
     border: none;
 
     :hover {
-      color: ${colors.black};
+      color: var(--black);
     }
   }
 
   button.disabled {
     cursor: not-allowed;
-    color: ${colors.grey};
-    background-color: ${colors.lightGrey};
+    opacity: 0.55;
     :hover {
-      color: ${colors.grey};
-      background-color: ${colors.lightGrey};
+      opacity: 0.56;
     }
   }
 `;
