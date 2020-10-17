@@ -43,16 +43,7 @@ export default function VerifyAccountPage() {
       subtitle="Safety first!"
       primaryAction={handleSubmit}
       primaryActionName="Verify Account"
-      secondaryAction={handleCancel}
-      secondaryActionName="Cancel and login instead"
     >
-      <p>
-        In order to keep&nbsp;
-        <strong>hae</strong>
-        &nbsp; safe and reliable, we need to verify your account before you can
-        use it.
-      </p>
-
       <p>
         <strong>
           Enter the confirmation code sent to your email adress to verify your
@@ -63,8 +54,8 @@ export default function VerifyAccountPage() {
       <Input
         required
         type="text"
-        name="email"
-        placeholder="eg an@other.com"
+        name="confirmationCode"
+        placeholder="eg 000000"
         label="Confirmation code"
         value={confirmCode}
         onChange={handleInput}

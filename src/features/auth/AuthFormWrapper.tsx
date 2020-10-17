@@ -49,7 +49,7 @@ const AuthFormWrapper: React.FC<AuthFormWrapperProps> = ({
               {error && (
                 <div className="errors">
                   <InlineError
-                    error={error.message}
+                    error={error.message || error}
                     onClose={() => {
                       onCloseErrorBox();
                     }}

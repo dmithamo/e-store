@@ -21,12 +21,12 @@ const CAPageThree: React.FC<CAPageThreeProps> = ({
 }: CAPageThreeProps): JSX.Element => {
   type ValidationErrors = {
     dob: string;
-    nationalID: string;
+    nationalId: string;
     gender: string;
   };
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({
     dob: '',
-    nationalID: '',
+    nationalId: '',
     gender: '',
   });
   const [isValidPageThree, setIsValidPageThree] = useState(true);
@@ -50,9 +50,9 @@ const CAPageThree: React.FC<CAPageThreeProps> = ({
     const errs = validateCredentials([
       { name: 'dob', type: 'date', value: credentials.dob || '' },
       {
-        name: 'nationalID',
-        type: 'nationalID',
-        value: credentials.nationalID || '',
+        name: 'nationalId',
+        type: 'nationalId',
+        value: credentials.nationalId || '',
       },
       {
         name: 'gender',
@@ -61,7 +61,7 @@ const CAPageThree: React.FC<CAPageThreeProps> = ({
       },
     ]);
 
-    if (errs.dob === '' && errs.nationalID === '' && errs.gender === '') {
+    if (errs.dob === '' && errs.nationalId === '' && errs.gender === '') {
       onClickNext(0, credentials);
       return;
     }
@@ -72,13 +72,13 @@ const CAPageThree: React.FC<CAPageThreeProps> = ({
     });
 
     setIsValidPageThree(
-      errs.dob === '' && errs.nationalID === '' && errs.gender === '',
+      errs.dob === '' && errs.nationalId === '' && errs.gender === '',
     );
   }
 
   const genderOptions = [
-    { label: 'Female', value: 'female' },
-    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'FEMALE' },
+    { label: 'Male', value: 'MALE' },
   ];
   return (
     <>
@@ -98,14 +98,14 @@ const CAPageThree: React.FC<CAPageThreeProps> = ({
       <Input
         required
         type="text"
-        name="nationalID"
+        name="nationalId"
         placeholder="eg 30002345"
         label="National ID"
-        value={credentials.nationalID || ''}
+        value={credentials.nationalId || ''}
         onChange={(e: FormEvent) => {
           handleInput(e);
         }}
-        error={validationErrors.nationalID}
+        error={validationErrors.nationalId}
       />
       <CustomSelect
         name="gender"

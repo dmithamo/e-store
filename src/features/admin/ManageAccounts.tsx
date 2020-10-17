@@ -66,14 +66,14 @@ const ManageAccounts: React.FC = (): JSX.Element => {
     {
       align: 'left',
       Header: 'Phone No.',
-      accessor: 'phoneNumber',
+      accessor: 'mobileNumber',
     },
     {
       align: 'center',
       Header: 'User Type',
-      accessor: 'role',
-      modifier: (value: string) => {
-        const isAdmin = value === 'ADMIN';
+      accessor: 'roleId',
+      modifier: (value: number) => {
+        const isAdmin = value === 1;
         return (
           <span
             style={{

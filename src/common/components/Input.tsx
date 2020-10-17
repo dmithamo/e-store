@@ -108,7 +108,8 @@ const StyledInputWithLabel = styled.label`
       font-size: 1.5em;
       padding: 0.1em;
       position: absolute;
-      right: 5px;
+      top: 12px;
+      right: 10px;
       cursor: pointer;
       color: var(--lightBlack);
       :hover {

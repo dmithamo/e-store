@@ -14,10 +14,10 @@ import UserDetails from './UserDetails';
 export default function Navbar() {
   const [isUploading, setIsUploading] = useState(false);
   const {
-    user: { isLoggedIn, role },
+    user: { isLoggedIn, roleId },
   } = useSelector((state: RootState) => state.auth);
 
-  const isAdmin = role === 'ADMIN';
+  const isAdmin = roleId === 1;
   return (
     <>
       <StyledNavbar>

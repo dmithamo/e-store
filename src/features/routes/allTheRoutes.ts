@@ -9,6 +9,7 @@ import ShopFront from '../shop-front/ShopFront';
 import WorkingOnIT from '../TempPage';
 import ManageProducts from '../admin/ManageProducts';
 import Dashboard from '../admin/Dashboard';
+import VerifyAccountPage from '../auth/VerifyAccountPage';
 
 type Route = {
   path: string;
@@ -35,6 +36,14 @@ const allTheRoutes: Route[] = [
     needsAuth: false,
     adminOnly: false,
     component: SignInForm,
+    customLayout: NoNavbar,
+  },
+  {
+    path: '/verify-account',
+    pageTitle: 'verify account',
+    needsAuth: false,
+    adminOnly: false,
+    component: VerifyAccountPage,
     customLayout: NoNavbar,
   },
   {

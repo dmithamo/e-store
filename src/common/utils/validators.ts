@@ -66,7 +66,7 @@ const VALIDATORS = {
   tel: isValidPhoneNumber,
   confirmCode: isValidConfirmCode,
   date: isValidDate,
-  nationalID: isValidNationalID,
+  nationalId: isValidNationalID,
 };
 
 export default VALIDATORS;

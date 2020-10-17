@@ -15,12 +15,12 @@ export const makeFakeUsers = (num: number): User[] => {
     const u: User = {
       email: faker.internet.email(),
       address: faker.address.city(),
-      phoneNumber: faker.phone.phoneNumberFormat(0),
+      mobileNumber: faker.phone.phoneNumberFormat(0),
       firstName: faker.name.firstName(),
       lastName: faker.name.firstName(),
       avatar: faker.internet.avatar(),
       userID: faker.git.commitSha(),
-      role: i % 2 === 0 && i % 3 === 0 ? 'ADMIN' : 'NORMAL',
+      roleId: i % 2 === 0 && i % 3 === 0 ? 1 : 3,
       created: faker.date.between(
         subDays(new Date(), i + 1),
         subDays(new Date(), 60),

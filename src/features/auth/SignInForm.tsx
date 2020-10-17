@@ -36,7 +36,7 @@ const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
   });
 
   const {
-    user: { isLoggedIn, role },
+    user: { isLoggedIn, isVerified, roleId },
     error,
   } = useSelector((state: RootState) => state.auth);
 
@@ -94,8 +94,12 @@ const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
     }
   }
 
-  if (isLoggedIn) {
-    return <Redirect to={role === 'ADMIN' ? '/admin/accounts' : '/shop'} />;
+  if (isLoggedIn && isVerified) {
+    return <Redirect to={roleId === 1 ? '/admin/accounts' : '/shop'} />;
+  }
+
+  if (isLoggedIn && !isVerified) {
+    return <Redirect to="/verify-account" />;
   }
 
   const renderPageHelper = () => (

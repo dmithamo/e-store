@@ -2,13 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export interface User {
   email: string;
-  phoneNumber: string;
+  mobileNumber: string;
   firstName: string;
   lastName: string;
   avatar: string;
   userID: string;
   address: string;
-  role: 'ADMIN' | 'NORMAL';
+  roleId: 0 | 1 | 3; // 1: ADMIN 3: OTHERS
   created: Date;
   isVerified: boolean;
   isLoggedIn: boolean;
@@ -28,13 +28,13 @@ type AuthAction = {
 export const initialState: AuthState = {
   user: {
     email: '',
-    phoneNumber: '',
+    mobileNumber: '',
     firstName: '',
     lastName: '',
     avatar: '',
     userID: '',
     address: '',
-    role: 'NORMAL',
+    roleId: 0,
     created: new Date(),
     isVerified: false,
     isLoggedIn: false,

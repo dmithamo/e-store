@@ -52,7 +52,7 @@ export default function FullPageModal({
 }
 
 const StyledFullPageModal = styled.div`
-  box-shadow: 0 0 4px 4px var(--lightGrey);
+  box-shadow: 0 0 4px 4px var(--veryLightBlack);
   background-color: var(--white);
   border-radius: 10px;
   width: 650px;
@@ -99,9 +99,6 @@ const StyledFullPageModal = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    button {
-      margin: auto;
-    }
   }
 `;
 

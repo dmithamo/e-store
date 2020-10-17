@@ -8,7 +8,7 @@ import { Credentials } from '../CreateAccountForm/CreateAccountPage';
 export async function createAccount(credentials: Credentials): Promise<any> {
   try {
     const res = await api.post('/register', credentials);
-    if (res && res.status === 201) {
+    if (res && res.status === 200) {
       return [true, res.data];
     }
 

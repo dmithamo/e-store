@@ -18,12 +18,12 @@ const CAPageOne: React.FC<CAPAgeOneProps> = ({
   type ValidationErrors = {
     firstName: string;
     lastName: string;
-    phoneNumber: string;
+    mobileNumber: string;
   };
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({
     firstName: '',
     lastName: '',
-    phoneNumber: '',
+    mobileNumber: '',
   });
   const [isValidPageOne, setIsValidPageOne] = useState(true);
 
@@ -47,16 +47,16 @@ const CAPageOne: React.FC<CAPAgeOneProps> = ({
       { name: 'firstName', type: 'text', value: credentials.firstName || '' },
       { name: 'lastName', type: 'text', value: credentials.lastName || '' },
       {
-        name: 'phoneNumber',
+        name: 'mobileNumber',
         type: 'tel',
-        value: credentials.phoneNumber || '',
+        value: credentials.mobileNumber || '',
       },
     ]);
 
     if (
       errs.firstName === '' &&
       errs.lastName === '' &&
-      errs.phoneNumber === ''
+      errs.mobileNumber === ''
     ) {
       onClickNext(1, credentials);
       return;
@@ -68,7 +68,7 @@ const CAPageOne: React.FC<CAPAgeOneProps> = ({
     });
 
     setIsValidPageOne(
-      errs.firstName === '' && errs.lastName === '' && errs.phoneNumber === '',
+      errs.firstName === '' && errs.lastName === '' && errs.mobileNumber === '',
     );
   }
 
@@ -101,14 +101,14 @@ const CAPageOne: React.FC<CAPAgeOneProps> = ({
       <Input
         required
         type="tel"
-        name="phoneNumber"
+        name="mobileNumber"
         placeholder="eg 0700112233"
         label="Mobile number"
-        value={credentials.phoneNumber || ''}
+        value={credentials.mobileNumber || ''}
         onChange={(e: FormEvent) => {
           handleInput(e);
         }}
-        error={validationErrors.phoneNumber}
+        error={validationErrors.mobileNumber}
       />
 
       <FormNav

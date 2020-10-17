@@ -4,7 +4,6 @@ import { Redirect, useHistory } from 'react-router-dom';
 import Button from '../../../common/components/Button';
 import { RootState } from '../../../common/store/rootReducer';
 import AuthFormWrapper from '../AuthFormWrapper';
-import VerifyAccountPage from '../VerifyAccountPage';
 import { createAccount } from '../utils/businessLogic';
 import {
   registerUserFail,
@@ -18,12 +17,12 @@ import CAPageThree from './CAPageThree';
 export type Credentials = {
   firstName: string;
   lastName: string;
-  phoneNumber: string;
+  mobileNumber: string;
   email: string;
   password: string;
   repeatPassword: string;
   dob: string;
-  nationalID: string;
+  nationalId: string;
   gender: string;
 };
 
@@ -31,19 +30,19 @@ type CreateAccountFormProps = {};
 
 const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false);
-  const [pageNumber, setPageNumber] = useState(3);
+  const [pageNumber, setPageNumber] = useState(1);
   const history = useHistory();
   const dispatch = useDispatch();
 
   const [credentials, setCredentials] = useState<Credentials>({
     firstName: '',
     lastName: '',
-    phoneNumber: '',
+    mobileNumber: '',
     email: '',
     password: '',
     repeatPassword: '',
     dob: '',
-    nationalID: '',
+    nationalId: '',
     gender: '',
   });
 
@@ -86,7 +85,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
   }
 
   if (isRegistered && !user.isVerified) {
-    return <VerifyAccountPage />;
+    return <Redirect to="/verify-account" />;
   }
 
   if (user.isVerified) {
@@ -102,7 +101,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
             credentials={{
               firstName: credentials.firstName,
               lastName: credentials.lastName,
-              phoneNumber: credentials.phoneNumber,
+              mobileNumber: credentials.mobileNumber,
             }}
             onCredentialsChange={handleCredentialsChange}
           />
@@ -127,7 +126,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
             onClickPrev={handleNavigation}
             credentials={{
               dob: credentials.dob,
-              nationalID: credentials.nationalID,
+              nationalId: credentials.nationalId,
               gender: credentials.gender,
             }}
             onCredentialsChange={handleCredentialsChange}
