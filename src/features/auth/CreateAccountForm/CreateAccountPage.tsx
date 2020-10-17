@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import React, { FormEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import Button from '../../../common/components/Button';
@@ -7,7 +6,11 @@ import { RootState } from '../../../common/store/rootReducer';
 import AuthFormWrapper from '../AuthFormWrapper';
 import VerifyAccountPage from '../VerifyAccountPage';
 import { createAccount } from '../utils/businessLogic';
-import { registerUserFail, registerUserSuccess } from '../utils/stateMgmt';
+import {
+  registerUserFail,
+  registerUserSuccess,
+  clearFormErrs,
+} from '../utils/stateMgmt';
 import CAPageOne from './CAPageOne';
 import CAPageTwo from './CAPageTwo';
 import CAPageThree from './CAPageThree';
@@ -28,7 +31,7 @@ type CreateAccountFormProps = {};
 
 const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false);
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState(3);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -65,12 +68,10 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
     setCredentials({ ...credentials, [name]: value });
   }
 
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
+  async function handleSubmit() {
     try {
       setIsLoading(true);
       const [successfullyRegistered, res] = await createAccount(credentials);
-      console.log(successfullyRegistered, res);
 
       if (successfullyRegistered) {
         dispatch(registerUserSuccess(res));
@@ -82,10 +83,6 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
     } finally {
       setIsLoading(false);
     }
-  }
-
-  if (isLoading) {
-    return <p>Loading ...</p>;
   }
 
   if (isRegistered && !user.isVerified) {
@@ -138,22 +135,27 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
         );
     }
   };
+
+  const formFooter = () => (
+    <Button
+      onClick={() => history.push('/sign-in')}
+      category="link"
+      value="Already have an account? Sign in instead"
+    />
+  );
+
   return (
-    <AuthFormWrapper>
-      {error && <div className="error-container">{error}</div>}
-
-      <h2 className="form-header title">Sign up to get started</h2>
-
-      {renderPageHelper(pageNumber)}
-
-      <div className="redirect">
-        <Button
-          onClick={() => history.push('/sign-in')}
-          category="link"
-          value="Already have an account? Sign in instead"
-        />
-      </div>
-    </AuthFormWrapper>
+    <AuthFormWrapper
+      header="Sign up to get started"
+      footer={formFooter}
+      error={error}
+      isLoading={isLoading}
+      onCloseErrorBox={() => {
+        dispatch(clearFormErrs());
+      }}
+      formInputs={() => renderPageHelper(pageNumber)}
+      formName="sign-up"
+    />
   );
 };
 

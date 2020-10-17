@@ -73,61 +73,52 @@ const CAPageOne: React.FC<CAPAgeOneProps> = ({
   }
 
   return (
-    <form
-      name="pageOne"
-      autoComplete="off"
-      method=""
-      onSubmit={() => {
-        validatePageOne();
-      }}
-    >
-      <div className="page-one">
-        <Input
-          required
-          type="text"
-          name="firstName"
-          placeholder="eg Deniece"
-          label="First name"
-          value={credentials.firstName || ''}
-          onChange={(e: FormEvent) => {
-            handleInput(e);
-          }}
-          error={validationErrors.firstName}
-        />
-        <Input
-          required
-          type="text"
-          name="lastName"
-          placeholder="eg Muthoni"
-          label="Last name"
-          value={credentials.lastName || ''}
-          onChange={(e: FormEvent) => {
-            handleInput(e);
-          }}
-          error={validationErrors.lastName}
-        />
-        <Input
-          required
-          type="tel"
-          name="phoneNumber"
-          placeholder="eg 0700112233"
-          label="Mobile number"
-          value={credentials.phoneNumber || ''}
-          onChange={(e: FormEvent) => {
-            handleInput(e);
-          }}
-          error={validationErrors.phoneNumber}
-        />
+    <>
+      <Input
+        required
+        type="text"
+        name="firstName"
+        placeholder="eg Deniece"
+        label="First name"
+        value={credentials.firstName || ''}
+        onChange={(e: FormEvent) => {
+          handleInput(e);
+        }}
+        error={validationErrors.firstName}
+      />
+      <Input
+        required
+        type="text"
+        name="lastName"
+        placeholder="eg Muthoni"
+        label="Last name"
+        value={credentials.lastName || ''}
+        onChange={(e: FormEvent) => {
+          handleInput(e);
+        }}
+        error={validationErrors.lastName}
+      />
+      <Input
+        required
+        type="tel"
+        name="phoneNumber"
+        placeholder="eg 0700112233"
+        label="Mobile number"
+        value={credentials.phoneNumber || ''}
+        onChange={(e: FormEvent) => {
+          handleInput(e);
+        }}
+        error={validationErrors.phoneNumber}
+      />
 
-        <FormNav
-          showPrev={false}
-          onClickNext={validatePageOne}
-          onClickPrev={() => {}}
-          nextIsDisabled={!isValidPageOne}
-          pageNumber={1}
-        />
-      </div>
-    </form>
+      <FormNav
+        showPrev={false}
+        onClickNext={validatePageOne}
+        onClickPrev={() => {}}
+        nextIsDisabled={!isValidPageOne}
+        pageNumber={1}
+      />
+    </>
   );
 };
 

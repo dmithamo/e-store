@@ -40,13 +40,6 @@ function insertAuthTokenInRequestHeaders(
 
 export default {
   post: async (path: string, params: any) => {
-    if (path === '/auth') {
-      return tempCreateAccountFnBeforeApiIsLive(params);
-    }
-    if (path === '/auth/sign-in') {
-      return tempSignInBeforeApiIsLive(params);
-    }
-
     if (path === '/auth/verify-account') {
       return tempVerifyAccountFnBeforeApiIsLive(params);
     }
@@ -64,40 +57,6 @@ export default {
     return instantiateHTTPClient().get(path);
   },
 };
-
-function tempSignInBeforeApiIsLive(params: any) {
-  if (!!params.email && !!params.password) {
-    return {
-      status: 200,
-      data: params.email.includes('addmin')
-        ? { ...USERS[0], role: 'ADMIN', isLoggedIn: true }
-        : { ...USERS[1], isLoggedIn: true },
-    };
-  }
-  return {
-    status: 400,
-    data: { error: { message: 'Missing required values: ...' } },
-  };
-}
-
-function tempCreateAccountFnBeforeApiIsLive(params: any) {
-  if (params.email && params.email !== '') {
-    return {
-      status: 201,
-      data: {
-        email: params.email,
-        firstName: params.firstName,
-        lastName: params.lastName,
-        avatar: params.avatar,
-        phoneNumber: params.phoneNumber,
-      },
-    };
-  }
-  return {
-    status: 400,
-    data: { error: { message: 'Missing required values: ...' } },
-  };
-}
 
 function tempVerifyAccountFnBeforeApiIsLive(params: any) {
   if (params.email && params.confirmationCode) {

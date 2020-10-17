@@ -23,7 +23,7 @@ type Route = {
 const allTheRoutes: Route[] = [
   {
     path: '/sign-up',
-    pageTitle: 'sign-up',
+    pageTitle: 'sign up',
     needsAuth: false,
     adminOnly: false,
     component: CreateAccountPage,

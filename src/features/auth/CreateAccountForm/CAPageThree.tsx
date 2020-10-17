@@ -81,61 +81,52 @@ const CAPageThree: React.FC<CAPageThreeProps> = ({
     { label: 'Male', value: 'male' },
   ];
   return (
-    <form
-      autoComplete="off"
-      name="pageThree"
-      method=""
-      onSubmit={() => {
-        validatePageThree();
-      }}
-    >
-      <div className="page-three">
-        <Input
-          required
-          type="date"
-          name="dob"
-          label="Date of birth. You must be 18yrs or older to create an account"
-          value={credentials.dob || ''}
-          onChange={(e: FormEvent) => {
-            handleInput(e);
-          }}
-          error={validationErrors.dob}
-          min="1970-01-01"
-          max={`${format(subYears(new Date(), 18), 'yyyy-MM-dd')}`}
-        />
-        <Input
-          required
-          type="text"
-          name="nationalID"
-          placeholder="eg 30002345"
-          label="National ID"
-          value={credentials.nationalID || ''}
-          onChange={(e: FormEvent) => {
-            handleInput(e);
-          }}
-          error={validationErrors.nationalID}
-        />
-        <CustomSelect
-          name="gender"
-          options={genderOptions}
-          label="Gender"
-          onChange={(e: FormEvent) => {
-            handleInput(e);
-          }}
-          value={credentials.gender || ''}
-          error={validationErrors.gender}
-        />
-        <FormNav
-          showPrev
-          onClickNext={validatePageThree}
-          onClickPrev={() => {
-            onClickPrev(-1, credentials);
-          }}
-          nextIsDisabled={!isValidPageThree}
-          pageNumber={3}
-        />
-      </div>
-    </form>
+    <>
+      <Input
+        required
+        type="date"
+        name="dob"
+        label="Date of birth. You must be 18yrs or older to create an account"
+        value={credentials.dob || ''}
+        onChange={(e: FormEvent) => {
+          handleInput(e);
+        }}
+        error={validationErrors.dob}
+        min="1970-01-01"
+        max={`${format(subYears(new Date(), 18), 'yyyy-MM-dd')}`}
+      />
+      <Input
+        required
+        type="text"
+        name="nationalID"
+        placeholder="eg 30002345"
+        label="National ID"
+        value={credentials.nationalID || ''}
+        onChange={(e: FormEvent) => {
+          handleInput(e);
+        }}
+        error={validationErrors.nationalID}
+      />
+      <CustomSelect
+        name="gender"
+        options={genderOptions}
+        label="Gender"
+        onChange={(e: FormEvent) => {
+          handleInput(e);
+        }}
+        value={credentials.gender || ''}
+        error={validationErrors.gender}
+      />
+      <FormNav
+        showPrev
+        onClickNext={validatePageThree}
+        onClickPrev={() => {
+          onClickPrev(-1, credentials);
+        }}
+        nextIsDisabled={!isValidPageThree}
+        pageNumber={3}
+      />
+    </>
   );
 };
 

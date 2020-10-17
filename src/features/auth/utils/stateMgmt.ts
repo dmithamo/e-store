@@ -78,6 +78,10 @@ const authState = createSlice({
     logoutUserSuccess(state: AuthState) {
       state.user = initialState.user;
     },
+
+    clearFormErrs(state: AuthState) {
+      state.error = initialState.error;
+    },
   },
 });
 
@@ -89,6 +93,7 @@ export const {
   loginUserFailure,
   logoutUserSuccess,
   verifyAccountCancel,
+  clearFormErrs,
 } = authState.actions;
 
 export default authState.reducer;

@@ -85,65 +85,56 @@ const CAPageTwo: React.FC<CAPAgeTwoProps> = ({
   }
 
   return (
-    <form
-      name="pageTwo"
-      autoComplete="off"
-      method=""
-      onSubmit={() => {
-        validatePageTwo();
-      }}
-    >
-      <div className="page-two">
-        <Input
-          required
-          type="email"
-          name="email"
-          placeholder="eg dmuthoni@email.com"
-          label="Email address"
-          value={credentials.email || ''}
-          onChange={(e: FormEvent) => {
-            handleInput(e);
-          }}
-          error={validationErrors.email}
-        />
-        <Input
-          required
-          type="password"
-          name="password"
-          placeholder="eg exBd3Qwert"
-          label="Password"
-          hasHideToggle
-          value={credentials.password || ''}
-          onChange={(e: FormEvent) => {
-            handleInput(e);
-          }}
-          error={validationErrors.password || validationErrors.repeatPassword}
-        />
-        <Input
-          required
-          type="password"
-          name="repeatPassword"
-          placeholder="eg exBd3Qwert"
-          label="Repeat Password"
-          hasHideToggle
-          value={credentials.repeatPassword || ''}
-          onChange={(e: FormEvent) => {
-            handleInput(e);
-          }}
-          error={validationErrors.repeatPassword}
-        />
+    <>
+      <Input
+        required
+        type="email"
+        name="email"
+        placeholder="eg dmuthoni@email.com"
+        label="Email address"
+        value={credentials.email || ''}
+        onChange={(e: FormEvent) => {
+          handleInput(e);
+        }}
+        error={validationErrors.email}
+      />
+      <Input
+        required
+        type="password"
+        name="password"
+        placeholder="eg exBd3Qwert"
+        label="Password"
+        hasHideToggle
+        value={credentials.password || ''}
+        onChange={(e: FormEvent) => {
+          handleInput(e);
+        }}
+        error={validationErrors.password || validationErrors.repeatPassword}
+      />
+      <Input
+        required
+        type="password"
+        name="repeatPassword"
+        placeholder="eg exBd3Qwert"
+        label="Repeat Password"
+        hasHideToggle
+        value={credentials.repeatPassword || ''}
+        onChange={(e: FormEvent) => {
+          handleInput(e);
+        }}
+        error={validationErrors.repeatPassword}
+      />
 
-        <FormNav
-          showPrev
-          onClickNext={validatePageTwo}
-          onClickPrev={() => {
-            onClickPrev(-1, credentials);
-          }}
-          nextIsDisabled={!isValidPageTwo}
-          pageNumber={2}
-        />
-      </div>
-    </form>
+      <FormNav
+        showPrev
+        onClickNext={validatePageTwo}
+        onClickPrev={() => {
+          onClickPrev(-1, credentials);
+        }}
+        nextIsDisabled={!isValidPageTwo}
+        pageNumber={2}
+      />
+    </>
   );
 };
 

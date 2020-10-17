@@ -8,7 +8,11 @@ import Input from '../../common/components/Input';
 import { RootState } from '../../common/store/rootReducer';
 import AuthFormWrapper from './AuthFormWrapper';
 import { signIn } from './utils/businessLogic';
-import { loginUserSuccess, loginUserFailure } from './utils/stateMgmt';
+import {
+  loginUserSuccess,
+  loginUserFailure,
+  clearFormErrs,
+} from './utils/stateMgmt';
 import validateCredentials from './utils/validators';
 
 type SignInFormProps = {};
@@ -33,6 +37,7 @@ const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
 
   const {
     user: { isLoggedIn, role },
+    error,
   } = useSelector((state: RootState) => state.auth);
 
   function handleInput(e: FormEvent) {
@@ -67,8 +72,7 @@ const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
     return errs;
   }
 
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
+  async function handleSubmit() {
     const errs = validateForm();
     const formIsValid = errs.email === '' && errs.password === '';
 
@@ -82,80 +86,79 @@ const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
         } else {
           dispatch(loginUserFailure(res));
         }
-      } catch (error) {
+      } catch (err) {
+        dispatch(loginUserFailure(err));
+      } finally {
         setIsLoading(false);
       }
     }
-  }
-
-  if (isLoading) {
-    return <p>Loading ...</p>;
   }
 
   if (isLoggedIn) {
     return <Redirect to={role === 'ADMIN' ? '/admin/accounts' : '/shop'} />;
   }
 
-  return (
-    <AuthFormWrapper>
-      <form
-        autoComplete="off"
-        method=""
-        onSubmit={(e: FormEvent) => {
-          handleSubmit(e);
+  const renderPageHelper = () => (
+    <>
+      <Input
+        required
+        type="email"
+        name="email"
+        placeholder="eg dmuthoni@email.com"
+        label="Email address"
+        value={credentials.email}
+        onChange={(e: FormEvent) => {
+          handleInput(e);
         }}
+        error={validationErrors.email}
+      />
+      <Input
+        required
+        type="password"
+        name="password"
+        placeholder="eg exBd3Qwert"
+        label="Password"
+        hasHideToggle
+        value={credentials.password}
+        onChange={(e: FormEvent) => {
+          handleInput(e);
+        }}
+        error={validationErrors.password}
+      />
+
+      <Button
+        type="submit"
+        onClick={() => {
+          handleSubmit();
+        }}
+        disabled={validationErrors.email !== '' || isLoading}
       >
-        <h2 className="form-header title">Sign in now</h2>
+        <span>Sign in</span>
+        <FontAwesomeIcon icon="arrow-right" />
+      </Button>
+    </>
+  );
 
-        <div className="page-one" style={{ padding: '3em 0' }}>
-          <Input
-            required
-            type="email"
-            name="email"
-            placeholder="eg dmuthoni@email.com"
-            label="Email address"
-            value={credentials.email}
-            onChange={(e: FormEvent) => {
-              handleInput(e);
-            }}
-            error={validationErrors.email}
-          />
-          <Input
-            required
-            type="password"
-            name="password"
-            placeholder="eg exBd3Qwert"
-            label="Password"
-            hasHideToggle
-            value={credentials.password}
-            onChange={(e: FormEvent) => {
-              handleInput(e);
-            }}
-            error={validationErrors.password}
-          />
+  const formFooter = () => (
+    <Button
+      onClick={() => history.push('/sign-up')}
+      category="link"
+      value="New here? Create a free account"
+    />
+  );
 
-          <div className="buttons">
-            <Button
-              type="submit"
-              onClick={(e) => {
-                handleSubmit(e);
-              }}
-              disabled={validationErrors.email !== ''}
-            >
-              <span>Sign in</span>
-              <FontAwesomeIcon icon="arrow-right" />
-            </Button>
-          </div>
-        </div>
-      </form>
-      <div className="redirect">
-        <Button
-          onClick={() => history.push('/sign-up')}
-          category="link"
-          value="New here? Create an account for free"
-        />
-      </div>
-    </AuthFormWrapper>
+  return (
+    <AuthFormWrapper
+      header="Sign in"
+      footer={formFooter}
+      error={error}
+      isLoading={isLoading}
+      onCloseErrorBox={() => {
+        dispatch(clearFormErrs());
+      }}
+      formInputs={() => renderPageHelper()}
+      formName="sign-in"
+    />
   );
 };
 
