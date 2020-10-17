@@ -13,6 +13,8 @@ type InputProps = {
   required?: boolean;
   error?: string;
   hasHideToggle?: boolean;
+  min?: string;
+  max?: string;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -25,6 +27,8 @@ const Input: React.FC<InputProps> = ({
   required,
   error,
   hasHideToggle,
+  min,
+  max,
 }: InputProps): JSX.Element => {
   const [showContents, setShowContents] = useState(false);
 
@@ -40,6 +44,8 @@ const Input: React.FC<InputProps> = ({
           name={name}
           required={required}
           className={error !== '' ? 'errored' : ''}
+          min={min}
+          max={max}
         />
 
         {hasHideToggle && (
@@ -63,6 +69,8 @@ Input.defaultProps = {
   required: false,
   error: '',
   hasHideToggle: false,
+  min: '',
+  max: '',
 };
 
 const StyledInputWithLabel = styled.label`
@@ -100,7 +108,8 @@ const StyledInputWithLabel = styled.label`
       font-size: 1.5em;
       padding: 0.1em;
       position: absolute;
-      right: 5px;
+      top: 12px;
+      right: 10px;
       cursor: pointer;
       color: var(--lightBlack);
       :hover {

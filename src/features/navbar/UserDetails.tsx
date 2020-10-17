@@ -12,12 +12,18 @@ import defaultAvatar from '../../assets/img/default-avatar.png';
 const UserDetails: React.FC = (): JSX.Element => {
   const history = useHistory();
   const {
-    user: { email, firstName = 'Deniece', lastName = 'Muthoni', avatar, role },
+    user: {
+      email,
+      firstName = 'Deniece',
+      lastName = 'Muthoni',
+      avatar,
+      roleId,
+    },
   } = useSelector((state: RootState) => state.auth);
   const fullName = `${firstName} ${lastName}`;
   const icon = () => <InlineImage src={avatar || defaultAvatar} size="small" />;
 
-  const isAdmin = role === 'ADMIN';
+  const isAdmin = roleId === 1;
   return (
     <DropDownMenu icon={icon}>
       <InlineImage src={avatar || defaultAvatar} size="medium" />

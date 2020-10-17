@@ -25,10 +25,15 @@ export default function RouteItem({
   pageTitle,
 }: RouteItemProps): JSX.Element {
   const {
-    user: { isLoggedIn, role },
+    user: { isLoggedIn, isVerified, roleId },
   } = useSelector((state: RootState) => state.auth);
 
-  const isAdmin = role === 'ADMIN';
+  const isAdmin = roleId === 1;
+
+  if (needsAuth && isLoggedIn && !isVerified) {
+    return <Redirect to="/verify-account" />;
+  }
+
   if (needsAuth && !isLoggedIn) {
     return <Redirect to="/sign-in" />;
   }

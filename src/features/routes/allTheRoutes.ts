@@ -1,5 +1,5 @@
 import ManageAccounts from '../admin/ManageAccounts';
-import CreateAccountPage from '../auth/CreateAccountPage';
+import CreateAccountPage from '../auth/CreateAccountForm/CreateAccountPage';
 import SignInForm from '../auth/SignInForm';
 import CheckoutPage from '../checkout-page/CheckOut';
 import LandingPage from '../landing-page/LandingPage';
@@ -9,6 +9,7 @@ import ShopFront from '../shop-front/ShopFront';
 import WorkingOnIT from '../TempPage';
 import ManageProducts from '../admin/ManageProducts';
 import Dashboard from '../admin/Dashboard';
+import VerifyAccountPage from '../auth/VerifyAccountPage';
 
 type Route = {
   path: string;
@@ -23,7 +24,7 @@ type Route = {
 const allTheRoutes: Route[] = [
   {
     path: '/sign-up',
-    pageTitle: 'sign-up',
+    pageTitle: 'sign up',
     needsAuth: false,
     adminOnly: false,
     component: CreateAccountPage,
@@ -35,6 +36,14 @@ const allTheRoutes: Route[] = [
     needsAuth: false,
     adminOnly: false,
     component: SignInForm,
+    customLayout: NoNavbar,
+  },
+  {
+    path: '/verify-account',
+    pageTitle: 'verify account',
+    needsAuth: false,
+    adminOnly: false,
+    component: VerifyAccountPage,
     customLayout: NoNavbar,
   },
   {

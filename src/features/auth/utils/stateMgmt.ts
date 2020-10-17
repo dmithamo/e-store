@@ -2,13 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export interface User {
   email: string;
-  phoneNumber: string;
+  mobileNumber: string;
   firstName: string;
   lastName: string;
   avatar: string;
   userID: string;
   address: string;
-  role: 'ADMIN' | 'NORMAL';
+  roleId: 0 | 1 | 3; // 1: ADMIN 3: OTHERS
   created: Date;
   isVerified: boolean;
   isLoggedIn: boolean;
@@ -28,13 +28,13 @@ type AuthAction = {
 export const initialState: AuthState = {
   user: {
     email: '',
-    phoneNumber: '',
+    mobileNumber: '',
     firstName: '',
     lastName: '',
     avatar: '',
     userID: '',
     address: '',
-    role: 'NORMAL',
+    roleId: 0,
     created: new Date(),
     isVerified: false,
     isLoggedIn: false,
@@ -78,6 +78,10 @@ const authState = createSlice({
     logoutUserSuccess(state: AuthState) {
       state.user = initialState.user;
     },
+
+    clearFormErrs(state: AuthState) {
+      state.error = initialState.error;
+    },
   },
 });
 
@@ -89,6 +93,7 @@ export const {
   loginUserFailure,
   logoutUserSuccess,
   verifyAccountCancel,
+  clearFormErrs,
 } = authState.actions;
 
 export default authState.reducer;
