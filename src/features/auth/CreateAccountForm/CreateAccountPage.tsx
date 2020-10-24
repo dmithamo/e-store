@@ -6,13 +6,13 @@ import { RootState } from '../../../common/store/rootReducer';
 import AuthFormWrapper from '../AuthFormWrapper';
 import { createAccount } from '../utils/businessLogic';
 import {
+  clearFormErrs,
   registerUserFail,
   registerUserSuccess,
-  clearFormErrs,
 } from '../utils/stateMgmt';
 import CAPageOne from './CAPageOne';
-import CAPageTwo from './CAPageTwo';
 import CAPageThree from './CAPageThree';
+import CAPageTwo from './CAPageTwo';
 
 export type Credentials = {
   firstName: string;
