@@ -23,7 +23,7 @@ const ProfilePage: React.FC<ProfileProps> = (): JSX.Element => {
         <div className="user-info">
           <div className="prof-pic">
             <img
-              src={avatar === '' ? defaultAvatar : avatar}
+              src={avatar === '' || !avatar ? defaultAvatar : avatar}
               alt="user avatar here"
             />
             <h2 className="username">{fullName}</h2>

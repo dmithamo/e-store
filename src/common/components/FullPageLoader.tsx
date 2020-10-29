@@ -13,7 +13,7 @@ const StyledLoader = styled.div`
   left: 0;
   height: 100vh;
   width: 100%;
-  z-index: 2000;
+  z-index: 12000;
   background-color: rgba(0, 0, 0, 0.2);
 
   display: flex;
