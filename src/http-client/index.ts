@@ -22,9 +22,9 @@ function instantiateHTTPClient(): AxiosInstance {
 function insertAuthTokenInRequestHeaders(
   config: AxiosRequestConfig,
 ): AxiosRequestConfig {
-  switch (config.url) {
-    // no auth header needed
-    case '/checkout':
+  switch (true) {
+    case config.url?.includes('/checkout'):
+    case config.url?.includes('/verify'):
       return {
         ...config,
         headers: {
@@ -33,19 +33,17 @@ function insertAuthTokenInRequestHeaders(
         },
       };
 
+    // no auth header needed
     default:
       return config;
   }
 }
 
 export default {
-  post: async (path: string, params: any) => {
-    if (path === '/auth/verify-account') {
-      return tempVerifyAccountFnBeforeApiIsLive(params);
-    }
+  post: async (path: string, params: any) =>
+    instantiateHTTPClient().post(path, params),
 
-    return instantiateHTTPClient().post(path, params);
-  },
+  patch: async (path: string, params: any) => instantiateHTTPClient().patch(path, params),
 
   get: async (path: string) => {
     if (path.includes('/items')) {
@@ -57,22 +55,6 @@ export default {
     return instantiateHTTPClient().get(path);
   },
 };
-
-function tempVerifyAccountFnBeforeApiIsLive(params: any) {
-  if (params.email && params.confirmationCode) {
-    return {
-      status: 201,
-      data: {
-        email: params.email,
-        userID: 'new-user-uuid-01',
-      },
-    };
-  }
-  return {
-    status: 400,
-    data: { error: { message: 'Missing required values: ...' } },
-  };
-}
 
 function tempFetchItemsBeforeApiIsLive(path: string) {
   const category = path.includes('category')
