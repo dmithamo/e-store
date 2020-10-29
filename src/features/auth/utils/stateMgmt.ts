@@ -56,9 +56,13 @@ const authState = createSlice({
       state.error = payload;
     },
 
-    verifyAccountSuccess(state: AuthState, { payload }: AuthAction) {
+    verifyAccountSuccess(state: AuthState) {
       state.user.isVerified = true;
-      state.user = payload;
+      state.error = false;
+    },
+
+    verifyAccountFail(state: AuthState, { payload }: AuthAction) {
+      state.error = payload;
     },
 
     verifyAccountCancel(state: AuthState) {
@@ -92,6 +96,7 @@ export const {
   loginUserSuccess,
   loginUserFailure,
   logoutUserSuccess,
+  verifyAccountFail,
   verifyAccountCancel,
   clearFormErrs,
 } = authState.actions;

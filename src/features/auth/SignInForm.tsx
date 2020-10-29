@@ -9,9 +9,9 @@ import { RootState } from '../../common/store/rootReducer';
 import AuthFormWrapper from './AuthFormWrapper';
 import { signIn } from './utils/businessLogic';
 import {
-  loginUserSuccess,
-  loginUserFailure,
   clearFormErrs,
+  loginUserFailure,
+  loginUserSuccess,
 } from './utils/stateMgmt';
 import validateCredentials from './utils/validators';
 
@@ -82,7 +82,18 @@ const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
         const [isSuccessfullySignedIn, res] = await signIn(credentials);
         setIsLoading(false);
         if (isSuccessfullySignedIn) {
-          dispatch(loginUserSuccess(res));
+          sessionStorage.setItem('token', res.token);
+          dispatch(
+            loginUserSuccess({
+              userID: res.userId,
+              roleId: res.roleId,
+              firstName: res.firstName,
+              lastName: res.lastName,
+              email: res.email,
+              isVerified: true,
+              created: res.created_at || new Date(),
+            }),
+          );
         } else {
           dispatch(loginUserFailure(res));
         }
