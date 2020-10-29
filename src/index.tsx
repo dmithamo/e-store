@@ -80,6 +80,7 @@ library.add(
   faExternalLinkAlt,
   faCartArrowDown,
   faChartLine,
+  faMinusCircle,
 );
 
 const render = () => {

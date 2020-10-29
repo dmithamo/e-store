@@ -8,7 +8,7 @@ import { Credentials } from '../CreateAccountForm/CreateAccountPage';
 export async function createAccount(credentials: Credentials): Promise<any> {
   try {
     const res = await api.post('/register', credentials);
-    if (res && res.status === 200) {
+    if (res && res.status === 201) {
       return [true, res.data];
     }
 
@@ -26,13 +26,15 @@ export async function createAccount(credentials: Credentials): Promise<any> {
  */
 export async function verifyAccount(
   confirmationCode: string,
-  email: string,
+  userID: string,
 ): Promise<any> {
   try {
-    if (!email || !confirmationCode) {
-      return [false, 'Missing email or confirmation code'];
+    if (!confirmationCode) {
+      return [false, 'Missing confirmation code'];
     }
-    const res = await api.post('/auth/verify-account', {});
+    const res = await api.patch(`/verify/${userID}`, {
+      verificationCode: confirmationCode,
+    });
 
     if (res && res.status === 200) {
       return [true, ''];

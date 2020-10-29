@@ -73,12 +73,13 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
       const [successfullyRegistered, res] = await createAccount(credentials);
 
       if (successfullyRegistered) {
-        dispatch(registerUserSuccess(res));
+        sessionStorage.setItem('token', res.token);
+        dispatch(registerUserSuccess({ userID: res.userId, token: res.token }));
       } else {
-        dispatch(registerUserFail(res));
+        dispatch(registerUserFail({ message: res.message }));
       }
     } catch (err) {
-      dispatch(registerUserFail(err));
+      dispatch(registerUserFail({ message: err.message }));
     } finally {
       setIsLoading(false);
     }
