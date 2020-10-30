@@ -9,9 +9,9 @@ import { RootState } from '../../common/store/rootReducer';
 import AuthFormWrapper from './AuthFormWrapper';
 import { signIn } from './utils/businessLogic';
 import {
-  loginUserSuccess,
-  loginUserFailure,
   clearFormErrs,
+  loginUserFailure,
+  loginUserSuccess,
 } from './utils/stateMgmt';
 import validateCredentials from './utils/validators';
 
