@@ -19,7 +19,7 @@ export async function fetchUsers(): Promise<any> {
 
 export async function fetchProducts(): Promise<any> {
   try {
-    const res = await api.get('/items');
+    const res = await api.get('/products');
     if (res && (res as any).status === 200) {
       return [true, (res as any).data];
     }

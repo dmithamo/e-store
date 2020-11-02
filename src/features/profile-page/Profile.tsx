@@ -41,7 +41,7 @@ const ProfilePage: React.FC<ProfileProps> = (): JSX.Element => {
               <FontAwesomeIcon icon="calendar-alt" />
               <span>
                 Since&nbsp;
-                {created.toDateString()}
+                {new Date(created).toLocaleDateString()}
               </span>
             </p>
           </div>

@@ -71,7 +71,7 @@ const StyledProduct = styled.div`
 
   img.product-img {
     width: 250px;
-    height: auto;
+    height: 250px;
     margin: auto;
   }
 

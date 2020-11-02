@@ -1,25 +1,36 @@
 import React from 'react';
 import styled from 'styled-components';
+import ErrorPage from '../../common/components/ErrorPage';
+import FullPageLoader from '../../common/components/FullPageLoader';
 import { breakpoints } from '../../common/constants';
 import Sidebar from './Sidebar';
 
 type AdminViewWrapperProps = {
   header: string;
   children: JSX.Element | JSX.Element[];
+  isLoading: boolean;
+  error: any;
 };
 
 const AdminViewWrapper: React.FC<AdminViewWrapperProps> = ({
   header,
   children,
-}: AdminViewWrapperProps): JSX.Element => (
-  <StyledWrapper>
-    <Sidebar />
-    <div className="main">
-      <h2>{header}</h2>
-      <div>{children}</div>
-    </div>
-  </StyledWrapper>
-);
+  isLoading,
+  error,
+}: AdminViewWrapperProps): JSX.Element => {
+  if (error) {
+    return <ErrorPage error={error} />;
+  }
+  return (
+    <StyledWrapper>
+      <Sidebar />
+      <div className="main">
+        <h2>{header}</h2>
+        {isLoading ? <FullPageLoader /> : <div>{children}</div>}
+      </div>
+    </StyledWrapper>
+  );
+};
 
 const StyledWrapper = styled.div`
   position: relative;
