@@ -85,8 +85,7 @@ const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
           sessionStorage.setItem('token', res.token);
           dispatch(
             loginUserSuccess({
-              userID: res.userId,
-              roleID: res.roleId,
+              roleId: res.roleId,
               firstName: res.firstName,
               lastName: res.lastName,
               email: res.email,
