@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ErrorPage from '../../common/components/ErrorPage';
 import Table from '../../common/components/Table';
 import { RootState } from '../../common/store/rootReducer';
 import { fetchUsers } from './utils/businessLogic';
 import { fetchUsersSuccess, fetchUsersFailure } from './utils/stateMgmt';
-import { format } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TableActions } from '../../common/components/Table/types';
 import { User } from '../auth/utils/stateMgmt';
@@ -21,7 +19,7 @@ const ManageAccounts: React.FC = (): JSX.Element => {
       setIsloading(true);
       const [isFetchedSuccessfully, res] = await fetchUsers();
       if (isFetchedSuccessfully) {
-        dispatch(fetchUsersSuccess(res));
+        dispatch(fetchUsersSuccess(res.data));
         setIsloading(false);
       } else {
         dispatch(fetchUsersFailure(res));
@@ -31,14 +29,6 @@ const ManageAccounts: React.FC = (): JSX.Element => {
 
     fetchHelper();
   }, []);
-
-  if (isLoading) {
-    return <p>Fetching users...</p>;
-  }
-
-  if (fetchError) {
-    return <ErrorPage error={fetchError} />;
-  }
 
   const columns = [
     {
@@ -65,6 +55,11 @@ const ManageAccounts: React.FC = (): JSX.Element => {
     },
     {
       align: 'left',
+      Header: 'Date of Birth',
+      accessor: 'dob',
+    },
+    {
+      align: 'left',
       Header: 'Phone No.',
       accessor: 'mobileNumber',
     },
@@ -78,7 +73,7 @@ const ManageAccounts: React.FC = (): JSX.Element => {
           <span
             style={{
               fontWeight: 'bold',
-              color: isAdmin ? 'red' : 'grey',
+              color: isAdmin ? 'green' : 'grey',
               fontSize: '1.2em',
             }}
           >
@@ -93,25 +88,17 @@ const ManageAccounts: React.FC = (): JSX.Element => {
     {
       align: 'left',
       Header: 'Member Since',
-      accessor: 'created',
-      modifier: (date: Date) => (
-        <p title={date.toDateString()}>
-          {/* {`${formatDistance(date, new Date())
-            .replace('less than a minute', '< 1 min')
-            .replace('minute', 'min')} ago`} */}
-          {format(date, 'dd MMMM yyyy')}
-        </p>
-      ),
+      accessor: 'created_at',
     },
     {
       align: 'center',
       Header: 'Verified?',
-      accessor: 'isVerified',
-      modifier: (isVerified: boolean) => (
+      accessor: 'verified',
+      modifier: (isVerified: number) => (
         <span
           style={{
             fontWeight: 'bold',
-            color: isVerified ? 'green' : 'red',
+            color: isVerified > 0 ? 'green' : 'red',
             fontSize: '1.2em',
           }}
         >
@@ -122,6 +109,7 @@ const ManageAccounts: React.FC = (): JSX.Element => {
         </span>
       ),
     },
+
     {
       align: 'center',
       Header: 'Online?',
@@ -202,7 +190,7 @@ const ManageAccounts: React.FC = (): JSX.Element => {
     },
   ];
   return (
-    <AdminViewWrapper header="users">
+    <AdminViewWrapper error={fetchError} isLoading={isLoading} header="users">
       <Table
         stateName="users"
         tableActions={actions}

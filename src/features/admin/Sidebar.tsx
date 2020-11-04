@@ -14,7 +14,7 @@ const sidabarItems: SidebarItemProps[] = [
 const Sidebar: React.FC = (): JSX.Element => (
   <StyledSidebar id="sidebar">
     {sidabarItems.map((itm) => (
-      <SidebarItem {...itm} />
+      <SidebarItem key={itm.name} {...itm} />
     ))}
   </StyledSidebar>
 );

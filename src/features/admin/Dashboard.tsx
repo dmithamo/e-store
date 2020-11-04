@@ -2,7 +2,7 @@ import React from 'react';
 import AdminViewWrapper from './AdminViewWrapper';
 
 const Dashboard: React.FC = (): JSX.Element => (
-  <AdminViewWrapper header="">
+  <AdminViewWrapper error={false} isLoading={false} header="">
     <p
       style={{
         display: 'flex',
