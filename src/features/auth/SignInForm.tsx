@@ -30,15 +30,15 @@ const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const [credentials, setCredentials] = useState({
-    email: '',
-    password: '',
-  });
-
   const {
-    user: { isLoggedIn, isVerified, roleId },
+    user: { isLoggedIn, isVerified, roleId, email },
     error,
   } = useSelector((state: RootState) => state.auth);
+
+  const [credentials, setCredentials] = useState({
+    email: email || '',
+    password: '',
+  });
 
   function handleInput(e: FormEvent) {
     const { name, value } = e.target as HTMLTextAreaElement;
