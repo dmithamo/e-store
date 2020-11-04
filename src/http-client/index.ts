@@ -1,6 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { addDays } from 'date-fns';
-import { makeFakeUsers } from '../common/utils/makeFakeData';
 
 /**
  * @description Instantiate axios client
@@ -25,6 +24,8 @@ function insertAuthTokenInRequestHeaders(
   switch (true) {
     case config.url?.includes('/checkout'):
     case config.url?.includes('/verify'):
+    case config.url?.includes('/users'):
+    case config.url?.includes('/products'):
       return {
         ...config,
         headers: {
@@ -43,15 +44,14 @@ export default {
   post: async (path: string, params: any) =>
     instantiateHTTPClient().post(path, params),
 
-  patch: async (path: string, params: any) => instantiateHTTPClient().patch(path, params),
+  patch: async (path: string, params: any) =>
+    instantiateHTTPClient().patch(path, params),
 
   get: async (path: string) => {
     if (path.includes('/items')) {
       return tempFetchItemsBeforeApiIsLive(path);
     }
-    if (path.includes('/users')) {
-      return tempFetchUsersBeforeApiIsLive();
-    }
+
     return instantiateHTTPClient().get(path);
   },
 };
@@ -150,9 +150,3 @@ function tempFetchItemsBeforeApiIsLive(path: string) {
     data: filterData(),
   };
 }
-
-function tempFetchUsersBeforeApiIsLive() {
-  return { status: 200, data: USERS };
-}
-
-const USERS = makeFakeUsers(50);

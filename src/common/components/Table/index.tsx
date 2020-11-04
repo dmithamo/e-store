@@ -11,6 +11,7 @@ import GroupActionsContainer from './GroupActionsContainer';
 import { breakpoints } from '../../constants';
 import { clearSelection } from './utils/stateMgmt';
 import { useDispatch } from 'react-redux';
+import NoData from './NoData';
 
 type TableProps = {
   tableColumns: TableColumn[];
@@ -141,7 +142,9 @@ const Table: React.FC<TableProps> = ({
     [],
   );
 
-  return (
+  return tableData.length < 1 ? (
+    <NoData />
+  ) : (
     <StyledTable>
       <GroupActionsContainer
         stateName={stateName}
@@ -275,7 +278,7 @@ const StyledTable = styled.div`
       tr {
         td,
         th {
-          width: 155px;
+          width: 145px;
           padding: 1.5em;
 
           :first-child {
@@ -310,7 +313,7 @@ const StyledTable = styled.div`
   td.fix-col-2,
   th.fix-col-2 {
     left: 100px !important;
-    width: 250px !important;
+    width: 200px !important;
   }
 
   th.fix-col {

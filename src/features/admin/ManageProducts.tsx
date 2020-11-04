@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ErrorPage from '../../common/components/ErrorPage';
 import Table from '../../common/components/Table';
 import { RootState } from '../../common/store/rootReducer';
 import { fetchProducts } from './utils/businessLogic';
@@ -22,7 +21,7 @@ const ManageProducts: React.FC = (): JSX.Element => {
       setIsloading(true);
       const [isFetchedSuccessfully, res] = await fetchProducts();
       if (isFetchedSuccessfully) {
-        dispatch(fetchProductsSuccess(res));
+        dispatch(fetchProductsSuccess(res.data));
         setIsloading(false);
       } else {
         dispatch(fetchProductsFailure(res));
@@ -32,14 +31,6 @@ const ManageProducts: React.FC = (): JSX.Element => {
 
     fetchHelper();
   }, []);
-
-  if (isLoading) {
-    return <p>Fetching products...</p>;
-  }
-
-  if (fetchError) {
-    return <ErrorPage error={fetchError} />;
-  }
 
   const columns = [
     {
@@ -121,7 +112,11 @@ const ManageProducts: React.FC = (): JSX.Element => {
     },
   ];
   return (
-    <AdminViewWrapper header="products">
+    <AdminViewWrapper
+      isLoading={isLoading}
+      error={fetchError}
+      header="products"
+    >
       <Table
         stateName="products"
         tableActions={actions}
