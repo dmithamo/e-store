@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import shoppingCart from '../../assets/img/shopping-cart-small.png';
 import Button from '../../common/components/Button';
 import InlineImage from '../../common/components/InlineImage';
+import AddToCartModal from '../shopping-cart/AddToCartModal';
 import { ShopItem } from './utils/stateMgmt';
-import shoppingCart from '../../assets/img/shopping-cart-small.png';
-import { useHistory } from 'react-router-dom';
 
 type ProductProps = {
   product: ShopItem;
@@ -12,44 +13,75 @@ type ProductProps = {
 };
 
 const Product: React.FC<ProductProps> = ({
-  product: { name, rate, avatar: img, category, id },
+  product,
   hideDetailsBtn,
 }: ProductProps): JSX.Element => {
   const history = useHistory();
+  const [showAddToCartModal, setShowAddToCartModal] = useState(false);
   return (
-    <StyledProduct>
-      <h2 className="name">{name}</h2>
-      <h3 className="rate">{`KES ${rate}/hr`}</h3>
-      <img className="product-img" src={img} alt={name} />
-      <div className="actions">
-        {!hideDetailsBtn ? (
+    <StyledContainer>
+      {showAddToCartModal ? (
+        <AddToCartModal
+          onClose={() => {
+            setShowAddToCartModal(false);
+          }}
+          item={product}
+        />
+      ) : (
+        <></>
+      )}
+
+      <StyledProduct>
+        <h2 className="name">{product.name}</h2>
+        <h3 className="rate">{`KES ${product.rate}/hr`}</h3>
+        <img className="product-img" src={product.img} alt={product.name} />
+        <div className="actions">
+          {!hideDetailsBtn ? (
+            <Button
+              category="link"
+              classes="details-button"
+              onClick={() => {
+                history.push(
+                  `/shop/${product.category.toLowerCase()}/${product.id}`,
+                );
+              }}
+              value="Details"
+            />
+          ) : (
+            <></>
+          )}
           <Button
-            category="link"
-            classes="details-button"
+            category="secondary"
+            classes="buy-button"
             onClick={() => {
-              history.push(`/shop/${category.toLowerCase()}/${id}`);
+              setShowAddToCartModal(true);
             }}
-            value="Details"
-          />
-        ) : (
-          <></>
-        )}
-        <Button category="secondary" classes="buy-button" onClick={() => {}}>
-          <InlineImage src={shoppingCart} size="smallest" alt="shopping cart" />
-          <span>Hire item</span>
-        </Button>
-      </div>
-    </StyledProduct>
+          >
+            <InlineImage
+              src={shoppingCart}
+              size="smallest"
+              alt="shopping cart"
+            />
+            <span>Hire item</span>
+          </Button>
+        </div>
+      </StyledProduct>
+    </StyledContainer>
   );
 };
 
 Product.defaultProps = { hideDetailsBtn: false };
+
+const StyledContainer = styled.div`
+  position: relative;
+`;
 
 const StyledProduct = styled.div`
   background-color: var(--white);
   padding: 1em 2em;
   position: relative;
   border-radius: 5px;
+  height: 400px;
 
   display: flex;
   flex-direction: column;
@@ -71,7 +103,7 @@ const StyledProduct = styled.div`
 
   img.product-img {
     width: 250px;
-    height: 250px;
+    height: auto;
     margin: auto;
   }
 
