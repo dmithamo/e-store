@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import { format } from 'date-fns';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Table from '../../common/components/Table';
-import { RootState } from '../../common/store/rootReducer';
-import { fetchProducts } from './utils/businessLogic';
-import { fetchProductsSuccess, fetchProductsFailure } from './utils/stateMgmt';
-import { format } from 'date-fns';
 import { TableActions } from '../../common/components/Table/types';
+import { RootState } from '../../common/store/rootReducer';
 import { ShopItem } from '../shop-front/utils/stateMgmt';
 import AdminViewWrapper from './AdminViewWrapper';
+import { fetchProducts } from './utils/businessLogic';
+import { fetchProductsFailure, fetchProductsSuccess } from './utils/stateMgmt';
 
 const ManageProducts: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();

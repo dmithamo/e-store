@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React from 'react';
+import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { breakpoints } from '../../common/constants';

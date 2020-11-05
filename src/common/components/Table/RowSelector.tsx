@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-import React from 'react';
+import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { RootState } from '../../store/rootReducer';

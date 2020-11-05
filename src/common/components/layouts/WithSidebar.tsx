@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import Navbar from '../../../features/navbar/Navbar';
 import Sidebar from '../../../features/admin/Sidebar';
+import Navbar from '../../../features/navbar/Navbar';
 
 export type WithSidebarProps = {
   children: JSX.Element[] | JSX.Element;

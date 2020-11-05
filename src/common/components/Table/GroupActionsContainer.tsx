@@ -1,11 +1,12 @@
-import styled from 'styled-components';
-import React, { useEffect, useState } from 'react';
-import { ALL_ROWS, TableActions } from './types';
-import Button from '../Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as React from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearSelection, removeFromSelection } from './utils/stateMgmt';
+import styled from 'styled-components';
 import { RootState } from '../../store/rootReducer';
+import Button from '../Button';
+import { ALL_ROWS, TableActions } from './types';
+import { removeFromSelection } from './utils/stateMgmt';
 
 type GAProps = {
   actions: TableActions;

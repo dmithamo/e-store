@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import * as React from 'react';
+import { useHistory } from 'react-router-dom';
+import shoppingCartDefault from '../../assets/img/shopping-cart-small.png';
 import Button from '../../common/components/Button';
 import DropDownMenu from '../../common/components/DropDownMenu';
-import AmountSpentPreview from '../checkout-page/AmountSpentPreview';
-import shoppingCartDefault from '../../assets/img/shopping-cart-small.png';
 import InlineImage from '../../common/components/InlineImage';
-import { useHistory } from 'react-router-dom';
+import AmountSpentPreview from '../checkout-page/AmountSpentPreview';
 
 const ShoppingCart: React.FC = (): JSX.Element => {
   const history = useHistory();

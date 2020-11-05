@@ -1,50 +1,47 @@
-import './index.css';
-import './assets/fonts/Poppins-Black.ttf';
-import './assets/fonts/Poppins-Regular.ttf';
-import './assets/fonts/Poppins-Light.ttf';
-
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab, faCcVisa } from '@fortawesome/free-brands-svg-icons';
 import {
+  faCheckCircle,
+  faCircle,
   faTimesCircle,
   faUserCircle,
-  faCircle,
-  faCheckCircle,
 } from '@fortawesome/free-regular-svg-icons';
 import {
   faArrowAltCircleLeft,
   faArrowAltCircleRight,
   faArrowLeft,
   faArrowRight,
-  faEye,
-  faEyeSlash,
-  faShoppingCart,
-  faSignOutAlt,
-  faUserEdit,
-  faEnvelopeOpen,
-  faMobileAlt,
-  faCalendarAlt,
-  faPlusCircle,
-  faFastBackward,
   faBackward,
-  faForward,
-  faFastForward,
-  faCheckCircle as filledCheckCircle,
-  faMinusCircle,
-  faDotCircle,
-  faUserShield,
-  faUserAlt,
-  faEllipsisV,
-  faEllipsisH,
-  faExternalLinkAlt,
+  faCalendarAlt,
   faCartArrowDown,
   faChartLine,
+  faCheckCircle as filledCheckCircle,
+  faDotCircle,
+  faEllipsisH,
+  faEllipsisV,
+  faEnvelopeOpen,
+  faExternalLinkAlt,
+  faEye,
+  faEyeSlash,
+  faFastBackward,
+  faFastForward,
+  faForward,
+  faMinusCircle,
+  faMobileAlt,
+  faPlusCircle,
+  faShoppingCart,
+  faSignOutAlt,
+  faUserAlt,
+  faUserEdit,
+  faUserShield,
 } from '@fortawesome/free-solid-svg-icons';
-import React from 'react';
+import * as React from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import reduxStore from './common/store';
+import './index.css';
 
 library.add(
   fab,
@@ -87,13 +84,13 @@ const render = () => {
   const App = require('./App').default;
 
   ReactDOM.render(
-    <React.StrictMode>
+    <StrictMode>
       <Provider store={reduxStore.store}>
         <PersistGate persistor={reduxStore.persistor} loading={null}>
           <App />
         </PersistGate>
       </Provider>
-    </React.StrictMode>,
+    </StrictMode>,
     document.getElementById('root'),
   );
 };

@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import isEqual from 'lodash/isEqual';
-import React, { FormEvent, useState } from 'react';
+import * as React from 'react';
+import { FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -11,7 +12,7 @@ import FullPageModal from '../../common/components/FullPageModal';
 import { RootState } from '../../common/store/rootReducer';
 import { isValidConfirmCode } from '../../common/utils/validators';
 import { verifyAccount } from './utils/businessLogic';
-import { verifyAccountSuccess, verifyAccountFail } from './utils/stateMgmt';
+import { verifyAccountFail, verifyAccountSuccess } from './utils/stateMgmt';
 
 interface ConfirmationCode {
   1: string;

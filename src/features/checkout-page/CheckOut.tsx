@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as React from 'react';
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 import Button from '../../common/components/Button';
 import AmountSpentPreview from './AmountSpentPreview';
-import { useHistory } from 'react-router-dom';
 import MpesaDetailsForm from './MpesaDetails';
 import VisaDetailsForm from './VisaDetails';
 

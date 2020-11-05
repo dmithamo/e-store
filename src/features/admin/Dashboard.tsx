@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import AdminViewWrapper from './AdminViewWrapper';
 
 const Dashboard: React.FC = (): JSX.Element => (

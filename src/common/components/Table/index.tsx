@@ -1,17 +1,18 @@
 /* eslint-disable no-unused-expressions */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useMemo } from 'react';
+import * as React from 'react';
+import { useEffect, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import { usePagination, useTable } from 'react-table';
 import styled from 'styled-components';
-import Button from '../Button';
-import TablePagination from './TablePagination';
-import { TableData, TableColumn, TableActions, ALL_ROWS } from './types';
-import RowSelector from './RowSelector';
-import GroupActionsContainer from './GroupActionsContainer';
 import { breakpoints } from '../../constants';
-import { clearSelection } from './utils/stateMgmt';
-import { useDispatch } from 'react-redux';
+import Button from '../Button';
+import GroupActionsContainer from './GroupActionsContainer';
 import NoData from './NoData';
+import RowSelector from './RowSelector';
+import TablePagination from './TablePagination';
+import { ALL_ROWS, TableActions, TableColumn, TableData } from './types';
+import { clearSelection } from './utils/stateMgmt';
 
 type TableProps = {
   tableColumns: TableColumn[];

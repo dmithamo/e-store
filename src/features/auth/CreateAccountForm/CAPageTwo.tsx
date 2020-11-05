@@ -1,4 +1,5 @@
-import React, { FormEvent, useState } from 'react';
+import * as React from 'react';
+import { FormEvent, useState } from 'react';
 import Input from '../../../common/components/Input';
 import validateCredentials from '../utils/validators';
 import { Credentials } from './CreateAccountPage';

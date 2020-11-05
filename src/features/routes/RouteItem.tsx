@@ -1,9 +1,9 @@
-import React from 'react';
+import * as React from 'react';
+import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
-import { RootState } from '../../common/store/rootReducer';
 import WithNavbar from '../../common/components/layouts/WithNavbar';
-import { Helmet } from 'react-helmet';
+import { RootState } from '../../common/store/rootReducer';
 
 export type RouteItemProps = {
   path: string;

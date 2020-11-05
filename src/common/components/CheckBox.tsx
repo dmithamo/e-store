@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React, { FormEvent } from 'react';
+import * as React from 'react';
+import { FormEvent } from 'react';
 import styled from 'styled-components';
 
 type CheckBoxProps = {

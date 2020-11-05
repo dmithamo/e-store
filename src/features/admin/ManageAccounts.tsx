@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Table from '../../common/components/Table';
-import { RootState } from '../../common/store/rootReducer';
-import { fetchUsers } from './utils/businessLogic';
-import { fetchUsersSuccess, fetchUsersFailure } from './utils/stateMgmt';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TableActions } from '../../common/components/Table/types';
+import { RootState } from '../../common/store/rootReducer';
 import { User } from '../auth/utils/stateMgmt';
 import AdminViewWrapper from './AdminViewWrapper';
+import { fetchUsers } from './utils/businessLogic';
+import { fetchUsersFailure, fetchUsersSuccess } from './utils/stateMgmt';
 
 const ManageAccounts: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();

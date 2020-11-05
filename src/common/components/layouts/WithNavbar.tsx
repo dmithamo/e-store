@@ -8,12 +8,10 @@ export type WithNavbarProps = {
 
 export default function WithNavbar({ children }: WithNavbarProps): JSX.Element {
   return (
-    <>
-      <StyledWithNavbar>
-        <Navbar />
-        <section>{children}</section>
-      </StyledWithNavbar>
-    </>
+    <StyledWithNavbar>
+      <Navbar />
+      <section>{children}</section>
+    </StyledWithNavbar>
   );
 }
 

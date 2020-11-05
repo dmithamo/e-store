@@ -1,13 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import InlineImage from '../../common/components/InlineImage';
+import defaultAvatar from '../../assets/img/default-avatar.png';
 import Button from '../../common/components/Button';
 import DropDownMenu from '../../common/components/DropDownMenu';
+import InlineImage from '../../common/components/InlineImage';
 import LogoutButton from '../../common/components/LogoutButton';
 import { RootState } from '../../common/store/rootReducer';
-import defaultAvatar from '../../assets/img/default-avatar.png';
 
 const UserDetails: React.FC = (): JSX.Element => {
   const history = useHistory();

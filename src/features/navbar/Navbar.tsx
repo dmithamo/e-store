@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import * as React from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../../common/components/Button';

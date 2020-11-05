@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as React from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { RootState } from '../../common/store/rootReducer';
 import defaultAvatar from '../../assets/img/default-avatar.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../../common/components/Button';
 import LogoutButton from '../../common/components/LogoutButton';
-import ProfileHistory from './ProfileHistory';
+import { RootState } from '../../common/store/rootReducer';
 import EditProfile from './EditProfile';
+import ProfileHistory from './ProfileHistory';
 
 export type ProfileProps = {};
 

@@ -1,12 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type TableState = {
   tableSelection: Set<any>;
-};
-
-type TableAction = {
-  type: string;
-  payload: any;
 };
 
 const initialState: TableState = {
@@ -17,13 +12,13 @@ const tableState = createSlice({
   name: 'tableSelection',
   initialState,
   reducers: {
-    addToSelection(state: TableState, { payload }: TableAction) {
+    addToSelection(state: TableState, { payload }: PayloadAction<any>) {
       state.tableSelection.add(payload);
     },
-    removeFromSelection(state: TableState, { payload }: TableAction) {
+    removeFromSelection(state: TableState, { payload }: PayloadAction<any>) {
       state.tableSelection.delete(payload);
     },
-    replaceSelection(state: TableState, { payload }: TableAction) {
+    replaceSelection(state: TableState, { payload }: PayloadAction<any>) {
       state.tableSelection = payload;
     },
     clearSelection(state: TableState) {

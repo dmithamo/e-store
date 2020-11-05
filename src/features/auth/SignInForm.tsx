@@ -1,6 +1,7 @@
 /* eslint-disable indent */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { FormEvent, useState } from 'react';
+import * as React from 'react';
+import { FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import Button from '../../common/components/Button';

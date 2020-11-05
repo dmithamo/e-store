@@ -47,6 +47,7 @@
     "object-curly-newline": "off",
     "import/prefer-default-export": "off",
     "function-paren-newline": "off",
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    "react/react-in-jsx-scope": "off"
   }
 }

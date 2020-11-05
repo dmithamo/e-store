@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 import { TableActions, TableColumn, TableData } from './types';
 
@@ -8,11 +8,7 @@ type ActionsModalProps = {
   item: TableData;
 };
 
-const ActionsModal: React.FC<ActionsModalProps> = ({
-  actions,
-  columns,
-  item,
-}: ActionsModalProps): JSX.Element => (
+const ActionsModal: React.FC<ActionsModalProps> = (): JSX.Element => (
   <StyledActionsModal>what have YOU</StyledActionsModal>
 );
 

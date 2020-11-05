@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import * as React from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import FullPageLoader from '../../common/components/FullPageLoader';
 import FullPageOverlay from '../../common/components/FullPageOverlay';
 import InlineError from '../../common/components/InlineError';
-import FullPageLoader from '../../common/components/FullPageLoader';
 import InfoBanner from './InfoBanner';
 import { clearFormErrs } from './utils/stateMgmt';
 

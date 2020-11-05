@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 import ErrorPage from '../../common/components/ErrorPage';
 import FullPageLoader from '../../common/components/FullPageLoader';

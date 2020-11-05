@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import Product from './Product';
 import ShopFrontWrapper from './ShopFrontWrapper';
 import { ShopItem } from './utils/stateMgmt';

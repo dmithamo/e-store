@@ -1,5 +1,6 @@
 import { format, subYears } from 'date-fns';
-import React, { FormEvent, useState } from 'react';
+import * as React from 'react';
+import { FormEvent, useState } from 'react';
 import CustomSelect from '../../../common/components/CustomSelect';
 import Input from '../../../common/components/Input';
 import validateCredentials from '../utils/validators';

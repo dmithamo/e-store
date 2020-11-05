@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import * as React from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 type InputProps = {
