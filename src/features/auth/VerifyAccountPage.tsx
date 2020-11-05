@@ -26,7 +26,7 @@ export default function VerifyAccountPage() {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const {
-    user: { isVerified, userID },
+    user: { isVerified, userID, email },
     isRegistered,
   } = useSelector((state: RootState) => state.auth);
   const history = useHistory();
@@ -83,7 +83,7 @@ export default function VerifyAccountPage() {
       );
 
       if (successfullyVerified) {
-        dispatch(verifyAccountSuccess());
+        dispatch(verifyAccountSuccess(email));
       } else {
         dispatch(verifyAccountFail(res));
       }

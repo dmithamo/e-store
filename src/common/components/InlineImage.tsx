@@ -29,12 +29,11 @@ const StyledAvatarContainer = styled.div`
   img {
     width: 150px;
     height: auto;
-    border-radius: 50%;
     padding: 0 0.5em;
-    filter: brightness(0.9);
+    filter: brightness(1.1);
 
     :hover {
-      filter: brightness(1.1);
+      filter: brightness(1.3);
     }
   }
 
@@ -50,6 +49,9 @@ const StyledAvatarContainer = styled.div`
   }
   img.large {
     width: 300px;
+  }
+  img.largest {
+    width: 500px;
   }
 `;
 

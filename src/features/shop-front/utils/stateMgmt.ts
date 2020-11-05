@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type ShopFrontState = {
   items: { [category: string]: ShopItem[] };
@@ -17,18 +17,13 @@ export type ShopItem = {
   category: string;
   quantityAvailable: number;
   dateAvailable: Date;
-  avatar: string;
+  img: string;
   userID: string;
 };
 
 export type InCartItem = {
   item: ShopItem;
   quantity: number;
-};
-
-type ShopFrontAction = {
-  type: string;
-  payload: any;
 };
 
 export const initialState: ShopFrontState = {
@@ -43,31 +38,43 @@ const shopFrontState = createSlice({
   name: 'shopFront',
   initialState,
   reducers: {
-    fetchItemsSuccess(state: ShopFrontState, { payload }: ShopFrontAction) {
+    fetchItemsSuccess(
+      state: ShopFrontState,
+      { payload }: PayloadAction<{ [category: string]: ShopItem[] }>,
+    ) {
       state.items = payload;
     },
 
-    setSelectedCategory(state: ShopFrontState, { payload }: ShopFrontAction) {
+    setSelectedCategory(
+      state: ShopFrontState,
+      { payload }: PayloadAction<any>,
+    ) {
       state.selectedCategory = payload;
     },
 
-    setSelectedItemID(state: ShopFrontState, { payload }: ShopFrontAction) {
+    setSelectedItemID(state: ShopFrontState, { payload }: PayloadAction<any>) {
       state.selectedItemID = payload;
     },
 
-    fetchItemsFailure(state: ShopFrontState, { payload }) {
+    fetchItemsFailure(state: ShopFrontState, { payload }: PayloadAction<any>) {
       state.fetchError = payload;
     },
 
-    addItemToCart(state: ShopFrontState, { payload }) {
-      state.inCart = { ...state.inCart, [payload.name]: payload.item };
+    addItemToCart(
+      state: ShopFrontState,
+      { payload }: PayloadAction<InCartItem>,
+    ) {
+      state.inCart = { ...state.inCart, [payload.item.name]: payload };
     },
 
-    removeFromCart(state: ShopFrontState, { payload }: ShopFrontAction) {
-      if (state.inCart[payload.name].quantity === payload.quantity) {
-        delete state.inCart[payload.name];
+    removeFromCart(
+      state: ShopFrontState,
+      { payload }: PayloadAction<InCartItem>,
+    ) {
+      if (state.inCart[payload.item.name].quantity === payload.quantity) {
+        delete state.inCart[payload.item.name];
       } else {
-        state.inCart[payload.name].quantity -= payload.quantity;
+        state.inCart[payload.item.name].quantity -= payload.quantity;
       }
     },
   },

@@ -74,7 +74,13 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (): JSX.Element => {
 
       if (successfullyRegistered) {
         sessionStorage.setItem('token', res.token);
-        dispatch(registerUserSuccess({ userID: res.userId, token: res.token }));
+        dispatch(
+          registerUserSuccess({
+            userID: res.userId,
+            token: res.token,
+            email: credentials.email,
+          }),
+        );
       } else {
         dispatch(registerUserFail({ message: res.message }));
       }

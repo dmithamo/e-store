@@ -30,15 +30,15 @@ const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const [credentials, setCredentials] = useState({
-    email: '',
-    password: '',
-  });
-
   const {
-    user: { isLoggedIn, isVerified, roleId },
+    user: { isLoggedIn, isVerified, roleId, email },
     error,
   } = useSelector((state: RootState) => state.auth);
+
+  const [credentials, setCredentials] = useState({
+    email: email || '',
+    password: '',
+  });
 
   function handleInput(e: FormEvent) {
     const { name, value } = e.target as HTMLTextAreaElement;
@@ -94,10 +94,10 @@ const SigninForm: React.FC<SignInFormProps> = (): JSX.Element => {
             }),
           );
         } else {
-          dispatch(loginUserFailure({ message: res }));
+          dispatch(loginUserFailure(res));
         }
       } catch (err) {
-        dispatch(loginUserFailure({ message: err.message }));
+        dispatch(loginUserFailure(err));
       } finally {
         setIsLoading(false);
       }

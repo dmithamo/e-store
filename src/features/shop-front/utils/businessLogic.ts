@@ -17,7 +17,7 @@ export async function fetchItems(): Promise<any> {
               category: item.category,
               quantityAvailable: item.quantityAvailable,
               dateAvailable: item.dateAvailable,
-              avatar: item.avatar,
+              img: item.avatar,
               userID: item.userID,
             }),
           ),

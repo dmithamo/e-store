@@ -56,8 +56,9 @@ const authState = createSlice({
       state.error = payload;
     },
 
-    verifyAccountSuccess(state: AuthState) {
+    verifyAccountSuccess(state: AuthState, { payload }: AuthAction) {
       state.user.isVerified = true;
+      state.user.email = payload;
       state.error = false;
     },
 
